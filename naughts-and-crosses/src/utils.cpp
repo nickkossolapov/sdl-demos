@@ -2,6 +2,7 @@
 #include "constants.h"
 #include "globals.h"
 #include <SDL.h>
+#include "colours.h"
 
 void init() {
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )

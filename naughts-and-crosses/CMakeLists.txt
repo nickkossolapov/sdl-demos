@@ -15,7 +15,7 @@ add_executable(
         src/constants.h
         src/utils.h
         src/utils.cpp
-        src/globals.h src/globals.cpp)
+        src/globals.h src/globals.cpp src/shapeDrawer.h src/shapeDrawer.cpp src/colours.h)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)

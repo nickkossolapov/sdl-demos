@@ -4,7 +4,4 @@
 #define SCREEN_WIDTH   1280
 #define SCREEN_HEIGHT  720
 
-#define OFF_WHITE 0xF2
-#define OFF_BLACK 0x22
-
 #endif //NAUGHTS_AND_CROSSES_CONSTANTS_H
