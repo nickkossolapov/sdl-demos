@@ -26,7 +26,7 @@ int main(int argc, char *args[]) {
 
         prepareRenderer(gRenderer);
 
-        drawNaught(gRenderer, 150, 150, 60, 75);
+        drawNought(gRenderer, 150, 150, 60, 75);
         drawCross(gRenderer, 300, 300, 150, 18);
 
         SDL_RenderPresent(gRenderer);

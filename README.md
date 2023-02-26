@@ -5,4 +5,4 @@ These projects are mostly me trying to learn C++ and some game development, so t
 
 ## Demos
 
-[Naughts and crosses](./naughts-and-crosses/README.md)
+[Noughts and crosses](./noughts-and-crosses/README.md)

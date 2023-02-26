@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.23)
-project(naughts_and_crosses)
+project(noughts_and_crosses)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")

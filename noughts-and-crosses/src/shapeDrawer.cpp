@@ -40,7 +40,7 @@ void getCircleEdgePoints(int coords[], int coordsLength, int radius) {
 }
 
 
-int drawNaught(SDL_Renderer *renderer, int centreX, int centreY, int innerRadius, int outerRadius) {
+int drawNought(SDL_Renderer *renderer, int centreX, int centreY, int innerRadius, int outerRadius) {
     if (outerRadius < innerRadius || innerRadius < 0) {
         return -1;
     }

@@ -1,1 +1,0 @@
-# Naughts and crosses
