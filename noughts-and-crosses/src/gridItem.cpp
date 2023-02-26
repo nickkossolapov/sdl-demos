@@ -3,10 +3,10 @@
 #include "shapeDrawer.h"
 #include "colours.h"
 
-GridItem::GridItem(int topLeftX, int topLeftY, int length) {
-    mPosition = {topLeftX, topLeftY};
+GridItem::GridItem(SDL_Point center, int length) {
+    mPosition = {center.x - length/2, center.y - length/2};
     mLength = length;
-    mCenter = {topLeftX + length/2, topLeftY + length/2};
+    mCenter = center;
     mState = None;
     mSelected = {};
 }

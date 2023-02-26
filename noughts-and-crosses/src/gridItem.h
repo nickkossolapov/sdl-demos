@@ -14,7 +14,7 @@ enum State {
 
 class GridItem {
 public:
-    GridItem(int topLeftX, int topLeftY, int length);
+    GridItem(SDL_Point center, int length) ;
     void handleEvent(SDL_Event *e, PlayState &currentPlayer);
     void render(SDL_Renderer *renderer);
 
