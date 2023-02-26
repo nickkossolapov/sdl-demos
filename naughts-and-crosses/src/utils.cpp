@@ -15,6 +15,15 @@ void init() {
         {
             exit(1);
         }
+
+        gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+        if( gRenderer == nullptr )
+        {
+            exit(1);
+        }
+
+        SDL_SetRenderDrawColor( gRenderer, OFF_WHITE, OFF_WHITE, OFF_WHITE, 0xFF );
+
     }
 }
 
