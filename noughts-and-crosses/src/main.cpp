@@ -1,8 +1,9 @@
 #include <SDL.h>
-#include "utils.h"
-#include "globals.h"
 #include "colours.h"
+#include "globals.h"
+#include "gridItem.h"
 #include "shapeDrawer.h"
+#include "utils.h"
 
 
 void prepareRenderer(SDL_Renderer *renderer) {
@@ -17,17 +18,20 @@ int main(int argc, char *args[]) {
 
     SDL_Event e;
 
+    auto currentPlayer = std::rand() % 2 == 0 ? PlayState::Cross : PlayState::Nought;
+    GridItem gridItem = GridItem(200, 200, 150);
+
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT) {
                 quit = true;
             }
+            gridItem.handleEvent(&e, currentPlayer);
         }
 
         prepareRenderer(gRenderer);
 
-        drawNought(gRenderer, 150, 150, 60, 75);
-        drawCross(gRenderer, 300, 300, 150, 18);
+        gridItem.render(gRenderer);
 
         SDL_RenderPresent(gRenderer);
     }

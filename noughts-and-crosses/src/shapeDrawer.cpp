@@ -40,17 +40,17 @@ void getCircleEdgePoints(int coords[], int coordsLength, int radius) {
 }
 
 
-int drawNought(SDL_Renderer *renderer, int centreX, int centreY, int innerRadius, int outerRadius) {
+int drawNought(SDL_Renderer *renderer, SDL_Point center, const int innerRadius, const int outerRadius, Uint8 colour) {
     if (outerRadius < innerRadius || innerRadius < 0) {
         return -1;
     }
 
     int result = 0;
-    result |= SDL_SetRenderDrawColor(renderer, OFF_BLACK, OFF_BLACK, OFF_BLACK, 0xFF);
+    result |= SDL_SetRenderDrawColor(renderer, colour, colour, colour, 0xFF);
 
     // Multiply by sin(45) because that's where the quadrant will end
-    int outerLength = (int)(outerRadius*0.7+1);
-    int innerLength = (int)(innerRadius*0.7+1);
+    int outerLength = (int) (outerRadius * 0.7 + 1);
+    int innerLength = (int) (innerRadius * 0.7 + 1);
 
     int outerCoordinates[outerLength];
     int innerCoordinates[innerLength];
@@ -63,39 +63,38 @@ int drawNought(SDL_Renderer *renderer, int centreX, int centreY, int innerRadius
         int innerX = i >= innerLength ? i : innerCoordinates[i];
 
         for (int j = innerX; j < outerX; ++j) {
-            result |= SDL_RenderDrawPoint(renderer, centreX + j, centreY + i);
-            result |= SDL_RenderDrawPoint(renderer, centreX + i, centreY + j);
-            result |= SDL_RenderDrawPoint(renderer, centreX - j, centreY - i);
-            result |= SDL_RenderDrawPoint(renderer, centreX - i, centreY - j);
-            result |= SDL_RenderDrawPoint(renderer, centreX + j, centreY - i);
-            result |= SDL_RenderDrawPoint(renderer, centreX + i, centreY - j);
-            result |= SDL_RenderDrawPoint(renderer, centreX - j, centreY + i);
-            result |= SDL_RenderDrawPoint(renderer, centreX - i, centreY + j);
+            result |= SDL_RenderDrawPoint(renderer, center.x + j, center.y + i);
+            result |= SDL_RenderDrawPoint(renderer, center.x + i, center.y + j);
+            result |= SDL_RenderDrawPoint(renderer, center.x - j, center.y - i);
+            result |= SDL_RenderDrawPoint(renderer, center.x - i, center.y - j);
+            result |= SDL_RenderDrawPoint(renderer, center.x + j, center.y - i);
+            result |= SDL_RenderDrawPoint(renderer, center.x + i, center.y - j);
+            result |= SDL_RenderDrawPoint(renderer, center.x - j, center.y + i);
+            result |= SDL_RenderDrawPoint(renderer, center.x - i, center.y + j);
         }
     }
 
     return result;
 }
 
-int drawCross(SDL_Renderer *renderer, int centreX, int centreY, int width, int thickness){
-    if (width < 0 || thickness < 0) {
+int drawCross(SDL_Renderer *renderer, SDL_Point center, const int halfLength, const int thickness, Uint8 colour) {
+    if (halfLength < 0 || thickness < 0) {
         return -1;
     }
 
     int result = 0;
 
-    result |= SDL_SetRenderDrawColor(renderer, OFF_BLACK, OFF_BLACK, OFF_BLACK, 0xFF);
+    result |= SDL_SetRenderDrawColor(renderer, colour, colour, colour, 0xFF);
     // Convert the thickness to x-offset for 45 degree line
-    int offset = (int)(thickness*0.7);
-    int apo = width/2;
+    int offset = (int) (thickness * 0.7);
 
-    for (int i = 0; i < apo; i++) {
-        for (int j = 0; j < apo; j++) {
-            if (!(i + j > width - offset || i - j > offset - 1 || i - j < -offset + 1)){
-                SDL_RenderDrawPoint(renderer, centreX + i, centreY + j);
-                SDL_RenderDrawPoint(renderer, centreX - i, centreY - j);
-                SDL_RenderDrawPoint(renderer, centreX + i, centreY - j);
-                SDL_RenderDrawPoint(renderer, centreX - i, centreY + j);
+    for (int i = 0; i < halfLength; i++) {
+        for (int j = 0; j < halfLength; j++) {
+            if (!(i + j > halfLength * 2 - offset || i - j > offset - 1 || i - j < -offset + 1)) {
+                SDL_RenderDrawPoint(renderer, center.x + i, center.y + j);
+                SDL_RenderDrawPoint(renderer, center.x - i, center.y - j);
+                SDL_RenderDrawPoint(renderer, center.x + i, center.y - j);
+                SDL_RenderDrawPoint(renderer, center.x - i, center.y + j);
             }
 
         }
