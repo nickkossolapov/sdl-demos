@@ -19,7 +19,7 @@ int main(int argc, char *args[]) {
 
     SDL_Event e;
 
-    auto tiles = generateTiles(GRID_LENGTH, 130, GRID_OFFSET);
+    auto tiles = generateTiles(GRID_LENGTH, TILE_SIZE, GRID_OFFSET);
     GameState gameState = {tiles };
 
     while (!quit) {
