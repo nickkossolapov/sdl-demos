@@ -1,5 +1,5 @@
-#ifndef NOUGHTS_AND_CROSSES_GRIDITEM_H
-#define NOUGHTS_AND_CROSSES_GRIDITEM_H
+#ifndef NOUGHTS_AND_CROSSES_TILE_H
+#define NOUGHTS_AND_CROSSES_TILE_H
 
 #include <SDL.h>
 #include <optional>
@@ -12,9 +12,9 @@ enum State {
     Selected
 };
 
-class GridItem {
+class Tile {
 public:
-    GridItem(SDL_Point center, int length) ;
+    Tile(SDL_Point center, int length) ;
     void handleEvent(SDL_Event *e, PlayState &currentPlayer);
     void render(SDL_Renderer *renderer);
 
@@ -28,4 +28,4 @@ private:
     int drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour);
 };
 
-#endif //NOUGHTS_AND_CROSSES_GRIDITEM_H
+#endif //NOUGHTS_AND_CROSSES_TILE_H

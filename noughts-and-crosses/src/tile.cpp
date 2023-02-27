@@ -1,9 +1,9 @@
-#include "gridItem.h"
+#include "tile.h"
 #include "states.h"
 #include "shapeDrawer.h"
 #include "colours.h"
 
-GridItem::GridItem(SDL_Point center, int length) {
+Tile::Tile(SDL_Point center, int length) {
     mPosition = {center.x - length/2, center.y - length/2};
     mLength = length;
     mCenter = center;
@@ -11,7 +11,7 @@ GridItem::GridItem(SDL_Point center, int length) {
     mSelected = {};
 }
 
-void GridItem::handleEvent(SDL_Event *e, PlayState &currentPlayer) {
+void Tile::handleEvent(SDL_Event *e, PlayState &currentPlayer) {
     if (mState == Selected) {
         return;
     }
@@ -48,9 +48,9 @@ void GridItem::handleEvent(SDL_Event *e, PlayState &currentPlayer) {
                 break;
         }
     }
-};
+}
 
-void GridItem::render(SDL_Renderer *renderer) {
+void Tile::render(SDL_Renderer *renderer) {
     if (mState == None || !mSelected.has_value()) {
         return;
     }
@@ -76,10 +76,10 @@ void GridItem::render(SDL_Renderer *renderer) {
     }
 }
 
-int GridItem::drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour) {
+int Tile::drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour) {
     return drawCross(renderer, mCenter, mLength / 2, 18, colour);
 }
 
-int GridItem::drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour) {
+int Tile::drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour) {
     return drawNought(renderer, mCenter, mLength / 2, mLength / 2 + 15, colour);
 }
