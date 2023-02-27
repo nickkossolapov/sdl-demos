@@ -105,9 +105,9 @@ void drawGrid(SDL_Renderer *renderer, SDL_Point topLeft, int length, int thickne
     SDL_SetRenderDrawColor(renderer, colour, colour, colour, 0xFF);
 
     SDL_Rect row1 = {topLeft.x, topLeft.y + length / 3 - thickness / 2, length, thickness};
-    SDL_Rect row2 = {topLeft.x, topLeft.y + 2 * length / 3 - thickness / 2, length, thickness};
+    SDL_Rect row2 = {topLeft.x, topLeft.y + (2 * length) / 3 - thickness / 2, length, thickness};
     SDL_Rect column1 = {topLeft.x + length / 3 - thickness / 2, topLeft.y, thickness, length};
-    SDL_Rect column2 = {topLeft.x + 2 * length / 3 - 2 * thickness / 2, topLeft.y, thickness, length};
+    SDL_Rect column2 = {topLeft.x + 2 * length / 3 - thickness / 2, topLeft.y, thickness, length};
 
     SDL_RenderFillRect(renderer, &row1);
     SDL_RenderFillRect(renderer, &row2);

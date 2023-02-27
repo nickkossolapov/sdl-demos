@@ -1,7 +1,7 @@
 #ifndef NOUGHTS_AND_CROSSES_STATES_H
 #define NOUGHTS_AND_CROSSES_STATES_H
 
-enum PlayState{
+enum PlayState {
     Nought,
     Cross
 };

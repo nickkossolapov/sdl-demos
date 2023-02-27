@@ -1,7 +1,6 @@
 #include <SDL.h>
 #include "colours.h"
 #include "globals.h"
-#include "tile.h"
 #include "shapeDrawer.h"
 #include "utils.h"
 #include "tileGenerator.h"
@@ -12,13 +11,11 @@ void prepareRenderer(SDL_Renderer *renderer) {
     SDL_RenderClear(renderer);
 }
 
-int main(int argc, char *args[]) {
+int SDL_main() {
     init();
 
     bool quit = false;
-
     SDL_Event e;
-
     auto tiles = generateTiles(GRID_LENGTH, TILE_SIZE, GRID_OFFSET);
     GameState gameState = {tiles };
 
@@ -28,11 +25,19 @@ int main(int argc, char *args[]) {
                 quit = true;
             }
 
-            for (auto &tile: tiles) {
-                tile.handleEvent(e, gameState.currentPlayer());
-            }
+            if (gameState.outcome() == Outcome::InProgress) {
+                for (auto &tile: tiles) {
+                    tile.handleEvent(e, gameState.currentPlayer());
+                }
 
-            gameState.handleEvent(e);
+                gameState.handleEvent(e);
+            } else {
+                if (e.type == SDL_MOUSEBUTTONUP) {
+                    auto winningLine = gameState.tryGetWinningLine();
+                    gameState.reset();
+                    tiles = tiles = generateTiles(GRID_LENGTH, TILE_SIZE, GRID_OFFSET);
+                }
+            }
         }
 
         prepareRenderer(gRenderer);

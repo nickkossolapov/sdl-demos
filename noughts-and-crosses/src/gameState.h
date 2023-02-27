@@ -2,7 +2,6 @@
 #define NOUGHTS_AND_CROSSES_GAMESTATE_H
 
 #include <array>
-#include "states.h"
 #include "tile.h"
 #include "constants.h"
 
@@ -13,18 +12,38 @@ enum Outcome {
     Draw
 };
 
+enum WinningLines {
+    Row1,
+    Row2,
+    Row3,
+    Column1,
+    Column2,
+    Column3,
+    Diagonal,
+    OffDiagonal
+};
+
 class GameState {
 public:
     GameState(std::array<Tile, 9> &tiles);
     PlayState& currentPlayer();
     Outcome& outcome();
     void handleEvent(SDL_Event &e);
+    std::optional<WinningLines> tryGetWinningLine();
+    void reset();
 
 private:
+    enum TileState {
+        tEmpty = 0x00,
+        tNought = 0x01,
+        tCross = 0x02,
+    };
+
     PlayState mCurrentPlayer;
     Outcome mOutcome;
     std::array<Tile, GRID_SIZE>& mTiles;
-    std::array<bool, GRID_SIZE> mIsFilled;
+    std::array<TileState, GRID_SIZE> mCurrentBoard;
+    bool isBoardFull();
 };
 
 #endif //NOUGHTS_AND_CROSSES_GAMESTATE_H
