@@ -17,7 +17,7 @@ void init() {
             exit(1);
         }
 
-        gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED );
+        gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
         if( gRenderer == nullptr )
         {
             exit(1);

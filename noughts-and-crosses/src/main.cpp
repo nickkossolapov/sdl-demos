@@ -5,7 +5,7 @@
 #include "shapeDrawer.h"
 #include "utils.h"
 #include "tileGenerator.h"
-
+#include "gameState.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_WHITE, OFF_WHITE, OFF_WHITE, 0xFF);
@@ -19,12 +19,8 @@ int main(int argc, char *args[]) {
 
     SDL_Event e;
 
-    auto cross = PlayState::Nought;
-
-    const SDL_Point gridOffset = {20, 20 };
-    const int gridLength = 630;
-
-    auto tiles = generateTiles(gridLength, 130, gridOffset);
+    auto tiles = generateTiles(GRID_LENGTH, 130, GRID_OFFSET);
+    GameState gameState = {tiles };
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -33,8 +29,10 @@ int main(int argc, char *args[]) {
             }
 
             for (auto &tile: tiles) {
-                tile.handleEvent(&e, cross);
+                tile.handleEvent(e, gameState.currentPlayer());
             }
+
+            gameState.handleEvent(e);
         }
 
         prepareRenderer(gRenderer);
@@ -43,7 +41,7 @@ int main(int argc, char *args[]) {
             tile.render(gRenderer);
         }
 
-        drawGrid(gRenderer, gridOffset, gridLength, 12, OFF_BLACK);
+        drawGrid(gRenderer, GRID_OFFSET, GRID_LENGTH, 12, OFF_BLACK);
 
         SDL_RenderPresent(gRenderer);
     }

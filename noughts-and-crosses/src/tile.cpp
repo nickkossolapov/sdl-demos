@@ -11,12 +11,12 @@ Tile::Tile(SDL_Point center, int length) {
     mSelected = {};
 }
 
-void Tile::handleEvent(SDL_Event *e, PlayState &currentPlayer) {
+void Tile::handleEvent(SDL_Event &e, PlayState &currentPlayer) {
     if (mState == Selected) {
         return;
     }
 
-    if (e->type == SDL_MOUSEMOTION || e->type == SDL_MOUSEBUTTONDOWN || e->type == SDL_MOUSEBUTTONUP) {
+    if (e.type == SDL_MOUSEMOTION || e.type == SDL_MOUSEBUTTONDOWN || e.type == SDL_MOUSEBUTTONUP) {
         int x, y;
         SDL_GetMouseState(&x, &y);
 
@@ -30,7 +30,7 @@ void Tile::handleEvent(SDL_Event *e, PlayState &currentPlayer) {
 
         mSelected = currentPlayer == PlayState::Cross ? Cross : Nought;
 
-        switch (e->type) {
+        switch (e.type) {
             case SDL_MOUSEMOTION:
                 if (mState == None) {
                     mState = Hover;
@@ -82,4 +82,8 @@ int Tile::drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour) {
 
 int Tile::drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour) {
     return drawNought(renderer, mCenter, mLength / 2, mLength / 2 + 15, colour);
+}
+
+State& Tile::state(){
+    return mState;
 }

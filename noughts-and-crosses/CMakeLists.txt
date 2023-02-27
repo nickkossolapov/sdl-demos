@@ -15,7 +15,7 @@ add_executable(
         src/constants.h
         src/utils.h
         src/utils.cpp
-        src/globals.h src/globals.cpp src/shapeDrawer.h src/shapeDrawer.cpp src/colours.h src/tile.h src/tile.cpp src/states.h src/gameState.h src/tileGenerator.h src/tileGenerator.cpp)
+        src/globals.h src/globals.cpp src/shapeDrawer.h src/shapeDrawer.cpp src/colours.h src/tile.h src/tile.cpp src/states.h src/gameState.h src/tileGenerator.h src/tileGenerator.cpp src/gameState.cpp)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_image REQUIRED)

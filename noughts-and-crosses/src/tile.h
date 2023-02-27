@@ -15,8 +15,9 @@ enum State {
 class Tile {
 public:
     Tile(SDL_Point center, int length) ;
-    void handleEvent(SDL_Event *e, PlayState &currentPlayer);
+    void handleEvent(SDL_Event &e, PlayState &currentPlayer);
     void render(SDL_Renderer *renderer);
+    State& state();
 
 private:
     SDL_Point mPosition;
