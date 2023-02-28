@@ -14,11 +14,16 @@ enum State {
 
 class Tile {
 public:
-    Tile(SDL_Point center, int length) ;
+    Tile(SDL_Point center, int length);
+
     void handleEvent(SDL_Event &e, PlayState &currentPlayer);
+
     void render(SDL_Renderer *renderer);
-    State& state();
+
+    State &state();
+
     void disable();
+
     void reset();
 
 private:
@@ -28,6 +33,7 @@ private:
     State mState;
     bool mDisabled;
     std::optional<PlayState> mSelected;
+
     void drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour);
     void drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour);
 };

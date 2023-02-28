@@ -26,10 +26,15 @@ enum WinningLines {
 class GameState {
 public:
     GameState(std::array<Tile, 9> &tiles);
-    PlayState& currentPlayer();
-    Outcome& outcome();
+
+    PlayState &currentPlayer();
+
+    Outcome &outcome();
+
     void handleEvent(SDL_Event &e);
+
     std::optional<WinningLines> tryGetWinningLine();
+
     void reset();
 
 private:
@@ -41,8 +46,9 @@ private:
 
     PlayState mCurrentPlayer;
     Outcome mOutcome;
-    std::array<Tile, GRID_SIZE>& mTiles;
+    std::array<Tile, GRID_SIZE> &mTiles;
     std::array<TileState, GRID_SIZE> mCurrentBoard;
+
     bool isBoardFull();
 };
 
