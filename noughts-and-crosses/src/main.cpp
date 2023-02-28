@@ -5,6 +5,7 @@
 #include "utils.h"
 #include "tileGenerator.h"
 #include "gameState.h"
+#include "gameover.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_WHITE, OFF_WHITE, OFF_WHITE, 0xFF);
@@ -16,8 +17,11 @@ int SDL_main() {
 
     bool quit = false;
     SDL_Event e;
-    auto tiles = generateTiles(GRID_LENGTH, TILE_SIZE, GRID_OFFSET);
-    GameState gameState = {tiles };
+    SDL_Point gridOffset = {45, 45};
+    auto tiles = generateTiles(GRID_LENGTH, TILE_SIZE, gridOffset);
+    GameState gameState = {tiles};
+    bool completed = false;
+    GameOver gameOver = {tiles};
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -33,11 +37,22 @@ int SDL_main() {
                 gameState.handleEvent(e);
             } else {
                 if (e.type == SDL_MOUSEBUTTONUP) {
-                    auto winningLine = gameState.tryGetWinningLine();
                     gameState.reset();
-                    tiles = tiles = generateTiles(GRID_LENGTH, TILE_SIZE, GRID_OFFSET);
+                    for (auto &tile: tiles){
+                        tile.reset();
+                    }
+                    gameOver.reset();
+                    completed = false;
                 }
+
             }
+        }
+
+        if (!completed && gameState.outcome() != Outcome::InProgress) {
+            completed = true;
+
+            auto winningLine = gameState.tryGetWinningLine();
+            gameOver.setOutcome(gameState.outcome(), winningLine);
         }
 
         prepareRenderer(gRenderer);
@@ -46,7 +61,9 @@ int SDL_main() {
             tile.render(gRenderer);
         }
 
-        drawGrid(gRenderer, GRID_OFFSET, GRID_LENGTH, 12, OFF_BLACK);
+        drawGrid(gRenderer, gridOffset, GRID_LENGTH, 12, OFF_BLACK);
+
+        gameOver.render(gRenderer);
 
         SDL_RenderPresent(gRenderer);
     }

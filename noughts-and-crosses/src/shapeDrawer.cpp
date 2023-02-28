@@ -1,6 +1,5 @@
 #include <SDL.h>
 #include <algorithm>
-#include "colours.h"
 
 // Get the y-coordinate that lies on the edge of a circle using the midpoint circle algorithm https://en.wikipedia.org/wiki/Midpoint_circle_algorithm
 // Note: this only returns the edges in the first quadrant for the algorithm
@@ -40,7 +39,7 @@ void getCircleEdgePoints(int coords[], int coordsLength, int radius) {
 }
 
 
-void drawNought(SDL_Renderer *renderer, SDL_Point center, const int innerRadius, const int outerRadius, Uint8 colour) {
+void drawNought(SDL_Renderer *renderer, SDL_Point &center, const int innerRadius, const int outerRadius, Uint8 colour) {
     if (outerRadius < innerRadius || innerRadius < 0) {
         return;
     }
@@ -74,7 +73,7 @@ void drawNought(SDL_Renderer *renderer, SDL_Point center, const int innerRadius,
     }
 }
 
-void drawCross(SDL_Renderer *renderer, SDL_Point center, const int halfLength, const int thickness, Uint8 colour) {
+void drawCross(SDL_Renderer *renderer, SDL_Point &center, const int halfLength, const int thickness, Uint8 colour) {
     if (halfLength < 0 || thickness < 0) {
         return;
     }
@@ -97,7 +96,7 @@ void drawCross(SDL_Renderer *renderer, SDL_Point center, const int halfLength, c
     }
 }
 
-void drawGrid(SDL_Renderer *renderer, SDL_Point topLeft, int length, int thickness, Uint8 colour) {
+void drawGrid(SDL_Renderer *renderer, SDL_Point &topLeft, int length, int thickness, Uint8 colour) {
     if (thickness < 0 || length < thickness) {
         return;
     }

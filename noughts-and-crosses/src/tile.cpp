@@ -4,10 +4,11 @@
 #include "colours.h"
 
 Tile::Tile(SDL_Point center, int length) {
-    mPosition = {center.x - length/2, center.y - length/2};
+    mPosition = {center.x - length / 2, center.y - length / 2};
     mLength = length;
     mCenter = center;
     mState = None;
+    mDisabled = false;
     mSelected = {};
 }
 
@@ -61,7 +62,7 @@ void Tile::render(SDL_Renderer *renderer) {
         } else { drawCrossForGridItem(renderer, colour); };
     };
 
-    switch (mState){
+    switch (mState) {
         case Hover:
             drawer(LIGHT_GREY);
             break;
@@ -69,21 +70,31 @@ void Tile::render(SDL_Renderer *renderer) {
             drawer(DARK_GREY);
             break;
         case Selected:
-            drawer(OFF_BLACK);
+            drawer(mDisabled ? LIGHT_GREY : OFF_BLACK);
             break;
         case None:
             break;
     }
 }
 
-int Tile::drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour) {
-    return drawCross(renderer, mCenter, mLength / 2, 18, colour);
+void Tile::drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour) {
+    drawCross(renderer, mCenter, mLength / 2, 18, colour);
 }
 
-int Tile::drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour) {
-    return drawNought(renderer, mCenter, mLength / 2, mLength / 2 + 15, colour);
+void Tile::drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour) {
+    drawNought(renderer, mCenter, mLength / 2, mLength / 2 + 15, colour);
 }
 
-State& Tile::state(){
+State &Tile::state() {
     return mState;
+}
+
+void Tile::disable() {
+    mDisabled = true;
+}
+
+void Tile::reset() {
+    mState = None;
+    mDisabled = false;
+    mSelected = {};
 }

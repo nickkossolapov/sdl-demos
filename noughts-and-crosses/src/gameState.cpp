@@ -46,6 +46,10 @@ PlayState &GameState::currentPlayer() {
 }
 
 std::optional<WinningLines> GameState::tryGetWinningLine() {
+    /* Board ordering is
+       0 3 6
+       1 4 7
+       2 5 8 */
     if ((mCurrentBoard[0] & mCurrentBoard[3] & mCurrentBoard[6])) return Row1;
     if ((mCurrentBoard[1] & mCurrentBoard[4] & mCurrentBoard[7])) return Row2;
     if ((mCurrentBoard[2] & mCurrentBoard[5] & mCurrentBoard[8])) return Row3;
