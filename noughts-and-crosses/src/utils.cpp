@@ -1,38 +1,39 @@
-#include "utils.h"
+#include <SDL.h>
+#include <SDL_ttf.h>
 #include "constants.h"
 #include "globals.h"
-#include <SDL.h>
-#include "colours.h"
+#include "utils.h"
 
 void init() {
-    if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
-    {
+    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
         exit(1);
     }
-    else
-    {
-        gWindow = SDL_CreateWindow( "Noughts and Crosses", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN );
-        if( gWindow == nullptr )
-        {
-            exit(1);
-        }
 
-        gRenderer = SDL_CreateRenderer( gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-        if( gRenderer == nullptr )
-        {
-            exit(1);
-        }
-
-        SDL_SetRenderDrawColor( gRenderer, OFF_WHITE, OFF_WHITE, OFF_WHITE, 0xFF );
-
+    if (TTF_Init() == -1) {
+        exit(2);
     }
+    gWindow = SDL_CreateWindow("Noughts and Crosses", 700, 400, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+    if (gWindow == nullptr) {
+        exit(3);
+    }
+
+    gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (gRenderer == nullptr) {
+        exit(4);
+    }
+
+    gFont = TTF_OpenFont("fonts/OpenSans.ttf", FONT_SIZE);
+    if (gFont == nullptr) {
+        exit(5);
+    };
 }
 
-void close()
-{
-    SDL_DestroyWindow( gWindow );
-    gWindow = nullptr;
+void close() {
+    TTF_CloseFont(gFont);
+    SDL_DestroyRenderer(gRenderer);
+    SDL_DestroyWindow(gWindow);
 
+    TTF_Quit();
     SDL_Quit();
 }
 

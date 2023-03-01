@@ -12,7 +12,7 @@ enum Outcome {
     Draw
 };
 
-enum WinningLines {
+enum WinningLine {
     Row1,
     Row2,
     Row3,
@@ -33,7 +33,7 @@ public:
 
     void handleEvent(SDL_Event &e);
 
-    std::optional<WinningLines> tryGetWinningLine();
+    void highlightWinningLine();
 
     void reset();
 
@@ -47,9 +47,12 @@ private:
     PlayState mCurrentPlayer;
     Outcome mOutcome;
     std::array<Tile, GRID_SIZE> &mTiles;
-    std::array<TileState, GRID_SIZE> mCurrentBoard;
+    std::array<TileState, GRID_SIZE> mCurrentBoard{};
+    bool mHasDisabledTiles;
 
     bool isBoardFull();
+    std::optional<WinningLine> tryGetWinningLine();
+    void disableTiles(std::array<int, 6> indicesToDisable);
 };
 
 #endif //NOUGHTS_AND_CROSSES_GAMESTATE_H

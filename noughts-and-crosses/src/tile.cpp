@@ -1,7 +1,7 @@
 #include "tile.h"
 #include "states.h"
 #include "shapeDrawer.h"
-#include "colours.h"
+#include "colors.h"
 
 Tile::Tile(SDL_Point center, int length) {
     mPosition = {center.x - length / 2, center.y - length / 2};
@@ -56,10 +56,10 @@ void Tile::render(SDL_Renderer *renderer) {
         return;
     }
 
-    auto drawer = [this, &renderer](Uint8 colour) {
+    auto drawer = [this, &renderer](SDL_Color color) {
         if (mSelected.value() == PlayState::Nought) {
-            drawNoughtForGridItem(renderer, colour);
-        } else { drawCrossForGridItem(renderer, colour); };
+            drawNoughtForGridItem(renderer, color);
+        } else { drawCrossForGridItem(renderer, color); };
     };
 
     switch (mState) {
@@ -77,12 +77,12 @@ void Tile::render(SDL_Renderer *renderer) {
     }
 }
 
-void Tile::drawCrossForGridItem(SDL_Renderer *renderer, Uint8 colour) {
-    drawCross(renderer, mCenter, mLength / 2, 18, colour);
+void Tile::drawCrossForGridItem(SDL_Renderer *renderer, SDL_Color color) {
+    drawCross(renderer, mCenter, mLength / 2, 18, color);
 }
 
-void Tile::drawNoughtForGridItem(SDL_Renderer *renderer, Uint8 colour) {
-    drawNought(renderer, mCenter, mLength / 2, mLength / 2 + 15, colour);
+void Tile::drawNoughtForGridItem(SDL_Renderer *renderer, SDL_Color color) {
+    drawNought(renderer, mCenter, mLength / 2, mLength / 2 + 15, color);
 }
 
 State &Tile::state() {

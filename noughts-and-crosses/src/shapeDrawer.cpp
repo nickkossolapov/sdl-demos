@@ -39,12 +39,12 @@ void getCircleEdgePoints(int coords[], int coordsLength, int radius) {
 }
 
 
-void drawNought(SDL_Renderer *renderer, SDL_Point &center, const int innerRadius, const int outerRadius, Uint8 colour) {
+void drawNought(SDL_Renderer *renderer, SDL_Point &center, const int innerRadius, const int outerRadius, SDL_Color color) {
     if (outerRadius < innerRadius || innerRadius < 0) {
         return;
     }
 
-    SDL_SetRenderDrawColor(renderer, colour, colour, colour, 0xFF);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 0xFF);
 
     // Multiply by sin(45) because that's where the quadrant will end
     int outerLength = (int) (outerRadius * 0.7 + 1);
@@ -73,12 +73,12 @@ void drawNought(SDL_Renderer *renderer, SDL_Point &center, const int innerRadius
     }
 }
 
-void drawCross(SDL_Renderer *renderer, SDL_Point &center, const int halfLength, const int thickness, Uint8 colour) {
+void drawCross(SDL_Renderer *renderer, SDL_Point &center, const int halfLength, const int thickness, SDL_Color color) {
     if (halfLength < 0 || thickness < 0) {
         return;
     }
 
-    SDL_SetRenderDrawColor(renderer, colour, colour, colour, 0xFF);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 0xFF);
 
     // Convert the thickness to y-offset for 45 degree line (sin45~=0.7)
     int offset = (int) (thickness * 0.7);
@@ -96,12 +96,12 @@ void drawCross(SDL_Renderer *renderer, SDL_Point &center, const int halfLength, 
     }
 }
 
-void drawGrid(SDL_Renderer *renderer, SDL_Point &topLeft, int length, int thickness, Uint8 colour) {
+void drawGrid(SDL_Renderer *renderer, SDL_Point &topLeft, int length, int thickness, SDL_Color color) {
     if (thickness < 0 || length < thickness) {
         return;
     }
 
-    SDL_SetRenderDrawColor(renderer, colour, colour, colour, 0xFF);
+    SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, 0xFF);
 
     SDL_Rect row1 = {topLeft.x, topLeft.y + length / 3 - thickness / 2, length, thickness};
     SDL_Rect row2 = {topLeft.x, topLeft.y + (2 * length) / 3 - thickness / 2, length, thickness};
