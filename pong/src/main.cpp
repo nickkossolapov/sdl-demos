@@ -3,6 +3,7 @@
 #include "globals.h"
 #include "utils.h"
 #include "paddle.h"
+#include "constants.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -15,7 +16,7 @@ int SDL_main() {
     bool quit = false;
     SDL_Event e;
 
-    auto player1 = Paddle({10, 10, 700, 700});
+    auto player1 = Paddle({10, 10, 30, SCREEN_HEIGHT-20});
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {

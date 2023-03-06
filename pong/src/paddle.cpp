@@ -5,32 +5,23 @@
 
 Paddle::Paddle(SDL_Rect playBoundary) {
     mPaddleRect = {
-            SCREEN_HEIGHT / 2 - PADDLE_HEIGHT / 2,
-            PLAY_AREA_PADDING,
+            playBoundary.x,
+            playBoundary.h / 2 - PADDLE_HEIGHT / 2,
             PADDLE_WIDTH,
             PADDLE_HEIGHT
     };
 
     mBoundingRect = playBoundary;
-    mVelX = 0;
     mVelY = 0;
 }
 
 void Paddle::handleEvent(SDL_Event &e) {
     if (e.type == SDL_JOYAXISMOTION) {
-        if (e.jaxis.which == 0) {
-            if (e.jaxis.axis == 0) {
-                if (abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE) {
-                    mVelX = (float) e.jaxis.value * JOYSTICK_MAX_LIMIT;
-                } else {
-                    mVelX = 0;
-                }
-            } else if (e.jaxis.axis == 1) {
-                if (abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE) {
-                    mVelY = (float) e.jaxis.value * JOYSTICK_MAX_LIMIT;
-                } else {
-                    mVelY = 0;
-                }
+        if (e.jaxis.which == 0 && e.jaxis.axis == 1) {
+            if (abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE) {
+                mVelY = (float) e.jaxis.value * JOYSTICK_MAX_LIMIT;
+            } else {
+                mVelY = 0;
             }
         }
     }
@@ -44,12 +35,6 @@ void Paddle::handleEvent(SDL_Event &e) {
             case SDLK_DOWN:
                 mVelY = fminf(mVelY + 4, MAX_VELOCITY);
                 break;
-            case SDLK_LEFT:
-                mVelX = fmaxf(mVelX - 4, -MAX_VELOCITY);
-                break;
-            case SDLK_RIGHT:
-                mVelX = fminf(mVelX + 4, MAX_VELOCITY);
-                break;
         }
     } else if (e.type == SDL_KEYUP) {
         switch (e.key.keysym.sym) {
@@ -57,23 +42,22 @@ void Paddle::handleEvent(SDL_Event &e) {
             case SDLK_DOWN:
                 mVelY = 0;
                 break;
-            case SDLK_LEFT:
-            case SDLK_RIGHT:
-                mVelX = 0;
-                break;
         }
     }
 }
 
 void Paddle::move() {
-    mPaddleRect.x += (int) roundf(mVelX);
-    if ((mPaddleRect.x < mBoundingRect.x) || (mPaddleRect.x + mPaddleRect.w > mBoundingRect.x + mBoundingRect.w)) {
-        mPaddleRect.x -= (int) roundf(mVelX);
+    mPaddleRect.y += (int) roundf(mVelY);
+
+    if (mPaddleRect.y < mBoundingRect.y) {
+        mPaddleRect.y = mBoundingRect.y;
+        mVelY = 0;
+
     }
 
-    mPaddleRect.y += (int) roundf(mVelY);
-    if ((mPaddleRect.y < mBoundingRect.y) || (mPaddleRect.y + mPaddleRect.h > mBoundingRect.y + mBoundingRect.h)) {
-        mPaddleRect.y -= (int) roundf(mVelY);
+    if (mPaddleRect.y + mPaddleRect.h > mBoundingRect.y + mBoundingRect.h) {
+        mPaddleRect.y = + mBoundingRect.y + mBoundingRect.h - mPaddleRect.h;
+        mVelY = 0;
     }
 }
 
