@@ -6,6 +6,7 @@
 
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
+extern SDL_Joystick* gGameController;
 extern TTF_Font* gFont;
 
 #endif //GLOBALS_H

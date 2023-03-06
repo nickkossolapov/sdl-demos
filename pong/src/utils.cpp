@@ -5,7 +5,7 @@
 #include "utils.h"
 
 void init() {
-    if (SDL_Init(SDL_INIT_VIDEO) < 0) {
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_JOYSTICK) < 0) {
         exit(1);
     }
 
@@ -25,7 +25,14 @@ void init() {
     gFont = TTF_OpenFont("fonts/arcadeclassic.ttf", FONT_SIZE);
     if (gFont == nullptr) {
         exit(5);
-    };
+    }
+
+    if (SDL_NumJoysticks() >= 1) {
+        gGameController = SDL_JoystickOpen(0);
+        if (gGameController == nullptr) {
+            exit(6);
+        }
+    }
 }
 
 void close() {
