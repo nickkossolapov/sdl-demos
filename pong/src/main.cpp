@@ -4,6 +4,7 @@
 #include "utils.h"
 #include "paddle.h"
 #include "constants.h"
+#include "ball.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -16,7 +17,11 @@ int SDL_main() {
     bool quit = false;
     SDL_Event e;
 
-    auto player1 = Paddle({10, 10, 30, SCREEN_HEIGHT-20});
+    std::vector<Paddle> players{
+            Paddle({10, 10, 30, SCREEN_HEIGHT - 20})
+    };
+
+    auto ball = Ball({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20});
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -24,14 +29,26 @@ int SDL_main() {
                 quit = true;
             }
 
-            player1.handleEvent(e);
+            if (e.type == SDL_JOYBUTTONDOWN) {
+                ball.reset();
+            }
+
+            for (auto &player: players) {
+                player.handleEvent(e);
+            }
         }
 
-        player1.move();
+        for (auto &player: players) {
+            player.move();
+        }
+        ball.move(players);
 
         prepareRenderer(gRenderer);
 
-        player1.render(gRenderer);
+        for (auto &player: players) {
+            player.render(gRenderer);
+        }
+        ball.render(gRenderer);
 
         SDL_RenderPresent(gRenderer);
     }

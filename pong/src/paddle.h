@@ -19,7 +19,7 @@ public:
     SDL_Rect &getCollisionBox();
 
 private:
-    const float MAX_VELOCITY = 10;
+    const float MAX_VELOCITY = 20;
     const float JOYSTICK_MAX_LIMIT = MAX_VELOCITY / SDL_MAX_SINT16;
 
     SDL_Rect mBoundingRect{};
