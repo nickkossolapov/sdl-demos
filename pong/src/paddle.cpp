@@ -16,7 +16,9 @@ Paddle::Paddle(SDL_Rect playBoundary) {
 }
 
 void Paddle::setVelocity(float velocity) {
-    mVelY = velocity;
+    mVelY = velocity > 0
+            ? std::min(velocity, (float) Paddle::MAX_VELOCITY)
+            : std::max(velocity, (float) Paddle::MAX_VELOCITY);
 }
 
 void Paddle::move() {
@@ -29,7 +31,7 @@ void Paddle::move() {
     }
 
     if (mPaddleRect.y + mPaddleRect.h > mBoundingRect.y + mBoundingRect.h) {
-        mPaddleRect.y = + mBoundingRect.y + mBoundingRect.h - mPaddleRect.h;
+        mPaddleRect.y = +mBoundingRect.y + mBoundingRect.h - mPaddleRect.h;
         mVelY = 0;
     }
 }
