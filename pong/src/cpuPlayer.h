@@ -1,13 +1,13 @@
-#ifndef AI_H
-#define AI_H
+#ifndef CPUPLAYER_H
+#define CPUPLAYER_H
 
 #include "paddle.h"
 #include "ball.h"
 #include "constants.h"
 
-class Ai {
+class CpuPlayer {
 public:
-    Ai(Paddle &paddle, Ball &ball);
+    CpuPlayer(Paddle &paddle, Ball &ball);
 
     void movePaddle();
 
@@ -21,4 +21,4 @@ private:
     float mCurrentVelocity;
 };
 
-#endif //AI_H
+#endif //CPUPLAYER_H

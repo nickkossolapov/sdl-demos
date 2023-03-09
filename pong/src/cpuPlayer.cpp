@@ -1,10 +1,10 @@
-#include "ai.h"
+#include "cpuPlayer.h"
 
-Ai::Ai(Paddle &paddle, Ball &ball) : mPaddle(paddle), mBall(ball) {
+CpuPlayer::CpuPlayer(Paddle &paddle, Ball &ball) : mPaddle(paddle), mBall(ball) {
     mCurrentVelocity = 0;
 }
 
-void Ai::movePaddle() {
+void CpuPlayer::movePaddle() {
     SDL_Point ballCenter = mBall.getCenter();
     auto [ballXVel, _] = mBall.getVelocity();
     SDL_Rect paddleRect = mPaddle.getCollisionBox();

@@ -6,7 +6,7 @@
 #include "constants.h"
 #include "ball.h"
 #include "player.h"
-#include "ai.h"
+#include "cpuPlayer.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -36,7 +36,7 @@ int SDL_main() {
 
     auto ball = Ball({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20});
     auto player = Player(paddles[0]);
-    auto ai = Ai(paddles[1], ball);
+    auto cpuPlayer = CpuPlayer(paddles[1], ball);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -51,7 +51,7 @@ int SDL_main() {
             player.handleEvent(e);
         }
 
-        ai.movePaddle();
+        cpuPlayer.movePaddle();
 
         for (auto &paddle: paddles) {
             paddle.move();
