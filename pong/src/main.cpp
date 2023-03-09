@@ -5,6 +5,7 @@
 #include "paddle.h"
 #include "constants.h"
 #include "ball.h"
+#include "player.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -17,11 +18,12 @@ int SDL_main() {
     bool quit = false;
     SDL_Event e;
 
-    std::vector<Paddle> players{
+    std::vector<Paddle> paddles{
             Paddle({10, 10, 30, SCREEN_HEIGHT - 20})
     };
 
     auto ball = Ball({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20});
+    auto player = Player(paddles[0]);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -33,20 +35,18 @@ int SDL_main() {
                 ball.reset();
             }
 
-            for (auto &player: players) {
-                player.handleEvent(e);
-            }
+            player.handleEvent(e);
         }
 
-        for (auto &player: players) {
-            player.move();
+        for (auto &paddle: paddles) {
+            paddle.move();
         }
-        ball.move(players);
+        ball.move(paddles);
 
         prepareRenderer(gRenderer);
 
-        for (auto &player: players) {
-            player.render(gRenderer);
+        for (auto &paddle: paddles) {
+            paddle.render(gRenderer);
         }
         ball.render(gRenderer);
 

@@ -15,35 +15,8 @@ Paddle::Paddle(SDL_Rect playBoundary) {
     mVelY = 0;
 }
 
-void Paddle::handleEvent(SDL_Event &e) {
-    if (e.type == SDL_JOYAXISMOTION) {
-        if (e.jaxis.which == 0 && e.jaxis.axis == 1) {
-            if (abs(e.jaxis.value) > JOYSTICK_DEAD_ZONE) {
-                mVelY = (float) e.jaxis.value * JOYSTICK_MAX_LIMIT;
-            } else {
-                mVelY = 0;
-            }
-        }
-    }
-
-    if (e.type == SDL_KEYDOWN) {
-        //todo improve keyboard input
-        switch (e.key.keysym.sym) {
-            case SDLK_UP:
-                mVelY = fmaxf(mVelY - 4, -MAX_VELOCITY);
-                break;
-            case SDLK_DOWN:
-                mVelY = fminf(mVelY + 4, MAX_VELOCITY);
-                break;
-        }
-    } else if (e.type == SDL_KEYUP) {
-        switch (e.key.keysym.sym) {
-            case SDLK_UP:
-            case SDLK_DOWN:
-                mVelY = 0;
-                break;
-        }
-    }
+void Paddle::setVelocity(float velocity) {
+    mVelY = velocity;
 }
 
 void Paddle::move() {
