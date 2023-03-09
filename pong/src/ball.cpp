@@ -13,8 +13,8 @@ Ball::Ball(SDL_Rect playBoundary) {
     };
 
     mBoundingRect = playBoundary;
-    mVelX = - INITIAL_SPEED;
-    mVelY = - INITIAL_SPEED * (0.5f - (float)rand()/RAND_MAX) ; // NOLINT(cert-msc50-cpp)
+    mVelX = -INITIAL_SPEED;
+    mVelY = -INITIAL_SPEED * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
     mOut = false;
     mCollidingWithPaddle = false;
     mServed = false;
@@ -38,6 +38,7 @@ void Ball::move(std::vector<Paddle> &paddles) {
 
             if (!mCollidingWithPaddle) {
                 mVelX = -mVelX;
+                mVelY += BALL_DISPERSION * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
                 mCollidingWithPaddle = true;
             }
         } else {
@@ -45,15 +46,10 @@ void Ball::move(std::vector<Paddle> &paddles) {
         }
     }
 
-    if ((mBallRect.x < mBoundingRect.x)) { //|| (mBallRect.x + mBallRect.w > mBoundingRect.x + mBoundingRect.w)) {
+    if ((mBallRect.x < mBoundingRect.x) || (mBallRect.x + mBallRect.w > mBoundingRect.x + mBoundingRect.w)) {
         mVelX = 0;
         mVelY = 0;
         mOut = true;
-    }
-
-    if (mBallRect.x + mBallRect.w > mBoundingRect.x + mBoundingRect.w) {
-        mBallRect.x -= (int) roundf(mVelX);
-        mVelX = -mVelX;
     }
 
 
@@ -61,6 +57,14 @@ void Ball::move(std::vector<Paddle> &paddles) {
         mBallRect.y -= (int) roundf(mVelY);
         mVelY = -mVelY;
     }
+}
+
+SDL_Point Ball::getCenter() const {
+    return {mBallRect.x + mBallRect.w / 2, mBallRect.y + mBallRect.h / 2};
+}
+
+std::pair<float, float> Ball::getVelocity() const {
+    return {mVelX, mVelY};
 }
 
 void Ball::render(SDL_Renderer *renderer) {
@@ -71,8 +75,8 @@ void Ball::render(SDL_Renderer *renderer) {
 void Ball::reset() {
     mBallRect.x = SCREEN_HEIGHT / 2 - BALL_HEIGHT / 2;
     mBallRect.y = SCREEN_WIDTH / 2 - BALL_HEIGHT / 2;
-    mVelX = - INITIAL_SPEED;
-    mVelY = - INITIAL_SPEED * (0.5f - (float)rand()/RAND_MAX) ; // NOLINT(cert-msc50-cpp)
+    mVelX = -INITIAL_SPEED;
+    mVelY = -INITIAL_SPEED * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
     mOut = false;
     mCollidingWithPaddle = false;
     mServed = false;

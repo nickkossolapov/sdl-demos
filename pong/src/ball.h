@@ -9,7 +9,11 @@ class Ball {
 public:
     Ball(SDL_Rect playBoundary);
 
-    void move(std::vector<Paddle>& paddles);
+    void move(std::vector<Paddle> &paddles);
+
+    SDL_Point getCenter() const;
+
+    std::pair<float, float> getVelocity() const;
 
     void render(SDL_Renderer *renderer);
 
@@ -20,6 +24,7 @@ private:
     static const int BALL_WIDTH = 20;
     static const int SPEED_MULTIPLIER = 4;
     const float INITIAL_SPEED = 3;
+    const float BALL_DISPERSION = 7;
 
     SDL_Rect mBoundingRect{};
     SDL_Rect mBallRect{};

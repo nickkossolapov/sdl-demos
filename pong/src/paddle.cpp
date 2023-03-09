@@ -18,7 +18,7 @@ Paddle::Paddle(SDL_Rect playBoundary) {
 void Paddle::setVelocity(float velocity) {
     mVelY = velocity > 0
             ? std::min(velocity, (float) Paddle::MAX_VELOCITY)
-            : std::max(velocity, (float) Paddle::MAX_VELOCITY);
+            : std::max(velocity, (float) -Paddle::MAX_VELOCITY);
 }
 
 void Paddle::move() {
