@@ -7,6 +7,7 @@
 #include "ball.h"
 #include "player.h"
 #include "cpuPlayer.h"
+#include "gameState.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -34,9 +35,10 @@ int SDL_main() {
                    })
     };
 
-    auto ball = Ball({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20});
-    auto player = Player(paddles[0]);
-    auto cpuPlayer = CpuPlayer(paddles[1], ball);
+    Ball ball = {{10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20}};
+    Player player = {paddles[0]};
+    CpuPlayer cpuPlayer = {paddles[1], ball};
+    GameState gameState = {paddles, ball};
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -44,19 +46,19 @@ int SDL_main() {
                 quit = true;
             }
 
-            if (e.type == SDL_JOYBUTTONDOWN) {
-                ball.reset();
-            }
-
             player.handleEvent(e);
+
+            gameState.handleEvent(e);
         }
 
         cpuPlayer.movePaddle();
+        ball.move(paddles);
 
         for (auto &paddle: paddles) {
             paddle.move();
         }
-        ball.move(paddles);
+
+        gameState.checkCurrentState();
 
         prepareRenderer(gRenderer);
 

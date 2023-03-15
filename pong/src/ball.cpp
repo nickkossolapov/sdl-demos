@@ -13,8 +13,8 @@ Ball::Ball(SDL_Rect playBoundary) {
     };
 
     mBoundingRect = playBoundary;
-    mVelX = -INITIAL_SPEED;
-    mVelY = -INITIAL_SPEED * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
+    mVelX = 0;
+    mVelY = 0;
     mOut = false;
     mCollidingWithPaddle = false;
     mServed = false;
@@ -67,6 +67,19 @@ std::pair<float, float> Ball::getVelocity() const {
     return {mVelX, mVelY};
 }
 
+void Ball::startBall() {
+    mVelX = -INITIAL_SPEED;
+    mVelY = -INITIAL_SPEED * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp);
+}
+
+bool Ball::isOut() {
+    return mOut;
+}
+
+SDL_Point Ball::getPosition() {
+    return {mBallRect.x + mBallRect.h / 2, mBallRect.y + mBallRect.w / 2};
+}
+
 void Ball::render(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_WHITE.r, OFF_WHITE.g, OFF_WHITE.b, 0xFF);
     SDL_RenderFillRect(renderer, &mBallRect);
@@ -75,8 +88,8 @@ void Ball::render(SDL_Renderer *renderer) {
 void Ball::reset() {
     mBallRect.x = SCREEN_HEIGHT / 2 - BALL_HEIGHT / 2;
     mBallRect.y = SCREEN_WIDTH / 2 - BALL_HEIGHT / 2;
-    mVelX = -INITIAL_SPEED;
-    mVelY = -INITIAL_SPEED * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
+    mVelX = 0;
+    mVelY = 0;
     mOut = false;
     mCollidingWithPaddle = false;
     mServed = false;

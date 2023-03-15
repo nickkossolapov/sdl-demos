@@ -15,6 +15,12 @@ public:
 
     std::pair<float, float> getVelocity() const;
 
+    SDL_Point getPosition();
+
+    void startBall();
+
+    bool isOut();
+
     void render(SDL_Renderer *renderer);
 
     void reset();

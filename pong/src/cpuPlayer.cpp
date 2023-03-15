@@ -5,6 +5,11 @@ CpuPlayer::CpuPlayer(Paddle &paddle, Ball &ball) : mPaddle(paddle), mBall(ball) 
 }
 
 void CpuPlayer::movePaddle() {
+    if (mBall.isOut()) {
+        mCurrentVelocity = 0;
+        return;
+    }
+
     SDL_Point ballCenter = mBall.getCenter();
     auto [ballXVel, _] = mBall.getVelocity();
     SDL_Rect paddleRect = mPaddle.getCollisionBox();

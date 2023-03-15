@@ -17,6 +17,8 @@ public:
 
     void render(SDL_Renderer *renderer);
 
+    void reset();
+
     SDL_Rect &getCollisionBox();
 
 private:

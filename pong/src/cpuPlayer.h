@@ -14,7 +14,7 @@ public:
 private:
     const float MAX_VELOCITY = 20;
     const float ACCELERATION = 2;
-    const float DECELERATION = 1.075;
+    const float DECELERATION = 1.15;
 
     Paddle &mPaddle;
     Ball &mBall;

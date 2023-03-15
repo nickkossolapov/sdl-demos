@@ -41,6 +41,17 @@ void Paddle::render(SDL_Renderer *renderer) {
     SDL_RenderFillRect(renderer, &mPaddleRect);
 }
 
+void Paddle::reset() {
+    mPaddleRect = {
+            mBoundingRect.x,
+            mBoundingRect.h / 2 - PADDLE_HEIGHT / 2,
+            PADDLE_WIDTH,
+            PADDLE_HEIGHT
+    };
+
+    mVelY = 0;
+}
+
 SDL_Rect &Paddle::getCollisionBox() {
     return mPaddleRect;
 }
