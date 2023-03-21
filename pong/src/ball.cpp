@@ -28,22 +28,28 @@ void Ball::move(std::vector<Paddle> &paddles) {
     mBallRect.x += (int) roundf(mVelX);
     mBallRect.y += (int) roundf(mVelY);
 
+    bool collidingWithPaddle = false;
+
     for (auto &paddle: paddles) {
         if (SDL_HasIntersection(&mBallRect, &(paddle.getCollisionBox()))) {
-            if (!mServed) {
-                mServed = true;
-                mVelX *= SPEED_MULTIPLIER;
-                mVelY *= SPEED_MULTIPLIER;
-            }
-
-            if (!mCollidingWithPaddle) {
-                mVelX = -mVelX;
-                mVelY += BALL_DISPERSION * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
-                mCollidingWithPaddle = true;
-            }
-        } else {
-            mCollidingWithPaddle = false;
+            collidingWithPaddle = true;
         }
+    }
+
+    if (collidingWithPaddle) {
+        if (!mServed) {
+            mServed = true;
+            mVelX *= SPEED_MULTIPLIER;
+            mVelY *= SPEED_MULTIPLIER;
+        }
+
+        if (!mCollidingWithPaddle) {
+            mVelX = -mVelX;
+            mVelY += BALL_DISPERSION * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
+            mCollidingWithPaddle = true;
+        }
+    } else {
+        mCollidingWithPaddle = false;
     }
 
     if ((mBallRect.x < mBoundingRect.x) || (mBallRect.x + mBallRect.w > mBoundingRect.x + mBoundingRect.w)) {
