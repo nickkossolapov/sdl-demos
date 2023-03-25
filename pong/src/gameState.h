@@ -14,6 +14,8 @@ public:
 
     void checkCurrentState();
 
+    Score getScore();
+
 private:
     std::vector<Paddle> &mPaddles;
     Ball &mBall;

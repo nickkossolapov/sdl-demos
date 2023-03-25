@@ -15,7 +15,23 @@ add_executable(
         src/globals.h
         src/globals.cpp
         src/utils.h
-        src/utils.cpp src/paddle.h src/paddle.cpp src/ball.h src/ball.cpp src/player.h src/player.cpp src/cpuPlayer.h src/cpuPlayer.cpp src/gameState.h src/gameState.cpp src/score.h)
+        src/utils.cpp
+        src/paddle.h
+        src/paddle.cpp
+        src/ball.h
+        src/ball.cpp
+        src/player.h
+        src/player.cpp
+        src/cpuPlayer.h
+        src/cpuPlayer.cpp
+        src/gameState.h
+        src/gameState.cpp
+        src/score.h
+        src/textTexture.h
+        src/textTexture.cpp
+        src/scoreUi.cpp
+        src/scoreUi.h
+)
 
 find_package(SDL2 REQUIRED)
 find_package(SDL2_ttf REQUIRED)

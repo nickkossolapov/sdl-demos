@@ -6,7 +6,7 @@
 const int SCREEN_WIDTH = 750;
 const int SCREEN_HEIGHT = 770;
 
-const int FONT_SIZE = 36;
+const int FONT_SIZE = 72;
 
 const int PADDING = 10;
 

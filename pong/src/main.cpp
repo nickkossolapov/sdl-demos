@@ -8,6 +8,7 @@
 #include "player.h"
 #include "cpuPlayer.h"
 #include "gameState.h"
+#include "scoreUi.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -39,6 +40,7 @@ int SDL_main() {
     Player player = {paddles[0]};
     CpuPlayer cpuPlayer = {paddles[1], ball};
     GameState gameState = {paddles, ball};
+    ScoreUi scoreUi = ScoreUi(gFont, gRenderer);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -59,13 +61,16 @@ int SDL_main() {
         }
 
         gameState.checkCurrentState();
+        scoreUi.setScore(gameState.getScore());
 
         prepareRenderer(gRenderer);
 
         for (auto &paddle: paddles) {
             paddle.render(gRenderer);
         }
+
         ball.render(gRenderer);
+        scoreUi.render(gRenderer);
 
         SDL_RenderPresent(gRenderer);
     }

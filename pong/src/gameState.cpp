@@ -20,7 +20,7 @@ void GameState::checkCurrentState() {
         if (mBall.getPosition().y < SCREEN_WIDTH / 2) {
             mScore.player1 += 1;
         } else {
-            mScore.player2 += 2;
+            mScore.player2 += 1;
         }
 
         resetPositions();
@@ -35,4 +35,8 @@ void GameState::resetPositions() {
     }
 
     mPaused = true;
+}
+
+Score GameState::getScore() {
+    return mScore;
 }
