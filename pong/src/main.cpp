@@ -1,21 +1,21 @@
 #include <SDL.h>
-#include "colors.h"
+#include "config/colors.h"
 #include "globals.h"
-#include "utils.h"
-#include "paddle.h"
-#include "constants.h"
-#include "ball.h"
-#include "player.h"
-#include "cpuPlayer.h"
-#include "gameState.h"
-#include "scoreUi.h"
+#include "utils/utils.h"
+#include "game/paddle.h"
+#include "config/constants.h"
+#include "game/ball.h"
+#include "game/player.h"
+#include "game/cpuPlayer.h"
+#include "game/gameState.h"
+#include "ui/scoreUi.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
-int SDL_main() {
+int main( int argc, char* args[] ) {
     init();
 
     bool quit = false;

@@ -7,7 +7,7 @@
 
 class Ball {
 public:
-    Ball(SDL_Rect playBoundary);
+    explicit Ball(SDL_Rect playBoundary);
 
     void move(std::vector<Paddle> &paddles);
 

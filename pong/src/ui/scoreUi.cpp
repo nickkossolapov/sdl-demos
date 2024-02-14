@@ -1,7 +1,7 @@
 #include <string>
 #include "scoreUi.h"
-#include "colors.h"
-#include "constants.h"
+#include "../config/colors.h"
+#include "../config/constants.h"
 
 ScoreUi::ScoreUi(TTF_Font *font, SDL_Renderer *renderer) : mP1Score(TextTexture(font)), mP2Score(TextTexture(font)) {
     mScore = Score{1, 1};

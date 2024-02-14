@@ -3,7 +3,7 @@
 
 #include "paddle.h"
 #include "ball.h"
-#include "constants.h"
+#include "../config/constants.h"
 
 class CpuPlayer {
 public:

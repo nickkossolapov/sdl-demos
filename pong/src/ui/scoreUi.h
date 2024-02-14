@@ -2,8 +2,8 @@
 #define SCOREUI_H
 
 #include <SDL.h>
-#include "score.h"
-#include "textTexture.h"
+#include "../game/score.h"
+#include "../utils/textTexture.h"
 
 class ScoreUi {
 public:

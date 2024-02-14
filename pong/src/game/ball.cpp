@@ -1,8 +1,8 @@
 #include <cmath>
 #include <array>
 #include "ball.h"
-#include "constants.h"
-#include "colors.h"
+#include "../config/constants.h"
+#include "../config/colors.h"
 
 Ball::Ball(SDL_Rect playBoundary) {
     mBallRect = {

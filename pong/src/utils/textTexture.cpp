@@ -1,5 +1,5 @@
 #include "textTexture.h"
-#include "colors.h"
+#include "../config/colors.h"
 
 TextTexture::TextTexture(TTF_Font *font) {
     mFont = font;

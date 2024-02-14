@@ -5,11 +5,11 @@
 
 class Paddle {
 public:
-    static const int PADDLE_HEIGHT = 100;
+    static const int PADDLE_HEIGHT = 120;
     static const int PADDLE_WIDTH = 20;
     static const int MAX_VELOCITY = 20;
 
-    Paddle(SDL_Rect playBoundary);
+    explicit Paddle(SDL_Rect playBoundary);
 
     void move();
 

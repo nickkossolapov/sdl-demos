@@ -10,27 +10,27 @@ set(SDL2_ttf_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2_ttf/cmake)
 add_executable(
         ${CMAKE_PROJECT_NAME}
         src/main.cpp
-        src/constants.h
-        src/colors.h
+        src/config/constants.h
+        src/config/colors.h
         src/globals.h
         src/globals.cpp
-        src/utils.h
-        src/utils.cpp
-        src/paddle.h
-        src/paddle.cpp
-        src/ball.h
-        src/ball.cpp
-        src/player.h
-        src/player.cpp
-        src/cpuPlayer.h
-        src/cpuPlayer.cpp
-        src/gameState.h
-        src/gameState.cpp
-        src/score.h
-        src/textTexture.h
-        src/textTexture.cpp
-        src/scoreUi.cpp
-        src/scoreUi.h
+        src/utils/utils.h
+        src/utils/utils.cpp
+        src/game/paddle.h
+        src/game/paddle.cpp
+        src/game/ball.h
+        src/game/ball.cpp
+        src/game/player.h
+        src/game/player.cpp
+        src/game/cpuPlayer.h
+        src/game/cpuPlayer.cpp
+        src/game/gameState.h
+        src/game/gameState.cpp
+        src/game/score.h
+        src/utils/textTexture.h
+        src/utils/textTexture.cpp
+        src/ui/scoreUi.cpp
+        src/ui/scoreUi.h
 )
 
 find_package(SDL2 REQUIRED)

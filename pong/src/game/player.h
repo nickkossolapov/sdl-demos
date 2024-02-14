@@ -6,7 +6,7 @@
 
 class Player {
 public:
-    Player(Paddle &paddle);
+    explicit Player(Paddle &paddle);
 
     void handleEvent(SDL_Event &e);
 

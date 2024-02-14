@@ -1,7 +1,7 @@
 #include <cmath>
 #include "paddle.h"
-#include "constants.h"
-#include "colors.h"
+#include "../config/constants.h"
+#include "../config/colors.h"
 
 Paddle::Paddle(SDL_Rect playBoundary) {
     mPaddleRect = {

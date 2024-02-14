@@ -1,5 +1,5 @@
 #include "player.h"
-#include "constants.h"
+#include "../config/constants.h"
 
 Player::Player(Paddle &paddle) : mPaddle(paddle) {}
 

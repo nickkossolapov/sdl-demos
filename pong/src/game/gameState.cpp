@@ -1,5 +1,5 @@
 #include "gameState.h"
-#include "constants.h"
+#include "../config/constants.h"
 
 GameState::GameState(std::vector<Paddle> &paddles, Ball &ball) : mPaddles(paddles), mBall(ball) {
     mScore = {0, 0};

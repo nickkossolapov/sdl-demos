@@ -1,7 +1,7 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include "constants.h"
-#include "globals.h"
+#include "../config/constants.h"
+#include "../globals.h"
 #include "utils.h"
 
 void init() {

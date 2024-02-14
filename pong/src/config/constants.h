@@ -10,6 +10,6 @@ const int FONT_SIZE = 72;
 
 const int PADDING = 10;
 
-const int JOYSTICK_DEAD_ZONE = 8000;
+const int JOYSTICK_DEAD_ZONE = 5000;
 
 #endif //CONSTANTS_H
