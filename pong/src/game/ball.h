@@ -9,26 +9,26 @@ class Ball {
 public:
     explicit Ball(SDL_Rect playBoundary);
 
-    void move(std::vector<Paddle> &paddles);
+    void move(std::array<Paddle, 2> &paddles);
 
     SDL_Point getCenter() const;
 
     std::pair<float, float> getVelocity() const;
 
-    SDL_Point getPosition();
+    SDL_Point getPosition() const;
 
     void startBall();
 
-    bool isOut();
+    bool isOut() const;
 
-    void render(SDL_Renderer *renderer);
+    void render(SDL_Renderer *renderer) const;
 
     void reset();
 
 private:
-    static const int BALL_HEIGHT = 20;
-    static const int BALL_WIDTH = 20;
-    static const int SPEED_MULTIPLIER = 4;
+    static constexpr int BALL_HEIGHT = 20;
+    static constexpr int BALL_WIDTH = 20;
+    static constexpr int SPEED_MULTIPLIER = 4;
     const float INITIAL_SPEED = 3;
     const float BALL_DISPERSION = 7;
 

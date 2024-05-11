@@ -20,13 +20,13 @@ Ball::Ball(SDL_Rect playBoundary) {
     mServed = false;
 }
 
-void Ball::move(std::vector<Paddle> &paddles) {
+void Ball::move(std::array<Paddle, 2> &paddles) {
     if (mOut) {
         return;
     }
 
-    mBallRect.x += (int) roundf(mVelX);
-    mBallRect.y += (int) roundf(mVelY);
+    mBallRect.x += std::lround(mVelX);
+    mBallRect.y += std::lround(mVelY);
 
     bool collidingWithPaddle = false;
 
@@ -45,22 +45,22 @@ void Ball::move(std::vector<Paddle> &paddles) {
 
         if (!mCollidingWithPaddle) {
             mVelX = -mVelX;
-            mVelY += BALL_DISPERSION * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp)
+            mVelY += BALL_DISPERSION * (0.5f - static_cast<float>(rand()) / RAND_MAX); // NOLINT(cert-msc50-cpp)
             mCollidingWithPaddle = true;
         }
     } else {
         mCollidingWithPaddle = false;
     }
 
-    if ((mBallRect.x < mBoundingRect.x) || (mBallRect.x + mBallRect.w > mBoundingRect.x + mBoundingRect.w)) {
+    if (mBallRect.x < mBoundingRect.x || mBallRect.x + mBallRect.w > mBoundingRect.x + mBoundingRect.w) {
         mVelX = 0;
         mVelY = 0;
         mOut = true;
     }
 
 
-    if ((mBallRect.y < mBoundingRect.y) || (mBallRect.y + mBallRect.h > mBoundingRect.y + mBoundingRect.h)) {
-        mBallRect.y -= (int) roundf(mVelY);
+    if (mBallRect.y < mBoundingRect.y || mBallRect.y + mBallRect.h > mBoundingRect.y + mBoundingRect.h) {
+        mBallRect.y -= std::lround(mVelY);
         mVelY = -mVelY;
     }
 }
@@ -75,18 +75,18 @@ std::pair<float, float> Ball::getVelocity() const {
 
 void Ball::startBall() {
     mVelX = -INITIAL_SPEED;
-    mVelY = -INITIAL_SPEED * (0.5f - (float) rand() / RAND_MAX); // NOLINT(cert-msc50-cpp);
+    mVelY = -INITIAL_SPEED * (0.5f - static_cast<float>(rand()) / RAND_MAX); // NOLINT(cert-msc50-cpp);
 }
 
-bool Ball::isOut() {
+bool Ball::isOut() const {
     return mOut;
 }
 
-SDL_Point Ball::getPosition() {
+SDL_Point Ball::getPosition() const {
     return {mBallRect.x + mBallRect.h / 2, mBallRect.y + mBallRect.w / 2};
 }
 
-void Ball::render(SDL_Renderer *renderer) {
+void Ball::render(SDL_Renderer *renderer) const {
     SDL_SetRenderDrawColor(renderer, OFF_WHITE.r, OFF_WHITE.g, OFF_WHITE.b, 0xFF);
     SDL_RenderFillRect(renderer, &mBallRect);
 }

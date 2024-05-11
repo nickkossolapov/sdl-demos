@@ -8,7 +8,7 @@ class Player {
 public:
     explicit Player(Paddle &paddle);
 
-    void handleEvent(SDL_Event &e);
+    void handleEvent(const SDL_Event &e) const;
 
 private:
     const float JOYSTICK_MAX_LIMIT = (float) Paddle::MAX_VELOCITY / SDL_MAX_SINT16;

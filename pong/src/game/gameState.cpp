@@ -1,9 +1,12 @@
+#include <array>
 #include "gameState.h"
 #include "../config/constants.h"
 
-GameState::GameState(std::vector<Paddle> &paddles, Ball &ball) : mPaddles(paddles), mBall(ball) {
-    mScore = {0, 0};
-    mPaused = true;
+GameState::GameState(std::array<Paddle, 2> &paddles, Ball &ball)
+    : mPaddles(paddles),
+      mBall(ball),
+      mScore({0, 0}),
+      mPaused(true) {
 }
 
 void GameState::handleEvent(SDL_Event &e) {
@@ -37,6 +40,6 @@ void GameState::resetPositions() {
     mPaused = true;
 }
 
-Score GameState::getScore() {
+Score GameState::getScore() const {
     return mScore;
 }

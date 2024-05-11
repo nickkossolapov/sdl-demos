@@ -3,11 +3,10 @@
 
 #include "paddle.h"
 #include "ball.h"
-#include "../config/constants.h"
 
 class CpuPlayer {
 public:
-    CpuPlayer(Paddle &paddle, Ball &ball);
+    explicit CpuPlayer(Paddle &paddle, Ball &ball);
 
     void movePaddle();
 

@@ -8,16 +8,16 @@
 
 class GameState {
 public:
-    GameState(std::vector<Paddle> &paddles, Ball &ball);
+    GameState(std::array<Paddle, 2> &paddles, Ball &ball);
 
     void handleEvent(SDL_Event &e);
 
     void checkCurrentState();
 
-    Score getScore();
+    Score getScore() const;
 
 private:
-    std::vector<Paddle> &mPaddles;
+    std::array<Paddle, 2> &mPaddles;
     Ball &mBall;
     Score mScore;
     bool mPaused;

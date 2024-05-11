@@ -10,18 +10,18 @@ void CpuPlayer::movePaddle() {
         return;
     }
 
-    SDL_Point ballCenter = mBall.getCenter();
-    auto [ballXVel, _] = mBall.getVelocity();
-    SDL_Rect paddleRect = mPaddle.getCollisionBox();
+    const SDL_Point ballCenter = mBall.getCenter();
+    auto [ballVel, _] = mBall.getVelocity();
+    const SDL_Rect paddleRect = mPaddle.getCollisionBox();
 
-    if (ballXVel < 0) {
+    if (ballVel < 0) {
         mCurrentVelocity = 0;
     } else {
         if (ballCenter.y > (paddleRect.y + paddleRect.h)) {
-            mCurrentVelocity = std::min(mCurrentVelocity + ACCELERATION, (float) MAX_VELOCITY);
+            mCurrentVelocity = std::min(mCurrentVelocity + ACCELERATION, MAX_VELOCITY);
             mPaddle.setVelocity(mCurrentVelocity);
         } else if (ballCenter.y < paddleRect.y) {
-            mCurrentVelocity = std::max(mCurrentVelocity - ACCELERATION, (float) -MAX_VELOCITY);
+            mCurrentVelocity = std::max(mCurrentVelocity - ACCELERATION, -MAX_VELOCITY);
             mPaddle.setVelocity(mCurrentVelocity);
         } else {
             mCurrentVelocity /= DECELERATION;

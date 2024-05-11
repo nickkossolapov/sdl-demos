@@ -5,9 +5,9 @@
 
 class Paddle {
 public:
-    static const int PADDLE_HEIGHT = 120;
-    static const int PADDLE_WIDTH = 20;
-    static const int MAX_VELOCITY = 20;
+    static constexpr int PADDLE_HEIGHT = 120;
+    static constexpr int PADDLE_WIDTH = 20;
+    static constexpr float MAX_VELOCITY = 20;
 
     explicit Paddle(SDL_Rect playBoundary);
 
@@ -15,7 +15,7 @@ public:
 
     void setVelocity(float velocity);
 
-    void render(SDL_Renderer *renderer);
+    void render(SDL_Renderer *renderer) const;
 
     void reset();
 

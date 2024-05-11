@@ -1,3 +1,4 @@
+#include <array>
 #include <SDL.h>
 #include "config/colors.h"
 #include "globals.h"
@@ -15,32 +16,32 @@ void prepareRenderer(SDL_Renderer *renderer) {
     SDL_RenderClear(renderer);
 }
 
-int main( int argc, char* args[] ) {
+int main(int argc, char *args[]) {
     init();
 
     bool quit = false;
     SDL_Event e;
 
-    std::vector<Paddle> paddles{
-            Paddle({
-                           PADDING,
-                           PADDING,
-                           Paddle::PADDLE_WIDTH,
-                           SCREEN_HEIGHT - 2 * PADDING
-                   }),
-            Paddle({
-                           SCREEN_WIDTH - PADDING - Paddle::PADDLE_WIDTH,
-                           PADDING,
-                           Paddle::PADDLE_WIDTH,
-                           SCREEN_HEIGHT - 2 * PADDING
-                   })
+    std::array<Paddle, 2> paddles{
+        Paddle({
+            PADDING,
+            PADDING,
+            Paddle::PADDLE_WIDTH,
+            SCREEN_HEIGHT - 2 * PADDING
+        }),
+        Paddle({
+            SCREEN_WIDTH - PADDING - Paddle::PADDLE_WIDTH,
+            PADDING,
+            Paddle::PADDLE_WIDTH,
+            SCREEN_HEIGHT - 2 * PADDING
+        })
     };
 
-    Ball ball = {{10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20}};
-    Player player = {paddles[0]};
-    CpuPlayer cpuPlayer = {paddles[1], ball};
-    GameState gameState = {paddles, ball};
-    ScoreUi scoreUi = ScoreUi(gFont, gRenderer);
+    auto ball = Ball({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20});
+    auto player = Player(paddles[0]);
+    auto cpuPlayer = CpuPlayer(paddles[1], ball);
+    auto gameState = GameState({paddles, ball});
+    auto scoreUi = ScoreUi(gFont, gRenderer);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
