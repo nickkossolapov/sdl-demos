@@ -4,7 +4,7 @@ CpuPlayer::CpuPlayer(Paddle &paddle, Ball &ball) : mPaddle(paddle), mBall(ball) 
     mCurrentVelocity = 0;
 }
 
-void CpuPlayer::movePaddle() {
+void CpuPlayer::update() {
     if (mBall.isOut()) {
         mCurrentVelocity = 0;
         return;

@@ -8,7 +8,7 @@ class CpuPlayer {
 public:
     explicit CpuPlayer(Paddle &paddle, Ball &ball);
 
-    void movePaddle();
+    void update();
 
 private:
     const float MAX_VELOCITY = 20;

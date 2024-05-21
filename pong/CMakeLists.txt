@@ -24,13 +24,15 @@ add_executable(
         src/game/player.cpp
         src/game/cpuPlayer.h
         src/game/cpuPlayer.cpp
-        src/game/gameState.h
-        src/game/gameState.cpp
-        src/game/score.h
+        src/core/score.h
         src/utils/textTexture.h
         src/utils/textTexture.cpp
         src/ui/scoreUi.cpp
         src/ui/scoreUi.h
+        src/core/gameState.h
+        src/core/inGameState.cpp
+        src/core/inGameState.h
+        src/core/inGameState.h
 )
 
 find_package(SDL2 REQUIRED)

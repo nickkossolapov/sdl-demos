@@ -2,7 +2,7 @@
 #define SCOREUI_H
 
 #include <SDL.h>
-#include "../game/score.h"
+#include "../core/score.h"
 #include "../utils/textTexture.h"
 
 class ScoreUi {

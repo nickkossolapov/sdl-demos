@@ -8,7 +8,6 @@
 #include "game/ball.h"
 #include "game/player.h"
 #include "game/cpuPlayer.h"
-#include "game/gameState.h"
 #include "ui/scoreUi.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
@@ -22,26 +21,6 @@ int main(int argc, char *args[]) {
     bool quit = false;
     SDL_Event e;
 
-    std::array<Paddle, 2> paddles{
-        Paddle({
-            PADDING,
-            PADDING,
-            Paddle::PADDLE_WIDTH,
-            SCREEN_HEIGHT - 2 * PADDING
-        }),
-        Paddle({
-            SCREEN_WIDTH - PADDING - Paddle::PADDLE_WIDTH,
-            PADDING,
-            Paddle::PADDLE_WIDTH,
-            SCREEN_HEIGHT - 2 * PADDING
-        })
-    };
-
-    auto ball = Ball({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20});
-    auto player = Player(paddles[0]);
-    auto cpuPlayer = CpuPlayer(paddles[1], ball);
-    auto gameState = GameState({paddles, ball});
-    auto scoreUi = ScoreUi(gFont, gRenderer);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -49,30 +28,12 @@ int main(int argc, char *args[]) {
                 quit = true;
             }
 
-            player.handleEvent(e);
-
-            gameState.handleEvent(e);
+            // gameStateManager.handleEvent(e);
         }
 
-        cpuPlayer.movePaddle();
-        ball.move(paddles);
-
-        for (auto &paddle: paddles) {
-            paddle.move();
-        }
-
-        gameState.checkCurrentState();
-        scoreUi.setScore(gameState.getScore());
-
+        // gameStateManager.update();
         prepareRenderer(gRenderer);
-
-        for (auto &paddle: paddles) {
-            paddle.render(gRenderer);
-        }
-
-        ball.render(gRenderer);
-        scoreUi.render(gRenderer);
-
+        // gameStateManager.render(gRenderer);
         SDL_RenderPresent(gRenderer);
     }
 
