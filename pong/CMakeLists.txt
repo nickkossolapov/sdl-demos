@@ -35,6 +35,8 @@ add_executable(
         src/core/inGameState.h
         src/core/gameStateManager.h
         src/core/gameStateManager.cpp
+        src/core/pausedState.h
+        src/core/pausedState.cpp
 )
 
 find_package(SDL2 REQUIRED)

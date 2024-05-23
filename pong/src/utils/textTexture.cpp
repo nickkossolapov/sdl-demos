@@ -1,3 +1,4 @@
+#include <string>
 #include "textTexture.h"
 #include "../config/colors.h"
 
@@ -21,7 +22,7 @@ void TextTexture::free() {
     }
 }
 
-void TextTexture::setText(SDL_Renderer *renderer, char *text, SDL_Color fgColor, SDL_Color bgColor) {
+void TextTexture::setText(SDL_Renderer *renderer, const char *text, SDL_Color fgColor, SDL_Color bgColor) {
     free();
 
     SDL_Surface *textSurface = TTF_RenderText_LCD(mFont, text, fgColor, bgColor);
@@ -55,4 +56,8 @@ void TextTexture::render(SDL_Renderer *renderer, SDL_Point topLeft) {
 
 int TextTexture::getWidth() const {
     return mWidth;
+}
+
+int TextTexture::getHeight() const {
+    return mHeight;
 }

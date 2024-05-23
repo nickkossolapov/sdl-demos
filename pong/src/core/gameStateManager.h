@@ -1,11 +1,15 @@
 #ifndef PONG_GAMESTATEMANAGER_H
 #define PONG_GAMESTATEMANAGER_H
 
+#include <memory>
+#include <unordered_map>
 #include "gameState.h"
 #include "inGameState.h"
+#include "pausedState.h"
 
-struct GameStates {
-    InGameState inGameState;
+enum class GameStates {
+    IN_GAME,
+    PAUSED
 };
 
 class GameStateManager : public GameState {
@@ -19,8 +23,8 @@ public:
     void render(SDL_Renderer *renderer) override;
 
 private:
-    GameState *mCurrentState;
-    GameStates mGameStates;
+    GameStates mCurrentState;
+    std::unordered_map<GameStates, std::unique_ptr<GameState>> mGameStates;
 };
 
 #endif //PONG_GAMESTATEMANAGER_H

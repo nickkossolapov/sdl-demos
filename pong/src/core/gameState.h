@@ -7,9 +7,9 @@ class GameState {
 public:
     virtual ~GameState() {}
 
-    virtual void handleEvent(SDL_Event &e) = 0;
+    virtual void handleEvent(SDL_Event &e) {};
 
-    virtual void update() = 0;
+    virtual void update() {};
 
     virtual void render(SDL_Renderer *renderer) = 0;
 };
