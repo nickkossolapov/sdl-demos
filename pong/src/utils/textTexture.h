@@ -12,11 +12,11 @@ public:
 
     void free();
 
-    void setText(SDL_Renderer* renderer, char* text, SDL_Color fgColor, SDL_Color bgColor);
+    void setText(SDL_Renderer *renderer, char *text, SDL_Color fgColor, SDL_Color bgColor);
 
     void render(SDL_Renderer *renderer, SDL_Point topLeft);
 
-    int getWidth();
+    int getWidth() const;
 
 private:
     int mWidth;

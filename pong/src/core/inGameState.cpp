@@ -5,8 +5,8 @@
 #include "../config/constants.h"
 
 
-InGameState::InGameState(ScoreUi &scoreUi)
-        : mScoreUi(scoreUi),
+InGameState::InGameState(SDL_Renderer *renderer, TTF_Font *font)
+        : mScoreUi(font, renderer),
           mBall({10, 10, SCREEN_WIDTH - 20, SCREEN_HEIGHT - 20}),
           mPaddles{Paddle({PADDING, PADDING, Paddle::PADDLE_WIDTH, SCREEN_HEIGHT - 2 * PADDING}),
                    Paddle({SCREEN_WIDTH - PADDING - Paddle::PADDLE_WIDTH, PADDING, Paddle::PADDLE_WIDTH,
@@ -65,6 +65,3 @@ void InGameState::resetPositions() {
 
     mPaused = true;
 }
-
-
-

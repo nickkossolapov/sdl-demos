@@ -5,7 +5,6 @@
 
 ScoreUi::ScoreUi(TTF_Font *font, SDL_Renderer *renderer) : mP1Score(TextTexture(font)), mP2Score(TextTexture(font)) {
     mScore = Score{1, 1};
-
     mRenderer = renderer;
 }
 

@@ -12,7 +12,7 @@
 
 class InGameState : public GameState {
 public:
-    InGameState(ScoreUi &scoreUi);
+    explicit InGameState(SDL_Renderer *renderer, TTF_Font *font);
 
     void handleEvent(SDL_Event &e) override;
 

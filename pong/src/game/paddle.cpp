@@ -5,10 +5,10 @@
 
 Paddle::Paddle(const SDL_Rect playBoundary) {
     mPaddleRect = {
-        playBoundary.x,
-        playBoundary.h / 2 - PADDLE_HEIGHT / 2,
-        PADDLE_WIDTH,
-        PADDLE_HEIGHT
+            playBoundary.x,
+            playBoundary.h / 2 - PADDLE_HEIGHT / 2,
+            PADDLE_WIDTH,
+            PADDLE_HEIGHT
     };
 
     mBoundingRect = playBoundary;
@@ -17,8 +17,8 @@ Paddle::Paddle(const SDL_Rect playBoundary) {
 
 void Paddle::setVelocity(const float velocity) {
     mVelY = velocity > 0
-                ? std::min(velocity, MAX_VELOCITY)
-                : std::max(velocity, -MAX_VELOCITY);
+            ? std::min(velocity, MAX_VELOCITY)
+            : std::max(velocity, -MAX_VELOCITY);
 }
 
 void Paddle::move() {
@@ -42,10 +42,10 @@ void Paddle::render(SDL_Renderer *renderer) const {
 
 void Paddle::reset() {
     mPaddleRect = {
-        mBoundingRect.x,
-        mBoundingRect.h / 2 - PADDLE_HEIGHT / 2,
-        PADDLE_WIDTH,
-        PADDLE_HEIGHT
+            mBoundingRect.x,
+            mBoundingRect.h / 2 - PADDLE_HEIGHT / 2,
+            PADDLE_WIDTH,
+            PADDLE_HEIGHT
     };
 
     mVelY = 0;

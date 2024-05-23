@@ -33,6 +33,8 @@ add_executable(
         src/core/inGameState.cpp
         src/core/inGameState.h
         src/core/inGameState.h
+        src/core/gameStateManager.h
+        src/core/gameStateManager.cpp
 )
 
 find_package(SDL2 REQUIRED)

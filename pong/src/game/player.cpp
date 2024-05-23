@@ -23,7 +23,8 @@ void Player::handleEvent(const SDL_Event &e) const {
             case SDLK_DOWN:
                 mPaddle.setVelocity(Paddle::MAX_VELOCITY);
                 break;
-            default: break;
+            default:
+                break;
         }
     } else if (e.type == SDL_KEYUP) {
         switch (e.key.keysym.sym) {
@@ -31,7 +32,8 @@ void Player::handleEvent(const SDL_Event &e) const {
             case SDLK_DOWN:
                 mPaddle.setVelocity(0);
                 break;
-            default: break;
+            default:
+                break;
         }
     }
 }

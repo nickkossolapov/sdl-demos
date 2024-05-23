@@ -4,11 +4,11 @@
 #include "globals.h"
 #include "utils/utils.h"
 #include "game/paddle.h"
-#include "config/constants.h"
 #include "game/ball.h"
 #include "game/player.h"
 #include "game/cpuPlayer.h"
 #include "ui/scoreUi.h"
+#include "core/gameStateManager.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
@@ -21,6 +21,7 @@ int main(int argc, char *args[]) {
     bool quit = false;
     SDL_Event e;
 
+    auto gameStateManager = GameStateManager(gRenderer, gFont);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -28,12 +29,12 @@ int main(int argc, char *args[]) {
                 quit = true;
             }
 
-            // gameStateManager.handleEvent(e);
+            gameStateManager.handleEvent(e);
         }
 
-        // gameStateManager.update();
+        gameStateManager.update();
         prepareRenderer(gRenderer);
-        // gameStateManager.render(gRenderer);
+        gameStateManager.render(gRenderer);
         SDL_RenderPresent(gRenderer);
     }
 

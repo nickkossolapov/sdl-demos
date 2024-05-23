@@ -53,6 +53,6 @@ void TextTexture::render(SDL_Renderer *renderer, SDL_Point topLeft) {
     }
 }
 
-int TextTexture::getWidth()  {
+int TextTexture::getWidth() const {
     return mWidth;
 }
