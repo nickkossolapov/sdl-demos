@@ -10,6 +10,8 @@
 #include "../ui/scoreUi.h"
 #include "../game/cpuPlayer.h"
 
+const int WINNING_SCORE = 3;
+
 class InGameState : public GameState {
 public:
     explicit InGameState(SDL_Renderer *renderer, TTF_Font *font);
@@ -25,9 +27,17 @@ private:
     Player mPlayer;
     CpuPlayer mCpuPlayer;
     ScoreUi mScoreUi;
+    TextTexture mWinnerText;
     Ball mBall;
     Score mScore;
+    SDL_Renderer *mRenderer;
     bool mPaused;
+    bool mGameOver;
+
+
+    void checkGameOver();
+
+    void reset();
 
     void resetPositions();
 };

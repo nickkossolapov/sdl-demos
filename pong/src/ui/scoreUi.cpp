@@ -4,8 +4,9 @@
 #include "../config/constants.h"
 
 ScoreUi::ScoreUi(TTF_Font *font, SDL_Renderer *renderer) : mP1Score(TextTexture(font)), mP2Score(TextTexture(font)) {
-    mScore = Score{1, 1};
+    mScore = Score{0, 0};
     mRenderer = renderer;
+    setScoreText();
 }
 
 void ScoreUi::setScore(Score score) {
@@ -16,7 +17,7 @@ void ScoreUi::setScore(Score score) {
 }
 
 void ScoreUi::reset() {
-    mScore = {1, 1};
+    mScore = {0, 0};
     setScoreText();
 }
 
