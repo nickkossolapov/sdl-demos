@@ -30,7 +30,7 @@ private:
     static constexpr int BALL_WIDTH = 20;
     static constexpr int SPEED_MULTIPLIER = 4;
     const float INITIAL_SPEED = 3;
-    const float BALL_DISPERSION = 7;
+    const float BALL_DISPERSION = 10;
 
     SDL_Rect mBoundingRect{};
     SDL_Rect mBallRect{};

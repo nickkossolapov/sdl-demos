@@ -4,6 +4,7 @@
 #include "inGameState.h"
 #include "../config/constants.h"
 #include "../config/colors.h"
+#include "../config/game.h"
 
 
 InGameState::InGameState(SDL_Renderer *renderer, TTF_Font *font)

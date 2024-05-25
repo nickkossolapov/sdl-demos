@@ -10,8 +10,6 @@
 #include "../ui/scoreUi.h"
 #include "../game/cpuPlayer.h"
 
-const int WINNING_SCORE = 3;
-
 class InGameState : public GameState {
 public:
     explicit InGameState(SDL_Renderer *renderer, TTF_Font *font);
