@@ -34,7 +34,11 @@ void ScoreUi::render(SDL_Renderer *renderer) {
     mP2Score.render(renderer, {3 * SCREEN_WIDTH / 4 - p2TextWidth / 2, PADDING});
 }
 
+char *intToString(int value) {
+    return const_cast<char *>(std::to_string(value).c_str());
+}
+
 void ScoreUi::setScoreText() {
-    mP1Score.setText(mRenderer, const_cast<char *>(std::to_string(mScore.player1).c_str()), OFF_WHITE, OFF_BLACK);
-    mP2Score.setText(mRenderer, const_cast<char *>(std::to_string(mScore.player2).c_str()), OFF_WHITE, OFF_BLACK);
+    mP1Score.setText(mRenderer, intToString(mScore.player1), FONT_SIZE, OFF_WHITE, OFF_BLACK);
+    mP2Score.setText(mRenderer, intToString(mScore.player2), FONT_SIZE, OFF_WHITE, OFF_BLACK);
 }

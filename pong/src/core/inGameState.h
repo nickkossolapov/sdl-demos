@@ -28,6 +28,7 @@ private:
     CpuPlayer mCpuPlayer;
     ScoreUi mScoreUi;
     TextTexture mWinnerText;
+    TextTexture mStartText;
     Ball mBall;
     Score mScore;
     SDL_Renderer *mRenderer;

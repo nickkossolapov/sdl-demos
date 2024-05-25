@@ -12,7 +12,7 @@ public:
 
     void free();
 
-    void setText(SDL_Renderer *renderer, const char *text, SDL_Color fgColor, SDL_Color bgColor);
+    void setText(SDL_Renderer *renderer, const char *text, int fontSize, SDL_Color fgColor, SDL_Color bgColor);
 
     void render(SDL_Renderer *renderer, SDL_Point topLeft);
 

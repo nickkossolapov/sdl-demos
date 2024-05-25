@@ -1,6 +1,7 @@
 #include <string>
 #include "textTexture.h"
 #include "../config/colors.h"
+#include "utils.h"
 
 TextTexture::TextTexture(TTF_Font *font) {
     mFont = font;
@@ -22,8 +23,11 @@ void TextTexture::free() {
     }
 }
 
-void TextTexture::setText(SDL_Renderer *renderer, const char *text, SDL_Color fgColor, SDL_Color bgColor) {
+void
+TextTexture::setText(SDL_Renderer *renderer, const char *text, int fontSize, SDL_Color fgColor, SDL_Color bgColor) {
     free();
+
+    changeFontSize(fontSize);
 
     SDL_Surface *textSurface = TTF_RenderText_LCD(mFont, text, fgColor, bgColor);
 

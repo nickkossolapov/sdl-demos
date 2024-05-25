@@ -8,6 +8,8 @@ const int SCREEN_HEIGHT = 770;
 
 const int FONT_SIZE = 72;
 
+const int SMALL_FONT_SIZE = 36;
+
 const int PADDING = 10;
 
 const int JOYSTICK_DEAD_ZONE = 5000;

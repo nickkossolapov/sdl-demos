@@ -13,7 +13,6 @@ public:
 
 private:
     TextTexture mPausedText;
-    TextTexture mResumeText;
 };
 
 #endif //PONG_PAUSEDSTATE_H

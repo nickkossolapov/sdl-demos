@@ -18,7 +18,10 @@ InGameState::InGameState(SDL_Renderer *renderer, TTF_Font *font)
           mPaused(true),
           mGameOver(false),
           mWinnerText(TextTexture(font)),
-          mRenderer(renderer) {}
+          mStartText(TextTexture(font)),
+          mRenderer(renderer) {
+    mStartText.setText(renderer, "Press  any  button  to  start", SMALL_FONT_SIZE, OFF_WHITE, OFF_BLACK);
+}
 
 void InGameState::handleEvent(SDL_Event &e) {
     if (mGameOver) {
@@ -37,8 +40,8 @@ void InGameState::handleEvent(SDL_Event &e) {
 
 void InGameState::checkGameOver() {
     if (mScore.player1 == WINNING_SCORE || mScore.player2 == WINNING_SCORE) {
-        mWinnerText.setText(mRenderer, mScore.player1 > mScore.player2 ? "Player wins!" : "CPU wins!", OFF_WHITE,
-                            OFF_BLACK);
+        auto text = mScore.player1 == WINNING_SCORE ? "Player wins!" : "CPU wins!";
+        mWinnerText.setText(mRenderer, text, FONT_SIZE, OFF_WHITE, OFF_BLACK);
 
         mPaused = true;
         mGameOver = true;
@@ -74,6 +77,10 @@ void InGameState::render(SDL_Renderer *renderer) {
         mWinnerText.render(renderer, {SCREEN_WIDTH / 2 - mWinnerText.getWidth() / 2,
                                       SCREEN_HEIGHT / 2 - mWinnerText.getHeight() / 2});
     } else {
+        if (mPaused && (mScore.player1 == 0 and mScore.player2 == 0)) {
+            mStartText.render(renderer, {SCREEN_WIDTH / 2 - mStartText.getWidth() / 2,
+                                         SCREEN_HEIGHT - (mStartText.getHeight() + 10)});
+        }
         mBall.render(renderer);
         mScoreUi.render(renderer);
     }

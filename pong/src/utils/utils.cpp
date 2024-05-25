@@ -44,3 +44,12 @@ void close() {
     SDL_Quit();
 }
 
+void changeFontSize(int fontSize) {
+    TTF_CloseFont(gFont);
+    gFont = TTF_OpenFont("fonts/arcadeclassic.ttf", fontSize);
+
+    if (gFont == nullptr) {
+        exit(7);
+    }
+}
+
