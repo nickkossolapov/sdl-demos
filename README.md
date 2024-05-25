@@ -6,3 +6,5 @@ These projects are mostly me trying to learn C++ and some game development, so t
 ## Demos
 
 [Noughts and crosses](./noughts-and-crosses/README.md)
+
+[Pong](./pong/README.md)
