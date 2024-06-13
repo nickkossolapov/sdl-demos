@@ -16,6 +16,8 @@ add_executable(
         src/globals.cpp
         src/utils/utils.h
         src/utils/utils.cpp
+        src/math/Vector.h
+        src/math/Vector.cpp
 )
 
 find_package(SDL2 REQUIRED)
