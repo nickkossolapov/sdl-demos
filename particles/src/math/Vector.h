@@ -17,7 +17,11 @@ public:
 
     Vector operator+(const Vector &v) const;
 
+    Vector &operator+=(const Vector &v);
+
     Vector operator-(const Vector &v) const;
+
+    Vector &operator-=(const Vector &v);
 
     Vector operator*(float s) const;
 
