@@ -18,6 +18,9 @@ add_executable(
         src/utils/utils.cpp
         src/math/Vector.h
         src/math/Vector.cpp
+        src/entities/particle.h
+        src/entities/particle.cpp
+        src/constants.h
 )
 
 find_package(SDL2 REQUIRED)
