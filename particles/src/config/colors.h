@@ -3,9 +3,10 @@
 
 #include <SDL.h>
 
-const SDL_Color OFF_WHITE = {0xF2, 0xF2, 0xF2};
-const SDL_Color OFF_BLACK = {0x22, 0x22, 0x22};
-const SDL_Color LIGHT_GREY = {0xD1, 0xD1, 0xD1};
-const SDL_Color DARK_GREY = {0x9B, 0x9B, 0x9B};
+namespace Colours {
+    const SDL_Color white = {0xF2, 0xF2, 0xF2};
+    const SDL_Color black = {0x22, 0x22, 0x22};
+    const SDL_Color blue = {0x0D, 0x52, 0xBD};
+}
 
 #endif //COLORS_H

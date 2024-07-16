@@ -1,6 +1,7 @@
 #ifndef PARTICLES_PARTICLE_H
 #define PARTICLES_PARTICLE_H
 
+#include <SDL.h>
 #include "../math/Vector.h"
 
 class Particle {
@@ -11,6 +12,7 @@ public:
     float speed;
     Vector netForce;
     float radius;
+    SDL_Color colour;
 
 
     Particle();

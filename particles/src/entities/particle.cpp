@@ -1,5 +1,8 @@
 #include "particle.h"
 #include "../constants.h"
+#include "../globals.h"
+#include "../utils/shapes.h"
+#include "../config/colors.h"
 
 Particle::Particle() {
     mass = 1.0;
@@ -14,6 +17,7 @@ Particle::Particle() {
     netForce.y = 0.0;
     netForce.z = 0.0;
     radius = 0.1;
+    colour = Colours::blue;
 }
 
 void Particle::calcLoads() {
@@ -29,4 +33,32 @@ void Particle::updateBodyEuler(float dt) {
     position += ds;
 
     speed = velocity.length();
+}
+
+void Particle::draw() {
+    SDL_SetRenderDrawColor(gRenderer, colour.r, colour.g, colour.b, 0xFF);
+
+    auto center = SDL_Point{static_cast<int>(position.x), static_cast<int>(position.y)};
+
+    // Multiply by sin(45) because that's where the quadrant will end
+    int edgeCount = (int) (radius * 0.7 + 1);
+    int edgePoints[edgeCount];
+
+    getCircleEdgePoints(edgePoints, edgeCount, static_cast<int>(radius));
+
+
+    for (int i = 0; i < edgeCount; i++) {
+        int edge = edgePoints[i];
+
+        for (int j = 0; j < edge; ++j) {
+            SDL_RenderDrawPoint(gRenderer, center.x + j, center.y + i);
+            SDL_RenderDrawPoint(gRenderer, center.x + i, center.y + j);
+            SDL_RenderDrawPoint(gRenderer, center.x - j, center.y - i);
+            SDL_RenderDrawPoint(gRenderer, center.x - i, center.y - j);
+            SDL_RenderDrawPoint(gRenderer, center.x + j, center.y - i);
+            SDL_RenderDrawPoint(gRenderer, center.x + i, center.y - j);
+            SDL_RenderDrawPoint(gRenderer, center.x - j, center.y + i);
+            SDL_RenderDrawPoint(gRenderer, center.x - i, center.y + j);
+        }
+    }
 }

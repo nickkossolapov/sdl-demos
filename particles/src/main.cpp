@@ -3,9 +3,11 @@
 #include "config/colors.h"
 #include "globals.h"
 #include "utils/utils.h"
+#include "entities/particle.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
-    SDL_SetRenderDrawColor(renderer, OFF_BLACK.r, OFF_BLACK.g, OFF_BLACK.b, 0xFF);
+    auto background = Colours::white;
+    SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
@@ -15,6 +17,11 @@ int main(int argc, char *args[]) {
     bool quit = false;
     SDL_Event e;
 
+    auto particle = Particle();
+
+    particle.position.x = 100;
+    particle.position.y = 100;
+    particle.radius = 3;
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -24,6 +31,8 @@ int main(int argc, char *args[]) {
         }
 
         prepareRenderer(gRenderer);
+
+        particle.draw();
 
         SDL_RenderPresent(gRenderer);
     }

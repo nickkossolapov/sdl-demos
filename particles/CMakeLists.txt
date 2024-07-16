@@ -21,6 +21,8 @@ add_executable(
         src/entities/particle.h
         src/entities/particle.cpp
         src/constants.h
+        src/utils/shapes.h
+        src/utils/shapes.cpp
 )
 
 find_package(SDL2 REQUIRED)
