@@ -4,7 +4,7 @@
 #include "../utils/shapes.h"
 #include "../config/colors.h"
 
-Particle::Particle() {
+Particle::Particle(float radius, SDL_Color colour) : radius(radius), colour(colour) {
     mass = 1.0;
     position.x = 0.0;
     position.y = 0.0;
@@ -16,8 +16,6 @@ Particle::Particle() {
     netForce.x = 0.0;
     netForce.y = 0.0;
     netForce.z = 0.0;
-    radius = 0.1;
-    colour = Colours::blue;
 }
 
 void Particle::calcLoads() {
@@ -35,7 +33,7 @@ void Particle::updateBodyEuler(float dt) {
     speed = velocity.length();
 }
 
-void Particle::draw() {
+void Particle::draw() const {
     SDL_SetRenderDrawColor(gRenderer, colour.r, colour.g, colour.b, 0xFF);
 
     auto center = SDL_Point{static_cast<int>(position.x), static_cast<int>(position.y)};

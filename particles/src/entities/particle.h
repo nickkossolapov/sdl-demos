@@ -3,6 +3,7 @@
 
 #include <SDL.h>
 #include "../math/Vector.h"
+#include "../config/colors.h"
 
 class Particle {
 public:
@@ -15,13 +16,13 @@ public:
     SDL_Color colour;
 
 
-    Particle();
+    explicit Particle(float radius = 3, SDL_Color colour = Colours::blue);
 
     void calcLoads();
 
     void updateBodyEuler(float dt);
 
-    void draw();
+    void draw() const;
 };
 
 #endif //PARTICLES_PARTICLE_H

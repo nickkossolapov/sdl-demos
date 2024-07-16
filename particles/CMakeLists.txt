@@ -10,7 +10,7 @@ set(SDL2_ttf_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2_ttf/cmake)
 add_executable(
         ${CMAKE_PROJECT_NAME}
         src/main.cpp
-        src/config/constants.h
+        src/config/config.h
         src/config/colors.h
         src/globals.h
         src/globals.cpp
@@ -23,6 +23,8 @@ add_executable(
         src/constants.h
         src/utils/shapes.h
         src/utils/shapes.cpp
+        src/entities/simulation.h
+        src/entities/simulation.cpp
 )
 
 find_package(SDL2 REQUIRED)

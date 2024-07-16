@@ -4,6 +4,8 @@
 #include "globals.h"
 #include "utils/utils.h"
 #include "entities/particle.h"
+#include "config/config.h"
+#include "entities/simulation.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     auto background = Colours::white;
@@ -17,11 +19,11 @@ int main(int argc, char *args[]) {
     bool quit = false;
     SDL_Event e;
 
-    auto particle = Particle();
+    int offset = 20;
+    auto particleInitialArea = SDL_Rect{offset, offset, ScreenSize::width - (2 * offset), ScreenSize::height / 3};
 
-    particle.position.x = 100;
-    particle.position.y = 100;
-    particle.radius = 3;
+    int numParticles = 1000;
+    auto simulation = Simulation(numParticles, particleInitialArea);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -32,7 +34,7 @@ int main(int argc, char *args[]) {
 
         prepareRenderer(gRenderer);
 
-        particle.draw();
+        simulation.draw();
 
         SDL_RenderPresent(gRenderer);
     }
