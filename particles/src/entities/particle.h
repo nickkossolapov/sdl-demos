@@ -9,11 +9,14 @@ class Particle {
 public:
     float mass;
     Vector position;
+    Vector previousPosition;
     Vector velocity;
     float speed;
     Vector netForce;
+    Vector impactForce;
     float radius;
     SDL_Color colour;
+    bool isColliding = false;
 
     explicit Particle(float radius = 3, SDL_Color colour = Colours::blue);
 

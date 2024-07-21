@@ -20,7 +20,10 @@ int main(int argc, char *args[]) {
     SDL_Event e;
 
     int offset = 20;
-    auto particleInitialArea = SDL_Rect{offset, offset, ScreenSize::width - (2 * offset), ScreenSize::height / 3};
+    SDL_Rect particleInitialArea = {offset,
+                                    2 * ScreenSize::height / 3 - offset,
+                                    ScreenSize::width - (2 * offset),
+                                    ScreenSize::height / 3};
 
     int numParticles = 1000;
     auto simulation = Simulation(numParticles, particleInitialArea);

@@ -3,31 +3,27 @@
 #include "../globals.h"
 #include "../utils/shapes.h"
 #include "../config/colors.h"
+#include "../config/config.h"
 
 Particle::Particle(float radius, SDL_Color colour) : radius(radius), colour(colour),
                                                      area(Constants::Pi * radius * radius) {
     mass = 1.0;
-    position.x = 0.0;
-    position.y = 0.0;
-    position.z = 0.0;
-    velocity.x = 0.0;
-    velocity.y = 0.0;
-    velocity.z = 0.0;
     speed = 0.0;
-    netForce.x = 0.0;
-    netForce.y = 0.0;
-    netForce.z = 0.0;
 }
 
 void Particle::calcLoads() {
-    netForce.x = 0.0;
-    netForce.y = Constants::Gravity * mass;
+    netForce = {0.0f, 0.0f};
 
-    Vector drag = velocity.reversed();
-    drag.normalize();
+    if (isColliding) {
+        netForce += impactForce;
+    } else {
+        netForce.y = -Constants::Gravity * mass;
 
-    drag *= 0.5f * Constants::AirDensity * dragCoefficient * area * speed * speed;
+        Vector drag = velocity.reversed();
+        drag.normalize();
 
+        drag *= 0.5f * Constants::AirDensity * dragCoefficient * area * speed * speed;
+    }
 }
 
 void Particle::updateBodyEuler(float dt) {
@@ -44,7 +40,7 @@ void Particle::updateBodyEuler(float dt) {
 void Particle::draw() const {
     SDL_SetRenderDrawColor(gRenderer, colour.r, colour.g, colour.b, 0xFF);
 
-    auto center = SDL_Point{static_cast<int>(position.x), static_cast<int>(position.y)};
+    auto center = SDL_Point{static_cast<int>(position.x), ScreenSize::height - static_cast<int>(position.y)};
 
     // Multiply by sin(45) because that's where the quadrant will end
     int edgeCount = (int) (radius * 0.7 + 1);
