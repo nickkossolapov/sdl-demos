@@ -2,7 +2,6 @@
 #include "../constants.h"
 #include "../globals.h"
 #include "../utils/shapes.h"
-#include "../config/colors.h"
 #include "../config/config.h"
 
 Particle::Particle(float radius, SDL_Color colour) : radius(radius), colour(colour),
@@ -27,6 +26,7 @@ void Particle::calcLoads() {
 }
 
 void Particle::updateBodyEuler(float dt) {
+    previousPosition = position;
     Vector a = netForce / mass;
     Vector dv = a * dt;
     velocity += dv;

@@ -4,7 +4,7 @@
 namespace Constants {
     constexpr float Pi = 3.14159265359f;
     constexpr float Gravity = 9.8f;
-    constexpr float ScaleFactor = 0.01f;
+    constexpr float ScaleFactor = 50.0f;
     constexpr float AirDensity = 1.23f; // kg/m^3
 }
 

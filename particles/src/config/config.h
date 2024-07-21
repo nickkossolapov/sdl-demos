@@ -8,8 +8,8 @@ namespace ScreenSize {
     const int height = 800;
 };
 
-namespace ParticlesDefaults {
-    const int count = 1000;
+namespace World {
+    const float groundPlane = 0.0f;
 };
 
 #endif //CONSTANTS_H

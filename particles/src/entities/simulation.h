@@ -13,10 +13,13 @@ public:
 
     void draw();
 
+    static bool checkForCollision(Particle &particle, float timeStep);
+
 private:
     std::vector<Particle> particles;
     Uint32 lastTime = 0;
-    int targetDelaT = 0;
+    float targetTimeStep = 0.005f;
+    float accumulator = 0.0f;
 };
 
 
