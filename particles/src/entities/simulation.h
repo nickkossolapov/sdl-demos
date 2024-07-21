@@ -15,6 +15,8 @@ public:
 
 private:
     std::vector<Particle> particles;
+    Uint32 lastTime = 0;
+    int targetDelaT = 0;
 };
 
 

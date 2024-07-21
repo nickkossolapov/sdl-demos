@@ -34,6 +34,8 @@ int main(int argc, char *args[]) {
 
         prepareRenderer(gRenderer);
 
+        simulation.updateSimulation();
+
         simulation.draw();
 
         SDL_RenderPresent(gRenderer);

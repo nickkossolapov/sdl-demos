@@ -37,9 +37,24 @@ Vector Vector::operator*(float s) const {
     return {x * s, y * s, z * s};
 }
 
+Vector &Vector::operator*=(float s) {
+    x *= s;
+    y *= s;
+    z *= s;
+    return *this;
+}
+
 Vector Vector::operator/(float s) const {
     return {x / s, y / s, z / s};
 }
+
+Vector &Vector::operator/=(float s) {
+    x /= s;
+    y /= s;
+    z /= s;
+    return *this;
+}
+
 
 Vector Vector::operator-() const {
     return {-x, -y, -z};

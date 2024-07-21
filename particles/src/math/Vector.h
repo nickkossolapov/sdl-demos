@@ -25,7 +25,11 @@ public:
 
     Vector operator*(float s) const;
 
+    Vector &operator*=(float s);
+
     Vector operator/(float s) const;
+
+    Vector &operator/=(float s);
 
     Vector operator-() const;
 

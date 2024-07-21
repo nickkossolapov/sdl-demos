@@ -15,7 +15,6 @@ public:
     float radius;
     SDL_Color colour;
 
-
     explicit Particle(float radius = 3, SDL_Color colour = Colours::blue);
 
     void calcLoads();
@@ -23,6 +22,10 @@ public:
     void updateBodyEuler(float dt);
 
     void draw() const;
+
+private:
+    float dragCoefficient = 0.47;
+    float area;
 };
 
 #endif //PARTICLES_PARTICLE_H

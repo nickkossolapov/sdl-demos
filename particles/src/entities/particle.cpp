@@ -4,7 +4,8 @@
 #include "../utils/shapes.h"
 #include "../config/colors.h"
 
-Particle::Particle(float radius, SDL_Color colour) : radius(radius), colour(colour) {
+Particle::Particle(float radius, SDL_Color colour) : radius(radius), colour(colour),
+                                                     area(Constants::Pi * radius * radius) {
     mass = 1.0;
     position.x = 0.0;
     position.y = 0.0;
@@ -19,7 +20,14 @@ Particle::Particle(float radius, SDL_Color colour) : radius(radius), colour(colo
 }
 
 void Particle::calcLoads() {
+    netForce.x = 0.0;
     netForce.y = Constants::Gravity * mass;
+
+    Vector drag = velocity.reversed();
+    drag.normalize();
+
+    drag *= 0.5f * Constants::AirDensity * dragCoefficient * area * speed * speed;
+
 }
 
 void Particle::updateBodyEuler(float dt) {
@@ -28,7 +36,7 @@ void Particle::updateBodyEuler(float dt) {
     velocity += dv;
 
     Vector ds = velocity * dt;
-    position += ds;
+    position += ds * Constants::ScaleFactor;
 
     speed = velocity.length();
 }
