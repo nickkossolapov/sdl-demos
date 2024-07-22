@@ -25,6 +25,8 @@ add_executable(
         src/utils/shapes.cpp
         src/entities/simulation.h
         src/entities/simulation.cpp
+        src/entities/obstacle.h
+        src/entities/obstacle.cpp
 )
 
 find_package(SDL2 REQUIRED)

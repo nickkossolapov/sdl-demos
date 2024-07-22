@@ -5,7 +5,8 @@
 #include "../math/Vector.h"
 #include "../config/colors.h"
 
-class Particle {
+class Particle
+{
 public:
     float mass;
     Vector position;
@@ -17,7 +18,7 @@ public:
     float radius;
     SDL_Color colour;
     bool isColliding = false;
-    float restitution = 0.5;
+    float restitution = 0.6;
 
     explicit Particle(float radius = 3, SDL_Color colour = Colours::blue);
 
