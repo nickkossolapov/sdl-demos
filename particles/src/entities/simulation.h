@@ -25,7 +25,7 @@ private:
     float accumulator = 0.0f;
     static constexpr float particleRadius = 3;
     static constexpr float obstacleRadius = 30;
-    static constexpr float collisionRadius = particleRadius + obstacleRadius - 1;
+    static constexpr float collisionRadius = particleRadius + obstacleRadius;
 };
 
 

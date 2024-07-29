@@ -62,12 +62,38 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
         if (normalVelocity < 0.0f) {
             float J = -normalVelocity * particle.mass * (particle.restitution + 1.0f);
 
-            if (J < 0.05f) {
-                J = 0.0f;
-            }
-
             particle.impactForce = {0.0f, J / timeStep};
             particle.position.y = particle.previousPosition.y;
+
+            isColliding = true;
+        }
+    }
+
+    // Check for left wall collision
+    if (particle.position.x <= 0 + particle.radius + 0.05f) {
+        float normalVelocity = particle.velocity.dot({1.0f, 0.0f});
+
+        if (normalVelocity < 0.0f) {
+            float J = -normalVelocity * particle.mass * (particle.restitution + 1.0f);
+
+
+            particle.impactForce += {J / timeStep, 0.0f};
+            particle.position.x = particle.previousPosition.x;
+
+            isColliding = true;
+        }
+    }
+
+    // Check for right wall collision
+    if (particle.position.x >= ScreenSize::width - particle.radius - 0.05f) {
+        float normalVelocity = particle.velocity.dot({-1.0f, 0.0f});
+
+        if (normalVelocity < 0.0f) {
+            float J = -normalVelocity * particle.mass * (particle.restitution + 1.0f);
+
+
+            particle.impactForce = {-J / timeStep, 0.0f};
+            particle.position.x = particle.previousPosition.x;
 
             isColliding = true;
         }
@@ -76,8 +102,9 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
     // Check for obstacle collision
     for (auto &obstacle: obstacles) {
         Vector distance = (particle.position - obstacle.position);
+        float overlap = distance.length() - collisionRadius;
 
-        if (distance.length() < collisionRadius) {
+        if (overlap < 0) {
             distance.normalize();
 
             float normalVelocity = particle.velocity.dot(distance);
@@ -85,12 +112,8 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
             if (normalVelocity < 0.0f) {
                 Vector J = -distance * normalVelocity * particle.mass * (particle.restitution + 1.0f);
 
-                if (J.length() < 1.0f) {
-                    J = {0.0f, 0.0f};
-                }
-
-                particle.impactForce = J / timeStep;
-                particle.position.y = particle.previousPosition.y;
+                particle.impactForce += J / timeStep;
+                particle.position -= distance * overlap;
 
                 isColliding = true;
             }
