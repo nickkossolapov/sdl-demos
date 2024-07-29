@@ -7,15 +7,13 @@
 #include "config/config.h"
 #include "entities/simulation.h"
 
-void prepareRenderer(SDL_Renderer* renderer)
-{
+void prepareRenderer(SDL_Renderer *renderer) {
     auto background = Colours::white;
     SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
-int main(int argc, char* args[])
-{
+int main(int argc, char *args[]) {
     init();
 
     bool quit = false;
@@ -23,29 +21,27 @@ int main(int argc, char* args[])
 
     int offset = 20;
     SDL_Rect particleInitialArea = {
-        offset,
-        2 * ScreenSize::height / 3 - offset,
-        ScreenSize::width - (2 * offset),
-        ScreenSize::height / 4
+            offset,
+            2 * ScreenSize::height / 3 - offset,
+            ScreenSize::width - (2 * offset),
+            ScreenSize::height / 4
     };
 
     int obstacleOffset = 30;
     SDL_Rect obstacleInitialArea = {
-        obstacleOffset,
-        2 * obstacleOffset,
-        ScreenSize::width - (2 * obstacleOffset),
-        ScreenSize::height / 4
+            obstacleOffset,
+            2 * obstacleOffset,
+            ScreenSize::width - (2 * obstacleOffset),
+            ScreenSize::height / 4
     };
 
     constexpr int numParticles = 1000;
-    auto simulation = Simulation(numParticles, particleInitialArea, 8, obstacleInitialArea);
+    constexpr int numObstacles = 15;
+    auto simulation = Simulation(numParticles, particleInitialArea, numObstacles, obstacleInitialArea);
 
-    while (!quit)
-    {
-        while (SDL_PollEvent(&e) != 0)
-        {
-            if (e.type == SDL_QUIT)
-            {
+    while (!quit) {
+        while (SDL_PollEvent(&e) != 0) {
+            if (e.type == SDL_QUIT) {
                 quit = true;
             }
         }

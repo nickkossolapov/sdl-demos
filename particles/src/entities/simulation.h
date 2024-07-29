@@ -7,8 +7,7 @@
 #include "particle.h"
 #include "../config/config.h"
 
-class Simulation
-{
+class Simulation {
 public:
     Simulation(int particleCount, SDL_Rect initialArea, int obstacleCount, SDL_Rect obstacleArea);
 
@@ -16,7 +15,7 @@ public:
 
     void draw() const;
 
-    static bool checkForCollision(Particle& particle, float timeStep);
+    bool checkForCollision(Particle &particle, float timeStep);
 
 private:
     std::vector<Particle> particles;
@@ -24,6 +23,9 @@ private:
     Uint32 lastTime = 0;
     float targetTimeStep = 0.005f;
     float accumulator = 0.0f;
+    static constexpr float particleRadius = 3;
+    static constexpr float obstacleRadius = 30;
+    static constexpr float collisionRadius = particleRadius + obstacleRadius - 1;
 };
 
 
