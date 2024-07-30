@@ -76,7 +76,6 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
         if (normalVelocity < 0.0f) {
             float J = -normalVelocity * particle.mass * (particle.restitution + 1.0f);
 
-
             particle.impactForce += {J / timeStep, 0.0f};
             particle.position.x = particle.previousPosition.x;
 
@@ -90,7 +89,6 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
 
         if (normalVelocity < 0.0f) {
             float J = -normalVelocity * particle.mass * (particle.restitution + 1.0f);
-
 
             particle.impactForce = {-J / timeStep, 0.0f};
             particle.position.x = particle.previousPosition.x;
