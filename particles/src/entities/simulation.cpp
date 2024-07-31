@@ -55,8 +55,11 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
     particle.impactForce = {0.0f, 0.0f};
     bool isColliding = false;
 
+    // check for multiple collisions
+    int numCollisions = 0;
+
     // Check for ground plane collision
-    if (particle.position.y <= World::groundPlane + particle.radius + 0.05f) {
+    if (particle.position.y <= World::groundPlane + particle.radius) {
         float normalVelocity = particle.velocity.dot({0.0f, 1.0f});
 
         if (normalVelocity < 0.0f) {
@@ -66,11 +69,12 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
             particle.position.y = particle.previousPosition.y;
 
             isColliding = true;
+            ++numCollisions;
         }
     }
 
     // Check for left wall collision
-    if (particle.position.x <= 0 + particle.radius + 0.05f) {
+    if (particle.position.x <= 0 + particle.radius) {
         float normalVelocity = particle.velocity.dot({1.0f, 0.0f});
 
         if (normalVelocity < 0.0f) {
@@ -80,6 +84,7 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
             particle.position.x = particle.previousPosition.x;
 
             isColliding = true;
+            ++numCollisions;
         }
     }
 
@@ -94,6 +99,7 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
             particle.position.x = particle.previousPosition.x;
 
             isColliding = true;
+            ++numCollisions;
         }
     }
 
@@ -114,8 +120,15 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
                 particle.position -= distance * overlap;
 
                 isColliding = true;
+                ++numCollisions;
             }
         }
+    }
+
+    // Split mass if collisions multiple collisions are detected - https://gamedev.stackexchange.com/a/32614
+    // Since only one particle can collide with multiple objects, mass and impulse force are directly related
+    if (numCollisions > 1) {
+        particle.impactForce /= static_cast<float>(numCollisions);
     }
 
     return isColliding;

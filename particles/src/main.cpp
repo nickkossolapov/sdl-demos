@@ -27,16 +27,16 @@ int main(int argc, char *args[]) {
             ScreenSize::height / 4
     };
 
-    int obstacleOffset = 30;
+    int obstacleOffset = 50;
     SDL_Rect obstacleInitialArea = {
             obstacleOffset,
             2 * obstacleOffset,
             ScreenSize::width - (2 * obstacleOffset),
-            ScreenSize::height / 4
+            ScreenSize::height / 3
     };
 
     constexpr int numParticles = 1000;
-    constexpr int numObstacles = 15;
+    constexpr int numObstacles = 30;
     auto simulation = Simulation(numParticles, particleInitialArea, numObstacles, obstacleInitialArea);
 
     while (!quit) {
