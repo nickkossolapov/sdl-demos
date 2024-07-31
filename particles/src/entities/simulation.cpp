@@ -1,7 +1,8 @@
 #include <random>
 #include "simulation.h"
 
-Simulation::Simulation(int particleCount, SDL_Rect initialArea, int obstacleCount, SDL_Rect obstacleArea)
+Simulation::Simulation(int particleCount, SDL_Rect initialArea, int obstacleCount,
+                       SDL_Rect obstacleArea)
         : particles(std::vector<Particle>(particleCount)) {
     std::random_device rd;
 
@@ -10,7 +11,6 @@ Simulation::Simulation(int particleCount, SDL_Rect initialArea, int obstacleCoun
         particle.position.x = static_cast<float>(rd() % initialArea.w + initialArea.x);
         particle.position.y = static_cast<float>(rd() % initialArea.h + initialArea.y);
     }
-
 
     for (int i = 0; i < obstacleCount; i++) {
         Vector position
@@ -46,8 +46,8 @@ void Simulation::draw() const {
         particle.draw();
     }
 
-    for (auto &obstable: obstacles) {
-        obstable.draw();
+    for (auto &obstacle: obstacles) {
+        obstacle.draw();
     }
 }
 
@@ -115,6 +115,12 @@ bool Simulation::checkForCollision(Particle &particle, float timeStep) {
 
             if (normalVelocity < 0.0f) {
                 Vector J = -distance * normalVelocity * particle.mass * (particle.restitution + 1.0f);
+
+                if (numCollisions == 0) {
+                    // Apply some "wobble" to stop particles staying on top of obstacles
+                    std::normal_distribution<float> distX(0, 0.01);
+                    J.x += distX(rng);;
+                }
 
                 particle.impactForce += J / timeStep;
                 particle.position -= distance * overlap;

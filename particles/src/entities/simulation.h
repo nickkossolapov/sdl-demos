@@ -1,6 +1,7 @@
 #ifndef PARTICLES_SIMULATION_H
 #define PARTICLES_SIMULATION_H
 
+#include <random>
 #include <vector>
 
 #include "obstacle.h"
@@ -23,6 +24,7 @@ private:
     Uint32 lastTime = 0;
     float targetTimeStep = 0.005f;
     float accumulator = 0.0f;
+    std::mt19937 rng; // Use Mersenne Twister for better performance
     static constexpr float particleRadius = 3;
     static constexpr float obstacleRadius = 30;
     static constexpr float collisionRadius = particleRadius + obstacleRadius;
