@@ -16,11 +16,13 @@ add_executable(
         src/globals.cpp
         src/utils/utils.h
         src/utils/utils.cpp
-        src/math/Vector.h
-        src/math/Vector.cpp
+        src/math/vector.h
+        src/math/vector.cpp
         src/constants.h
         src/utils/shapes.h
         src/utils/shapes.cpp
+        src/entities/spaceship.h
+        src/entities/2dBody.h
 )
 
 find_package(SDL2 REQUIRED)
