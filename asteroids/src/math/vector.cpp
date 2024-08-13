@@ -1,5 +1,5 @@
 #include <cmath>
-#include "Vector.h"
+#include "vector.h"
 
 Vector::Vector() : x(0), y(0), z(0) {}
 
