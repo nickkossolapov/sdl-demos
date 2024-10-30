@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include "./spaceship.h"
 #include "../globals.h"
 #include "../config/colors.h"
@@ -10,9 +12,22 @@ void Spaceship::handleEvent(const SDL_Event &e) {
 
 void Spaceship::draw() const {
     auto [x, y, _] = position;
-    auto background = Colours::white;
-    SDL_SetRenderDrawColor(gRenderer, background.r, background.g, background.b, 0xFF);
+    auto [r, g, b, a] = Colours::white;
+    SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
-    SDL_RenderDrawLineF(gRenderer, x, y, x + 50, y + 50);
+    // todo: figure out angles
+
+    float tipX = x + std::cos(orientation) * 80;
+    float tipY = y + std::sin(orientation) * 80;
+
+    float rearLeftX = x - std::cos(orientation - 135) * 50;
+    float rearLeftY = y + std::sin(orientation - 135) * 50;
+
+    float rearRightX = x - std::cos(orientation + 135) * 50;
+    float rearRightY = y + std::sin(orientation + 135) * 50;
+
+    SDL_RenderDrawLineF(gRenderer, tipX, tipY, rearLeftX, rearLeftY);
+    SDL_RenderDrawLineF(gRenderer, tipX, tipY, rearRightX, rearRightY);
+    SDL_RenderDrawLineF(gRenderer, rearLeftX, rearLeftY, rearRightX, rearRightY);
 }
 

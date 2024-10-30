@@ -5,6 +5,8 @@
 
 class Body2d {
 public:
+    virtual ~Body2d() = default;
+
     float mass;
     float inertia;
     Vector position;
