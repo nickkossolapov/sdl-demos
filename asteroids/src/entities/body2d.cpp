@@ -25,6 +25,6 @@ void Body2d::updateBodyEuler(float dt) {
     float dav = aa * aa;
     angularVelocity += dav;
 
-    float dr = radiansToDegrees(angularVelocity * dt);
-    orientation += dr;
+//    float dr = radiansToDegrees(angularVelocity * dt);
+//    orientation += dr;
 }

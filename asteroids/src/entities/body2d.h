@@ -18,7 +18,7 @@ public:
 
     void updateBodyEuler(float dt);
 
-    virtual void draw() const;
+    virtual void draw() const = 0;
 };
 
 #endif //ASTEROIDS_BODY2D_H

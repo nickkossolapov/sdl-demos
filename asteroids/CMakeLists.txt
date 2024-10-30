@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.23)
 project(asteroids)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
 
 set(SDL2_DIR ${CMAKE_SOURCE_DIR}/lib/SDL2/cmake)
