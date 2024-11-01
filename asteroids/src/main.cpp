@@ -5,8 +5,8 @@
 #include "entities/spaceship.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
-    auto background = Colours::black;
-    SDL_SetRenderDrawColor(renderer, background.r, background.g, background.b, 0xFF);
+    auto [r, g, b, a] = Colours::grey;
+    SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
@@ -23,9 +23,11 @@ int main(int argc, char *args[]) {
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT) {
+            if (e.type == SDL_QUIT || (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)) {
                 quit = true;
             }
+
+            spaceship.handleEvent(e);
         }
 
         prepareRenderer(gRenderer);

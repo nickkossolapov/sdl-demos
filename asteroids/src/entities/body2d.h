@@ -12,7 +12,7 @@ public:
     Vector position;
     Vector velocity;
     Vector netForce;
-    float orientation; // 2D, so this represents the z-axis
+    float orientation; // Radians, 2D, so this represents the z-axis
     float angularVelocity;
     float netMoment;
 
