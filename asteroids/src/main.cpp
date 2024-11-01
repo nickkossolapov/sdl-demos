@@ -1,6 +1,10 @@
+#include <iostream>
 #include <SDL.h>
+#include <vector>
+
 #include "config/colors.h"
 #include "globals.h"
+#include "entities/simulation.h"
 #include "utils/utils.h"
 #include "entities/spaceship.h"
 
@@ -21,6 +25,12 @@ int main(int argc, char *args[]) {
     spaceship.position.x = 100;
     spaceship.position.y = 100;
 
+    std::vector<std::reference_wrapper<Body2d> > gameObjects = {};
+
+    gameObjects.emplace_back(spaceship);
+
+    auto simulation = Simulation(gameObjects);
+
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT || (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)) {
@@ -30,9 +40,13 @@ int main(int argc, char *args[]) {
             spaceship.handleEvent(e);
         }
 
+        simulation.updateSimulation();
+
         prepareRenderer(gRenderer);
 
-        spaceship.draw();
+        for (auto &gameObject: gameObjects) {
+            gameObject.get().draw();
+        }
 
         SDL_RenderPresent(gRenderer);
     }

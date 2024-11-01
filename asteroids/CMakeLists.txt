@@ -27,6 +27,8 @@ add_executable(
         src/math/utils.h
         src/math/utils.cpp
         src/entities/spaceship.cpp
+        src/entities/simulation.h
+        src/entities/simulation.cpp
 )
 
 find_package(SDL2 REQUIRED)
