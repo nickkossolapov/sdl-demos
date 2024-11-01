@@ -7,7 +7,7 @@
 #include "../globals.h"
 #include "../config/colors.h"
 
-Spaceship::Spaceship(float mass, float inertia) : Body2d(mass, inertia), isThrusting(false) {
+Spaceship::Spaceship(float mass, float inertia) : Body2d(mass, inertia) {
 }
 
 
@@ -25,6 +25,9 @@ void Spaceship::handleEvent(const SDL_Event &e) {
             case SDLK_UP:
                 isThrusting = true;
                 break;
+            case SDLK_DOWN:
+                isBreaking = true;
+                break;
             default:
                 break;
         }
@@ -40,8 +43,7 @@ void Spaceship::handleEvent(const SDL_Event &e) {
                 isThrusting = false;
                 break;
             case SDLK_DOWN:
-                velocity.x = 0;
-                velocity.y = 0;
+                isBreaking = false;
                 break;
             default:
                 break;
@@ -75,10 +77,25 @@ void Spaceship::draw() const {
 
 void Spaceship::update() {
     if (isThrusting) {
-        constexpr float forwardSpeed = 100;
+        constexpr float thrust = 100;
 
-        velocity.x = std::sin(orientation) * forwardSpeed;
-        velocity.y = std::cos(orientation) * forwardSpeed;
+        netForce.x = std::sin(orientation) * thrust;
+        netForce.y = std::cos(orientation) * thrust;
+    } else {
+        netForce.x = 0;
+        netForce.y = 0;
+    }
+
+    if (isBreaking) {
+        if (velocity.length() < 30) {
+            velocity.x = 0;
+            velocity.y = 0;
+        } else {
+            constexpr float breakingFactor = 1.1;
+
+            velocity.x /= breakingFactor;
+            velocity.y /= breakingFactor;
+        }
     }
 }
 

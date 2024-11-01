@@ -17,7 +17,8 @@ public:
     void update();
 
 private:
-    bool isThrusting;
+    bool isThrusting = false;
+    bool isBreaking = false;
 };
 
 #endif //ASTEROIDS_SPACESHIP_H
