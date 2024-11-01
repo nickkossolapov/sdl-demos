@@ -8,9 +8,16 @@ class Spaceship : public Body2d {
 public:
     explicit Spaceship(float mass, float inertia);
 
+    void calculateVelocity();
+
     void handleEvent(const SDL_Event &e);
 
     void draw() const override;
+
+    void update();
+
+private:
+    bool isThrusting;
 };
 
 #endif //ASTEROIDS_SPACESHIP_H

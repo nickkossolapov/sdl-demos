@@ -9,7 +9,7 @@ void Simulation::updateSimulation() {
     accumulator += frameTime;
 
     while (accumulator >= targetTimeStep) {
-        for (auto &gameObject: gameObjects) {
+        for (auto const &gameObject: gameObjects) {
             gameObject.get().updateBodyEuler(targetTimeStep);
         }
 

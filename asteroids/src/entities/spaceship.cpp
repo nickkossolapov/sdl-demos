@@ -2,11 +2,14 @@
 
 #include "./spaceship.h"
 
+#include <iostream>
+
 #include "../globals.h"
 #include "../config/colors.h"
 
-Spaceship::Spaceship(float mass, float inertia) : Body2d(mass, inertia) {
+Spaceship::Spaceship(float mass, float inertia) : Body2d(mass, inertia), isThrusting(false) {
 }
+
 
 void Spaceship::handleEvent(const SDL_Event &e) {
     constexpr float turningSpeed = 3;
@@ -19,6 +22,9 @@ void Spaceship::handleEvent(const SDL_Event &e) {
             case SDLK_LEFT:
                 angularVelocity += -turningSpeed;
                 break;
+            case SDLK_UP:
+                isThrusting = true;
+                break;
             default:
                 break;
         }
@@ -29,6 +35,13 @@ void Spaceship::handleEvent(const SDL_Event &e) {
                 break;
             case SDLK_LEFT:
                 angularVelocity -= -turningSpeed;
+                break;
+            case SDLK_UP:
+                isThrusting = false;
+                break;
+            case SDLK_DOWN:
+                velocity.x = 0;
+                velocity.y = 0;
                 break;
             default:
                 break;
@@ -58,5 +71,14 @@ void Spaceship::draw() const {
     SDL_RenderDrawLineF(gRenderer, x, y, rearLeftX, rearLeftY);
     SDL_SetRenderDrawColor(gRenderer, 0x00, 0xff, 0x00, 0xFF);
     SDL_RenderDrawLineF(gRenderer, x, y, rearRightX, rearRightY);
+}
+
+void Spaceship::update() {
+    if (isThrusting) {
+        constexpr float forwardSpeed = 100;
+
+        velocity.x = std::sin(orientation) * forwardSpeed;
+        velocity.y = std::cos(orientation) * forwardSpeed;
+    }
 }
 

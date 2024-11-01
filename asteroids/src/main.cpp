@@ -40,6 +40,8 @@ int main(int argc, char *args[]) {
             spaceship.handleEvent(e);
         }
 
+        spaceship.update();
+
         simulation.updateSimulation();
 
         prepareRenderer(gRenderer);
