@@ -13,6 +13,8 @@ void Simulation::updateSimulation() {
             gameObject.get().updateBodyEuler(targetTimeStep);
         }
 
+        bulletManager.updateBullets(targetTimeStep);
+
         accumulator -= targetTimeStep;
     }
 

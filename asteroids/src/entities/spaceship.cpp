@@ -7,7 +7,9 @@
 #include "../globals.h"
 #include "../config/colors.h"
 
-Spaceship::Spaceship(float mass, float inertia) : Body2d(mass, inertia) {
+Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
+        : Body2d(mass, inertia), bulletManager(_bulletManager) {
+    maxSpeed = 400;
 }
 
 
@@ -28,6 +30,9 @@ void Spaceship::handleEvent(const SDL_Event &e) {
             case SDLK_DOWN:
                 isBreaking = true;
                 break;
+            case SDLK_SPACE:
+            case SDLK_TAB:
+                shoot();
             default:
                 break;
         }
@@ -52,27 +57,29 @@ void Spaceship::handleEvent(const SDL_Event &e) {
 }
 
 void Spaceship::draw() const {
-    auto [x, y, _] = position;
-
     auto [r, g, b, a] = Colours::white;
     SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
-    float tipX = x + std::sin(orientation) * 30;
-    float tipY = y + std::cos(orientation) * 30;
+    auto [x, y, _] = position;
+
+    float tipX = x + std::sin(orientation) * tipLength;
+    float tipY = y + std::cos(orientation) * tipLength;
+
+    float rearX = x - std::sin(orientation) * 5;
+    float rearY = y - std::cos(orientation) * 5;
 
     constexpr float finAngle = 2.356194f; // 135 degrees
 
-    float rearLeftX = x + std::sin(orientation - finAngle) * 20;
-    float rearLeftY = y + std::cos(orientation - finAngle) * 20;
+    float leftWingX = x + std::sin(orientation - finAngle) * wingLength;
+    float leftWingY = y + std::cos(orientation - finAngle) * wingLength;
 
-    float rearRightX = x + std::sin(orientation + finAngle) * 20;
-    float rearRightY = y + std::cos(orientation + finAngle) * 20;
+    float rightWingX = x + std::sin(orientation + finAngle) * wingLength;
+    float rightWingY = y + std::cos(orientation + finAngle) * wingLength;
 
-    SDL_RenderDrawLineF(gRenderer, x, y, tipX, tipY);
-    SDL_SetRenderDrawColor(gRenderer, 0xff, 0x00, 0x00, 0xFF);
-    SDL_RenderDrawLineF(gRenderer, x, y, rearLeftX, rearLeftY);
-    SDL_SetRenderDrawColor(gRenderer, 0x00, 0xff, 0x00, 0xFF);
-    SDL_RenderDrawLineF(gRenderer, x, y, rearRightX, rearRightY);
+    SDL_RenderDrawLineF(gRenderer, tipX, tipY, leftWingX, leftWingY);
+    SDL_RenderDrawLineF(gRenderer, tipX, tipY, rightWingX, rightWingY);
+    SDL_RenderDrawLineF(gRenderer, rearX, rearY, rightWingX, rightWingY);
+    SDL_RenderDrawLineF(gRenderer, rearX, rearY, leftWingX, leftWingY);
 }
 
 void Spaceship::update() {
@@ -99,3 +106,12 @@ void Spaceship::update() {
     }
 }
 
+void Spaceship::shoot() {
+    auto [x, y, z] = position;
+    float tipX = x + std::sin(orientation) * tipLength;
+    float tipY = y + std::cos(orientation) * tipLength;
+
+    auto bullet = Bullet({tipX, tipY}, {std::sin(orientation), std::cos(orientation)});
+
+    bulletManager.addBullet(bullet);
+}

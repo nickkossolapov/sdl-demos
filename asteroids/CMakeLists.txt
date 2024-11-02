@@ -29,6 +29,10 @@ add_executable(
         src/entities/spaceship.cpp
         src/entities/simulation.h
         src/entities/simulation.cpp
+        src/entities/bullet.h
+        src/entities/bullet.cpp
+        src/entities/bulletManager.h
+        src/entities/bulletManager.cpp
 )
 
 find_package(SDL2 REQUIRED)
