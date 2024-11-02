@@ -12,7 +12,7 @@ Spaceship::Spaceship(float mass, float inertia) : Body2d(mass, inertia) {
 
 
 void Spaceship::handleEvent(const SDL_Event &e) {
-    constexpr float turningSpeed = 3;
+    constexpr float turningSpeed = 4;
 
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         switch (e.key.keysym.sym) {
@@ -77,7 +77,7 @@ void Spaceship::draw() const {
 
 void Spaceship::update() {
     if (isThrusting) {
-        constexpr float thrust = 100;
+        constexpr float thrust = 500;
 
         netForce.x = std::sin(orientation) * thrust;
         netForce.y = std::cos(orientation) * thrust;
@@ -91,7 +91,7 @@ void Spaceship::update() {
             velocity.x = 0;
             velocity.y = 0;
         } else {
-            constexpr float breakingFactor = 1.1;
+            constexpr float breakingFactor = 1.05;
 
             velocity.x /= breakingFactor;
             velocity.y /= breakingFactor;
