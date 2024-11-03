@@ -1,6 +1,7 @@
 #include "bullet.h"
 #include "../globals.h"
 #include "../config/colors.h"
+#include "../config/config.h"
 
 void Bullet::draw() const {
     int x = static_cast<int>(position.x);
@@ -19,5 +20,9 @@ void Bullet::draw() const {
 void Bullet::update(float dt) {
     Vector ds = velocity * dt;
     position += ds;
+}
+
+bool Bullet::isOffScreen() const {
+    return position.x < 0 || position.x > ScreenSize::width || position.y < 0 || position.y > ScreenSize::height;
 }
 

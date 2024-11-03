@@ -11,9 +11,25 @@ public:
         velocity = direction * defaultSpeed;
     }
 
+    Bullet &operator=(Bullet &&other) noexcept {
+        if (this != &other) {
+            position = other.position;
+            velocity = other.velocity;
+        }
+
+        return *this;
+    }
+
+    Bullet(const Bullet &other) {
+        position = other.position;
+        velocity = other.velocity;
+    }
+
     void draw() const;
 
     void update(float dt);
+
+    bool isOffScreen() const;
 
 private:
     Vector position;

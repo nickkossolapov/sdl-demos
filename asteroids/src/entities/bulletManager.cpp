@@ -5,8 +5,15 @@ void BulletManager::addBullet(const Bullet &bullet) {
 }
 
 void BulletManager::updateBullets(float dt) {
-    for (auto &bullet: bullets) {
-        bullet.update(dt);
+    for (int i = 0; i < bullets.size();) {
+        bullets[i].update(dt);
+
+        if (bullets[i].isOffScreen()) {
+            std::swap(bullets[i], bullets.back());
+            bullets.pop_back();
+        } else {
+            i++;
+        }
     }
 }
 
