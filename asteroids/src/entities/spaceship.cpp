@@ -6,6 +6,7 @@
 
 #include "../globals.h"
 #include "../config/colors.h"
+#include "../config/config.h"
 
 Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
     : Body2d(mass, inertia), bulletManager(_bulletManager) {
@@ -95,6 +96,18 @@ void Spaceship::update() {
             velocity.x /= breakingFactor;
             velocity.y /= breakingFactor;
         }
+    }
+
+    if (position.x < 0) {
+        position.x = ScreenSize::width;
+    } else if (position.x > ScreenSize::width) {
+        position.x = 0;
+    }
+
+    if (position.y < 0) {
+        position.y = ScreenSize::height;
+    } else if (position.y > ScreenSize::height) {
+        position.y = 0;
     }
 }
 
