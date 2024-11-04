@@ -2,7 +2,7 @@
 #define ASTEROIDS_BULLETMANAGER_H
 
 #include <vector>
-#include "bullet.h"
+#include "../entities/bullet.h"
 
 class BulletManager {
 public:

@@ -4,10 +4,10 @@
 
 #include "config/colors.h"
 #include "globals.h"
-#include "entities/simulation.h"
+#include "managers/simulation.h"
 #include "utils/utils.h"
 #include "entities/spaceship.h"
-#include "entities/bulletManager.h"
+#include "managers/bulletManager.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     auto [r, g, b, a] = Colours::grey;

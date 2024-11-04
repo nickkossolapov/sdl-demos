@@ -1,16 +1,16 @@
 #ifndef PARTICLES_SIMULATION_H
 #define PARTICLES_SIMULATION_H
 
+#include <SDL_stdinc.h>
 #include <vector>
 
-#include "body2d.h"
-#include "../config/config.h"
+#include "../entities/body2d.h"
 #include "bulletManager.h"
 
 class Simulation {
 public:
-    explicit Simulation(const std::vector<std::reference_wrapper<Body2d>> &_gameObjects, BulletManager &_bulletManager)
-            : gameObjects(_gameObjects), bulletManager(_bulletManager) {
+    explicit Simulation(const std::vector<std::reference_wrapper<Body2d> > &_gameObjects, BulletManager &_bulletManager)
+        : gameObjects(_gameObjects), bulletManager(_bulletManager) {
     };
 
     void updateSimulation();

@@ -35,7 +35,7 @@ private:
     Vector position;
     Vector velocity;
 
-    const float defaultSpeed = 550.0f;
+    const float defaultSpeed = 600.0f;
 };
 
 #endif //ASTEROIDS_BULLET_H

@@ -3,7 +3,7 @@
 
 #include <SDL.h>
 #include "body2d.h"
-#include "bulletManager.h"
+#include "../managers/bulletManager.h"
 
 class Spaceship : public Body2d {
 public:
