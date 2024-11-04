@@ -21,7 +21,6 @@ private:
 
     BulletManager &bulletManager;
     bool isThrusting = false;
-    bool isBreaking = false;
 
     void shoot();
 };

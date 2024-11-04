@@ -8,7 +8,7 @@
 #include "../config/colors.h"
 
 Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
-        : Body2d(mass, inertia), bulletManager(_bulletManager) {
+    : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
 }
 
@@ -27,9 +27,6 @@ void Spaceship::handleEvent(const SDL_Event &e) {
             case SDLK_UP:
                 isThrusting = true;
                 break;
-            case SDLK_DOWN:
-                isBreaking = true;
-                break;
             case SDLK_SPACE:
             case SDLK_TAB:
                 shoot();
@@ -46,9 +43,6 @@ void Spaceship::handleEvent(const SDL_Event &e) {
                 break;
             case SDLK_UP:
                 isThrusting = false;
-                break;
-            case SDLK_DOWN:
-                isBreaking = false;
                 break;
             default:
                 break;
@@ -91,14 +85,12 @@ void Spaceship::update() {
     } else {
         netForce.x = 0;
         netForce.y = 0;
-    }
 
-    if (isBreaking) {
         if (velocity.length() < 30) {
             velocity.x = 0;
             velocity.y = 0;
         } else {
-            constexpr float breakingFactor = 1.05;
+            constexpr float breakingFactor = 1.01;
 
             velocity.x /= breakingFactor;
             velocity.y /= breakingFactor;
