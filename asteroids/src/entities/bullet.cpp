@@ -4,6 +4,10 @@
 #include "../config/config.h"
 
 void Bullet::draw() const {
+    if (isDestroyed) {
+        return;
+    }
+
     int x = static_cast<int>(position.x);
     int y = static_cast<int>(position.y);
 

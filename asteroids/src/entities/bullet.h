@@ -7,6 +7,7 @@
 class Bullet {
 public:
     Vector position;
+    bool isDestroyed = false;
 
     Bullet(const Vector &_position, const Vector &direction) {
         position = _position;
@@ -22,10 +23,7 @@ public:
         return *this;
     }
 
-    Bullet(const Bullet &other) {
-        position = other.position;
-        velocity = other.velocity;
-    }
+    Bullet(const Bullet &other) = default;
 
     void draw() const;
 

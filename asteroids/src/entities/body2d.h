@@ -5,8 +5,6 @@
 
 class Body2d {
 public:
-    virtual ~Body2d() = default;
-
     float mass;
     float inertia;
     Vector position = {0, 0, 0};
@@ -19,6 +17,8 @@ public:
     float netMoment = 0;
 
     Body2d(float mass, float inertia);
+
+    virtual ~Body2d() = default;
 
     void updateBodyEuler(float dt);
 

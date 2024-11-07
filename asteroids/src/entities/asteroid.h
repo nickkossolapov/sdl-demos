@@ -16,6 +16,14 @@ public:
           scale(_scale) {
     }
 
+    Asteroid(Asteroid const &other) = default;
+
+    Asteroid(Asteroid &&other) noexcept = default;
+
+    Asteroid &operator=(Asteroid const &other) = default;
+
+    Asteroid &operator=(Asteroid &&other) noexcept = default;
+
     void draw() const override;
 
     void update() override {

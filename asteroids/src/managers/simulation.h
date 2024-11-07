@@ -24,7 +24,6 @@ private:
     Spaceship &spaceship;
     BulletManager &bulletManager;
     AsteroidManager &asteroidManager;
-    // std::mt19937 rng; // Use Mersenne Twister for better performance
 };
 
 

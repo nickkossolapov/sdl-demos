@@ -8,7 +8,7 @@ void BulletManager::updateBullets(float dt) {
     for (int i = 0; i < bullets.size();) {
         bullets[i].update(dt);
 
-        if (bullets[i].isOffScreen()) {
+        if (bullets[i].isOffScreen() || bullets[i].isDestroyed) {
             std::swap(bullets[i], bullets.back());
             bullets.pop_back();
         } else {

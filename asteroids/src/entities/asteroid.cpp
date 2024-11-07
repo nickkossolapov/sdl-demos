@@ -9,13 +9,12 @@
 #include "../math/utils.h"
 
 void Asteroid::draw() const {
-    auto [r, g, b, a] = Colours::white;
-    SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
-
     if (hasCollided) {
-        SDL_SetRenderDrawColor(gRenderer, r, 0x00, 0x00, 0xFF);
+        return;
     }
 
+    auto [r, g, b, a] = Colours::white;
+    SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
     float dCos = std::cos(orientation);
     float dSin = std::sin(orientation);
