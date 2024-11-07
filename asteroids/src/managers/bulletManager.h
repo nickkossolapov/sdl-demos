@@ -12,6 +12,10 @@ public:
 
     void drawBullets() const;
 
+    std::vector<Bullet> &getBullets() {
+        return bullets;
+    };
+
 private:
     std::vector<Bullet> bullets;
 };

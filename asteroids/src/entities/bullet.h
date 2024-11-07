@@ -6,6 +6,8 @@
 
 class Bullet {
 public:
+    Vector position;
+
     Bullet(const Vector &_position, const Vector &direction) {
         position = _position;
         velocity = direction * defaultSpeed;
@@ -32,7 +34,6 @@ public:
     bool isOffScreen() const;
 
 private:
-    Vector position;
     Vector velocity;
 
     const float defaultSpeed = 600.0f;
