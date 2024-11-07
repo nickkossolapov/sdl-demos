@@ -33,6 +33,8 @@ add_executable(
         src/entities/bullet.cpp
         src/managers/bulletManager.h
         src/managers/bulletManager.cpp
+        src/entities/asteroid.h
+        src/entities/asteroid.cpp
 )
 
 find_package(SDL2 REQUIRED)

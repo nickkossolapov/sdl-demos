@@ -4,8 +4,8 @@
 #include <SDL_rect.h>
 
 namespace ScreenSize {
-    const int width = 800;
-    const int height = 800;
+    const int width = 1200;
+    const int height = 900;
 };
 
 #endif //CONSTANTS_H

@@ -5,7 +5,7 @@
 #include "body2d.h"
 #include "../managers/bulletManager.h"
 
-class Spaceship : public Body2d {
+class Spaceship final : public Body2d {
 public:
     explicit Spaceship(float mass, float inertia, BulletManager &_bulletManager);
 

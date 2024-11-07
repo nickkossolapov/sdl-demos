@@ -4,6 +4,8 @@
 
 #include "config/colors.h"
 #include "globals.h"
+#include "config/config.h"
+#include "entities/asteroid.h"
 #include "managers/simulation.h"
 #include "utils/utils.h"
 #include "entities/spaceship.h"
@@ -25,14 +27,17 @@ int main(int argc, char *args[]) {
 
     auto spaceship = Spaceship(1.0, 1.0, bulletManager);
 
-    spaceship.position.x = 100;
-    spaceship.position.y = 100;
+    spaceship.position = {ScreenSize::width / 2, ScreenSize::height / 2};
 
     std::vector<std::reference_wrapper<Body2d> > gameObjects = {};
 
     gameObjects.emplace_back(spaceship);
 
     auto simulation = Simulation(gameObjects, bulletManager);
+
+    auto asteroid = Asteroid(1);
+
+    asteroid.position = {200, 200};
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -54,6 +59,10 @@ int main(int argc, char *args[]) {
         for (auto &gameObject: gameObjects) {
             gameObject.get().draw();
         }
+
+        asteroid.orientation += 0.05;
+
+        asteroid.draw();
 
         bulletManager.drawBullets();
 

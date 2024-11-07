@@ -1,7 +1,7 @@
 #ifndef PARTICLES_SIMULATION_H
 #define PARTICLES_SIMULATION_H
 
-#include <SDL_stdinc.h>
+#include <SDL.h>
 #include <vector>
 
 #include "../entities/body2d.h"
