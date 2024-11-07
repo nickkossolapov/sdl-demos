@@ -1,8 +1,6 @@
 #include "asteroidManager.h"
 
 void AsteroidManager::update() {
-    asteroids[0].orientation += 0.05;
-
     for (auto &asteroid: asteroids) {
         for (const auto &bullet: bulletManager.getBullets()) {
             if (asteroid.isColliding(bullet.position)) {
@@ -13,8 +11,8 @@ void AsteroidManager::update() {
     }
 }
 
-void AsteroidManager::updateBodiesEuler(const float dt) const {
-    for (auto asteroid: asteroids) {
+void AsteroidManager::updateBodiesEuler(const float dt) {
+    for (auto &asteroid: asteroids) {
         asteroid.updateBodyEuler(dt);
     }
 }

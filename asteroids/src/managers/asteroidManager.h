@@ -10,13 +10,14 @@ public:
         auto asteroid = Asteroid(1);
 
         asteroid.position = {200, 200};
+        asteroid.angularVelocity = 1;
 
         asteroids.push_back(asteroid);
     }
 
     void update();
 
-    void updateBodiesEuler(float dt) const;
+    void updateBodiesEuler(float dt);
 
     void drawAsteroids() const;
 

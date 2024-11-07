@@ -10,7 +10,7 @@ void Simulation::updateSimulation() {
 
     while (accumulator >= targetTimeStep) {
         spaceship.updateBodyEuler(targetTimeStep);
-
+        asteroidManager.updateBodiesEuler(targetTimeStep);
         bulletManager.updateBullets(targetTimeStep);
 
         accumulator -= targetTimeStep;
