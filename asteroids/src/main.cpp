@@ -9,6 +9,7 @@
 #include "managers/simulation.h"
 #include "utils/utils.h"
 #include "entities/spaceship.h"
+#include "managers/asteroidManager.h"
 #include "managers/bulletManager.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
@@ -24,20 +25,12 @@ int main(int argc, char *args[]) {
     SDL_Event e;
 
     auto bulletManager = BulletManager();
+    auto asteroidManager = AsteroidManager(bulletManager);
 
     auto spaceship = Spaceship(1.0, 1.0, bulletManager);
+    spaceship.position = {static_cast<float>(ScreenSize::width) / 2, static_cast<float>(ScreenSize::height) / 2};
 
-    spaceship.position = {ScreenSize::width / 2, ScreenSize::height / 2};
-
-    std::vector<std::reference_wrapper<Body2d> > gameObjects = {};
-
-    gameObjects.emplace_back(spaceship);
-
-    auto simulation = Simulation(gameObjects, bulletManager);
-
-    auto asteroid = Asteroid(1);
-
-    asteroid.position = {200, 200};
+    auto simulation = Simulation(spaceship, bulletManager, asteroidManager);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -48,23 +41,17 @@ int main(int argc, char *args[]) {
             spaceship.handleEvent(e);
         }
 
-        for (auto &gameObject: gameObjects) {
-            gameObject.get().update();
-        }
+        spaceship.update();
+        asteroidManager.update();
 
         simulation.updateSimulation();
 
         prepareRenderer(gRenderer);
 
-        for (auto &gameObject: gameObjects) {
-            gameObject.get().draw();
-        }
-
-        asteroid.orientation += 0.05;
-
-        asteroid.draw();
-
+        spaceship.draw();
         bulletManager.drawBullets();
+        asteroidManager.drawAsteroids();
+
 
         SDL_RenderPresent(gRenderer);
     }

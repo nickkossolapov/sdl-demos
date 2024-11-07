@@ -9,9 +9,7 @@ void Simulation::updateSimulation() {
     accumulator += frameTime;
 
     while (accumulator >= targetTimeStep) {
-        for (auto const &gameObject: gameObjects) {
-            gameObject.get().updateBodyEuler(targetTimeStep);
-        }
+        spaceship.updateBodyEuler(targetTimeStep);
 
         bulletManager.updateBullets(targetTimeStep);
 
