@@ -9,17 +9,17 @@
 #include "../math/utils.h"
 
 Asteroid::Asteroid(const int _scale, std::mt19937 &rng)
-    : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
-      scale(_scale), vertices(std::array<Vector, 12>()) {
+        : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
+          scale(_scale), vertices(std::array<Vector, 12>()) {
     std::uniform_real_distribution<float> dist(0.5, 1.0);
 
     for (int i = 0; i < 12; ++i) {
         Vector vertex = {
-            std::cos(static_cast<float>(i) * 3.14159f / 6),
-            std::sin(static_cast<float>(i) * 3.14159f / 6),
+                std::cos(static_cast<float>(i) * 3.14159f / 6),
+                std::sin(static_cast<float>(i) * 3.14159f / 6),
         };
 
-        vertices[i] = vertex * dist(rng) * static_cast<float>(scale) * static_cast<float>(size);
+        vertices[i] = vertex * dist(rng) * radius;
     }
 
     originalVertices = vertices;
@@ -31,8 +31,8 @@ void Asteroid::update() {
 
     for (int i = 0; i < 12; ++i) {
         vertices[i] = {
-            originalVertices[i].x * dCos - originalVertices[i].y * dSin,
-            originalVertices[i].x * dSin + originalVertices[i].y * dCos,
+                originalVertices[i].x * dCos - originalVertices[i].y * dSin + position.x,
+                originalVertices[i].x * dSin + originalVertices[i].y * dCos + position.y,
         };
     }
 }
@@ -44,52 +44,32 @@ void Asteroid::draw() const {
     }
 
     auto [r, g, b, a] = Colours::white;
-    SDL_SetRenderDrawColor(gRenderer, r, 0x00, 0x00, 0xFF);
-
-    float dCos = std::cos(orientation);
-    float dSin = std::sin(orientation);
-
-    std::vector<SDL_FPoint> squareVertices = {
-        {position.x + dCos * cornerLength, position.y + dSin * cornerLength},
-        {position.x + dSin * cornerLength, position.y - dCos * cornerLength},
-        {position.x - dCos * cornerLength, position.y - dSin * cornerLength},
-        {position.x - dSin * cornerLength, position.y + dCos * cornerLength},
-    };
-
-    for (int i = 0; i < 4; ++i) {
-        int j = (i + 1) % 4;
-        SDL_RenderDrawLineF(gRenderer, squareVertices[i].x, squareVertices[i].y, squareVertices[j].x,
-                            squareVertices[j].y);
-    }
 
     SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
     for (int i = 0; i < 12; ++i) {
         int j = (i + 1) % 12;
         SDL_RenderDrawLineF(
-            gRenderer,
-            vertices[i].x + position.x,
-            vertices[i].y + position.y,
-            vertices[j].x + position.x,
-            vertices[j].y + position.y);
+                gRenderer,
+                vertices[i].x,
+                vertices[i].y,
+                vertices[j].x,
+                vertices[j].y);
     }
 }
 
 bool Asteroid::isColliding(Vector const &point) const {
-    if ((point - position).length() > cornerLength) {
+    if ((point - position).length() > radius) {
         return false;
     }
 
-    float dCos = std::cos(orientation);
-    float dSin = std::sin(orientation);
+    for (int i = 0; i < 12; ++i) {
+        int j = (i + 1) % 12;
 
-    float paddedLength = cornerLength + 2.0f;
+        if (isInTriangle(point, vertices[i], vertices[j], position)) {
+            return true;
+        }
+    }
 
-    // Vertices
-    Vector v1 = {position.x + dCos * paddedLength, position.y + dSin * paddedLength};
-    Vector v2 = {position.x + dSin * paddedLength, position.y - dCos * paddedLength};
-    Vector v3 = {position.x - dCos * paddedLength, position.y - dSin * paddedLength};
-    Vector v4 = {position.x - dSin * paddedLength, position.y + dCos * paddedLength};
-
-    return isInTriangle(point, v1, v2, v3) || isInTriangle(point, v2, v3, v4);
+    return false;
 }

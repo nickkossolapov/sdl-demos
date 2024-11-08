@@ -1,6 +1,6 @@
 #include <cmath>
 
-#include "./spaceship.h"
+#include "./player.h"
 
 #include <iostream>
 
@@ -9,7 +9,7 @@
 #include "../config/config.h"
 
 Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
-    : Body2d(mass, inertia), bulletManager(_bulletManager) {
+        : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
 }
 

@@ -1,5 +1,5 @@
-#ifndef ASTEROIDS_SPACESHIP_H
-#define ASTEROIDS_SPACESHIP_H
+#ifndef ASTEROIDS_PLAYER_H
+#define ASTEROIDS_PLAYER_H
 
 #include <SDL.h>
 #include "body2d.h"
@@ -25,4 +25,4 @@ private:
     void shoot();
 };
 
-#endif //ASTEROIDS_SPACESHIP_H
+#endif //ASTEROIDS_PLAYER_H

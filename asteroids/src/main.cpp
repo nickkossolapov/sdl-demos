@@ -8,7 +8,7 @@
 #include "entities/asteroid.h"
 #include "managers/simulation.h"
 #include "utils/utils.h"
-#include "entities/spaceship.h"
+#include "entities/player.h"
 #include "managers/asteroidManager.h"
 #include "managers/bulletManager.h"
 

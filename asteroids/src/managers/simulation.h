@@ -7,12 +7,12 @@
 #include "asteroidManager.h"
 #include "../entities/body2d.h"
 #include "bulletManager.h"
-#include "../entities/spaceship.h"
+#include "../entities/player.h"
 
 class Simulation {
 public:
     explicit Simulation(Spaceship &_spaceship, BulletManager &_bulletManager, AsteroidManager &_asteroidManager)
-        : spaceship(_spaceship), bulletManager(_bulletManager), asteroidManager(_asteroidManager) {
+            : spaceship(_spaceship), bulletManager(_bulletManager), asteroidManager(_asteroidManager) {
     };
 
     void updateSimulation();

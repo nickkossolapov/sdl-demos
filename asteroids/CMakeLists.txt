@@ -21,12 +21,12 @@ add_executable(
         src/constants.h
         src/utils/shapes.h
         src/utils/shapes.cpp
-        src/entities/spaceship.h
+        src/entities/player.h
         src/entities/body2d.h
         src/entities/body2d.cpp
         src/math/utils.h
         src/math/utils.cpp
-        src/entities/spaceship.cpp
+        src/entities/player.cpp
         src/managers/simulation.h
         src/managers/simulation.cpp
         src/entities/bullet.h
