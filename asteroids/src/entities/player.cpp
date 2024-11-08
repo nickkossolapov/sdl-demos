@@ -7,6 +7,7 @@
 #include "../globals.h"
 #include "../config/colors.h"
 #include "../config/config.h"
+#include "../utils/controller.h"
 
 Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
         : Body2d(mass, inertia), bulletManager(_bulletManager) {
@@ -16,6 +17,33 @@ Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
 
 void Spaceship::handleEvent(const SDL_Event &e) {
     constexpr float turningSpeed = 4;
+
+    if (e.type == SDL_JOYAXISMOTION) {
+        if (e.jaxis.which == 0 && e.jaxis.axis == 0) {
+            angularVelocity = -getAxisTilt(e.jaxis.value) * turningSpeed;
+        }
+    }
+
+    if (e.type == SDL_JOYBUTTONDOWN) {
+        switch (e.jbutton.button) {
+            case 0:
+                isThrusting = true;
+                break;
+            case 2:
+                shoot();
+                break;
+            default:
+                break;
+        }
+    } else if (e.type == SDL_JOYBUTTONUP) {
+        switch (e.jbutton.button) {
+            case 0:
+                isThrusting = false;
+                break;
+            default:
+                break;
+        }
+    }
 
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         switch (e.key.keysym.sym) {

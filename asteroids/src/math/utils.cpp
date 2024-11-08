@@ -1,7 +1,8 @@
 #include "./utils.h"
+#include "../constants.h"
 
 float radiansToDegrees(float const radians) {
-    return radians * (180.0f / 3.14159f);
+    return radians * (180.0f / Constants::Pi);
 }
 
 float sign(Vector const &p1, Vector const &p2, Vector const &p3) {

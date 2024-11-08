@@ -37,6 +37,8 @@ add_executable(
         src/entities/asteroid.cpp
         src/managers/asteroidManager.h
         src/managers/asteroidManager.cpp
+        src/utils/controller.h
+        src/utils/controller.cpp
 )
 
 find_package(SDL2 REQUIRED)

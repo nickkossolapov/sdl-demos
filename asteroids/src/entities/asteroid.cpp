@@ -7,6 +7,7 @@
 #include "../config/colors.h"
 #include "../globals.h"
 #include "../math/utils.h"
+#include "../constants.h"
 
 Asteroid::Asteroid(const int _scale, std::mt19937 &rng)
         : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
@@ -15,8 +16,8 @@ Asteroid::Asteroid(const int _scale, std::mt19937 &rng)
 
     for (int i = 0; i < 12; ++i) {
         Vector vertex = {
-                std::cos(static_cast<float>(i) * 3.14159f / 6),
-                std::sin(static_cast<float>(i) * 3.14159f / 6),
+                std::cos(static_cast<float>(i) * Constants::Pi / 6),
+                std::sin(static_cast<float>(i) * Constants::Pi / 6),
         };
 
         vertices[i] = vertex * dist(rng) * radius;
