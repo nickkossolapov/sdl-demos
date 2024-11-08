@@ -1,5 +1,5 @@
-#ifndef PARTICLES_SIMULATION_H
-#define PARTICLES_SIMULATION_H
+#ifndef ASTEROIDS_SIMULATION_H
+#define ASTEROIDS_SIMULATION_H
 
 #include <SDL.h>
 #include <vector>
@@ -27,4 +27,4 @@ private:
 };
 
 
-#endif //PARTICLES_SIMULATION_H
+#endif //ASTEROIDS_SIMULATION_H

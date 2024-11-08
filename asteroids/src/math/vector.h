@@ -1,5 +1,5 @@
-#ifndef PARTICLES_VECTOR_H
-#define PARTICLES_VECTOR_H
+#ifndef ASTEROIDS_VECTOR_H
+#define ASTEROIDS_VECTOR_H
 
 class Vector {
 public:
@@ -52,4 +52,4 @@ private:
 };
 
 
-#endif //PARTICLES_VECTOR_H
+#endif //ASTEROIDS_VECTOR_H

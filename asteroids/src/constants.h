@@ -1,8 +1,8 @@
-#ifndef PARTICLES_CONSTANTS_H
-#define PARTICLES_CONSTANTS_H
+#ifndef ASTEROIDS_CONSTANTS_H
+#define ASTEROIDS_CONSTANTS_H
 
 namespace Constants {
     constexpr float Pi = 3.14159265359f;
 }
 
-#endif //PARTICLES_CONSTANTS_H
+#endif //ASTEROIDS_CONSTANTS_H

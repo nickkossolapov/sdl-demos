@@ -11,7 +11,7 @@ void init() {
     if (TTF_Init() == -1) {
         exit(2);
     }
-    gWindow = SDL_CreateWindow("Particles", 700, 400, ScreenSize::width, ScreenSize::height, SDL_WINDOW_SHOWN);
+    gWindow = SDL_CreateWindow("Asteroids", 700, 400, ScreenSize::width, ScreenSize::height, SDL_WINDOW_SHOWN);
     if (gWindow == nullptr) {
         exit(3);
     }
