@@ -18,9 +18,7 @@ public:
 private:
     float tipLength = 25;
     float wingLength = 15;
-
     int flameAnimationCount = 0;
-
     BulletManager &bulletManager;
     bool isThrusting = false;
     bool isTiltTrusting = false;

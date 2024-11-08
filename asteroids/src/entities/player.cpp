@@ -108,6 +108,18 @@ void Spaceship::draw() const {
     SDL_RenderDrawLineF(gRenderer, rightEndX, rightEndY, rightWingX, rightWingY);
     SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, leftWingX, leftWingY);
     SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, rightEndX, rightEndY);
+
+    if (isThrusting || isTiltTrusting) {
+        auto ticks = SDL_GetTicks();
+
+        if (ticks % 2 == 0) {
+            float flameEndX = x - std::sin(orientation) * wingLength;
+            float flameEndY = y - std::cos(orientation) * wingLength;
+
+            SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, flameEndX, flameEndY);
+            SDL_RenderDrawLineF(gRenderer, rightEndX, rightEndY, flameEndX, flameEndY);
+        }
+    }
 }
 
 void Spaceship::update() {
