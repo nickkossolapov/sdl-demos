@@ -10,21 +10,26 @@
 #include "../utils/controller.h"
 
 Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
-        : Body2d(mass, inertia), bulletManager(_bulletManager) {
+    : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
 }
 
 
 void Spaceship::handleEvent(const SDL_Event &e) {
-    constexpr float turningSpeed = 4;
+    constexpr float turningSpeed = 5;
 
     if (e.type == SDL_JOYAXISMOTION) {
         if (e.jaxis.which == 0 && e.jaxis.axis == 0) {
             angularVelocity = -getAxisTilt(e.jaxis.value) * turningSpeed;
         }
-    }
-
-    if (e.type == SDL_JOYBUTTONDOWN) {
+        if (e.jaxis.which == 0 && e.jaxis.axis == 1) {
+            if (fabsf(getAxisTilt(e.jaxis.value)) > 0.7) {
+                isTiltTrusting = true;
+            } else {
+                isTiltTrusting = false;
+            }
+        }
+    } else if (e.type == SDL_JOYBUTTONDOWN) {
         switch (e.jbutton.button) {
             case 0:
                 isThrusting = true;
@@ -43,9 +48,7 @@ void Spaceship::handleEvent(const SDL_Event &e) {
             default:
                 break;
         }
-    }
-
-    if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+    } else if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         switch (e.key.keysym.sym) {
             case SDLK_RIGHT:
                 angularVelocity += turningSpeed;
@@ -88,25 +91,27 @@ void Spaceship::draw() const {
     float tipX = x + std::sin(orientation) * tipLength;
     float tipY = y + std::cos(orientation) * tipLength;
 
-    float rearX = x - std::sin(orientation) * 5;
-    float rearY = y - std::cos(orientation) * 5;
-
     constexpr float finAngle = 2.356194f; // 135 degrees
 
+    float leftEndX = x + std::sin(orientation - finAngle) * wingLength / 2;
+    float leftEndY = y + std::cos(orientation - finAngle) * wingLength / 2;
     float leftWingX = x + std::sin(orientation - finAngle) * wingLength;
     float leftWingY = y + std::cos(orientation - finAngle) * wingLength;
 
+    float rightEndX = x + std::sin(orientation + finAngle) * wingLength / 2;
+    float rightEndY = y + std::cos(orientation + finAngle) * wingLength / 2;
     float rightWingX = x + std::sin(orientation + finAngle) * wingLength;
     float rightWingY = y + std::cos(orientation + finAngle) * wingLength;
 
     SDL_RenderDrawLineF(gRenderer, tipX, tipY, leftWingX, leftWingY);
     SDL_RenderDrawLineF(gRenderer, tipX, tipY, rightWingX, rightWingY);
-    SDL_RenderDrawLineF(gRenderer, rearX, rearY, rightWingX, rightWingY);
-    SDL_RenderDrawLineF(gRenderer, rearX, rearY, leftWingX, leftWingY);
+    SDL_RenderDrawLineF(gRenderer, rightEndX, rightEndY, rightWingX, rightWingY);
+    SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, leftWingX, leftWingY);
+    SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, rightEndX, rightEndY);
 }
 
 void Spaceship::update() {
-    if (isThrusting) {
+    if (isThrusting || isTiltTrusting) {
         constexpr float thrust = 500;
 
         netForce.x = std::sin(orientation) * thrust;
