@@ -4,13 +4,13 @@
 
 #include "../config/config.h"
 
-AsteroidManager::AsteroidManager(int initialAsteroids, BulletManager &_bulletManager)
+AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager)
     : bulletManager(_bulletManager),
       rng(std::chrono::system_clock::now().time_since_epoch().count()) {
     std::uniform_int_distribution<> scaleDist(1, 3);
 
     for (int i = 0; i < initialAsteroids; ++i) {
-        asteroids.emplace_back(scaleDist(rng));
+        asteroids.emplace_back(scaleDist(rng), rng);
     }
 
     std::uniform_real_distribution<float> xDist(0, ScreenSize::width);
@@ -25,13 +25,13 @@ AsteroidManager::AsteroidManager(int initialAsteroids, BulletManager &_bulletMan
 
 void AsteroidManager::update() {
     for (auto &asteroid: asteroids) {
+        asteroid.update();
+
         for (auto &bullet: bulletManager.getBullets()) {
             if (asteroid.isColliding(bullet.position)) {
                 asteroid.hasCollided = true;
                 bullet.isDestroyed = true;
-
-                createAsteroid();
-                return;
+                break;
             }
         }
     }
@@ -40,6 +40,7 @@ void AsteroidManager::update() {
         if (asteroids[i].hasCollided) {
             std::swap(asteroids[i], asteroids.back());
             asteroids.pop_back();
+            createAsteroid();
         } else {
             i++;
         }
@@ -61,7 +62,7 @@ void AsteroidManager::drawAsteroids() const {
 void AsteroidManager::createAsteroid() {
     std::uniform_int_distribution<> scaleDist(1, 3);
 
-    asteroids.emplace_back(scaleDist(rng));
+    asteroids.emplace_back(scaleDist(rng), rng);
 
     std::uniform_real_distribution<float> xDist(0, ScreenSize::width);
     std::uniform_real_distribution<float> yDist(0, ScreenSize::height);

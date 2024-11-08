@@ -2,7 +2,6 @@
 #define ASTEROIDS_BULLET_H
 
 #include "../math/vector.h"
-#include "body2d.h"
 
 class Bullet {
 public:
