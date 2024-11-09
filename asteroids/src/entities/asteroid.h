@@ -12,6 +12,8 @@ public:
     int scale;
     int size = 20;
     bool hasCollided = false;
+    bool hasAppeared = false;
+    float radius = static_cast<float>(scale) * static_cast<float>(size);
 
     explicit Asteroid(int _scale, std::mt19937 &rng);
 
@@ -29,13 +31,14 @@ public:
 
     bool isColliding(const Vector &point) const;
 
+    bool isOffScreen() const;
+
 private:
     explicit Asteroid(const int _scale)
             : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
               scale(_scale), vertices(std::array<Vector, 12>()), originalVertices(std::array<Vector, 12>()) {
     }
 
-    float radius = static_cast<float>(scale) * static_cast<float>(size);
     std::array<Vector, 12> originalVertices;
     std::array<Vector, 12> vertices;
 };
