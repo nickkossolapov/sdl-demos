@@ -22,6 +22,8 @@ private:
     std::mt19937 rng;
 
     void createAsteroid();
+
+    void createAsteroidFragments(int scale, const Vector &position, const Vector &velocity);
 };
 
 #endif //ASTEROIDMANAGER_H

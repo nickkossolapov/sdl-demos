@@ -3,6 +3,7 @@
 #include <chrono>
 
 #include "../config/config.h"
+#include "../globals.h"
 
 AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager)
         : bulletManager(_bulletManager),
@@ -17,7 +18,7 @@ void AsteroidManager::update() {
         asteroid.update();
 
         for (auto &bullet: bulletManager.getBullets()) {
-            if (asteroid.isColliding(bullet.position)) {
+            if (asteroid.isColliding(bullet.position) && !bullet.isDestroyed) {
                 asteroid.hasCollided = true;
                 bullet.isDestroyed = true;
                 break;
@@ -26,7 +27,11 @@ void AsteroidManager::update() {
     }
 
     for (int i = 0; i < asteroids.size();) {
-        if (asteroids[i].hasCollided || (asteroids[i].hasAppeared && asteroids[i].isOffScreen())) {
+        if (asteroids[i].hasCollided) {
+            createAsteroidFragments(asteroids[i].scale, asteroids[i].position, asteroids[i].velocity);
+            std::swap(asteroids[i], asteroids.back());
+            asteroids.pop_back();
+        } else if (asteroids[i].hasAppeared && asteroids[i].isOffScreen()) {
             std::swap(asteroids[i], asteroids.back());
             asteroids.pop_back();
             createAsteroid();
@@ -45,6 +50,14 @@ void AsteroidManager::updateBodiesEuler(const float dt) {
 void AsteroidManager::drawAsteroids() const {
     for (const auto &asteroid: asteroids) {
         asteroid.draw();
+    }
+
+    SDL_SetRenderDrawColor(gRenderer, 0xff, 0xff, 0xff, 0xFF);
+
+    for (int i = 0; i < asteroids.size(); i++) {
+        for (int j = -1; j < 2; ++j) {
+            SDL_RenderDrawPoint(gRenderer, 10 + i, 10 + j);
+        }
     }
 }
 
@@ -84,19 +97,46 @@ void AsteroidManager::createAsteroid() {
             break;
     }
 
+    // Adjust velocity to move towards the center so that the asteroid doesn't just fly off the screen
     Vector center = {ScreenSize::width / 2.0f, ScreenSize::height / 2.0f};
     Vector directionToCenter = center - asteroid.position;
     directionToCenter.normalize();
 
-    // Adjust velocity to move towards the center a bit
-    asteroid.velocity += directionToCenter * 2.0f; // Adjust the factor as needed
+    asteroid.velocity += directionToCenter * 2.0f;
     asteroid.velocity.normalize();
-
     asteroid.velocity *= 200.0f / speed;
 
     asteroid.angularVelocity = std::max(std::min(spinDist(rng), 2.0f), -2.0f);
 
     asteroids.push_back(asteroid);
 }
+
+void AsteroidManager::createAsteroidFragments(int scale, const Vector &position, const Vector &velocity) {
+    if (scale == 1) {
+        return;
+    }
+
+    std::uniform_int_distribution<> numFragmentsDist(2, 3);
+    auto numFragments = numFragmentsDist(rng);
+
+    for (int i = 0; i < numFragments; ++i) {
+        auto asteroid = Asteroid(scale - 1, rng);
+
+        asteroid.position = position;
+        asteroid.velocity = velocity.normalized();
+
+        std::uniform_real_distribution<float> speedDist(-1.5, 1.5);
+        asteroid.velocity += Vector(speedDist(rng), speedDist(rng));
+        asteroid.velocity.normalize();
+        asteroid.velocity *= 200.0f / std::sqrt(static_cast<float>(scale));
+
+        asteroid.angularVelocity = std::max(std::min(speedDist(rng), 2.0f), -2.0f);
+
+        asteroids.push_back(asteroid);
+    }
+}
+
+
+
 
 

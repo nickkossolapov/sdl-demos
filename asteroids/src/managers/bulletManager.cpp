@@ -26,12 +26,4 @@ void BulletManager::drawBullets() const {
     for (const auto &bullet: bullets) {
         bullet.draw();
     }
-
-    SDL_SetRenderDrawColor(gRenderer, 0xff, 0xff, 0xff, 0xFF);
-
-    for (int i = 0; i < bullets.size(); i++) {
-        for (int j = -1; j < 2; ++j) {
-            SDL_RenderDrawPoint(gRenderer, 10 + i, 10 + j);
-        }
-    }
 }
