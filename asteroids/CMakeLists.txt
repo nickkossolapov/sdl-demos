@@ -39,6 +39,9 @@ add_executable(
         src/managers/asteroidManager.cpp
         src/utils/controller.h
         src/utils/controller.cpp
+        src/managers/score.h
+        src/utils/numbers.h
+        src/utils/numbers.cpp
 )
 
 find_package(SDL2 REQUIRED)

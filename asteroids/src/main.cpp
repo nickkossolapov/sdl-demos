@@ -11,6 +11,7 @@
 #include "entities/player.h"
 #include "managers/asteroidManager.h"
 #include "managers/bulletManager.h"
+#include "utils/numbers.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     auto [r, g, b, a] = Colours::grey;
@@ -52,6 +53,7 @@ int main(int argc, char *args[]) {
         bulletManager.drawBullets();
         asteroidManager.drawAsteroids();
 
+        Numbers::drawNumber(2013456789, 10, 10);
 
         SDL_RenderPresent(gRenderer);
     }
