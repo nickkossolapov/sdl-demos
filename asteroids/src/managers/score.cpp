@@ -3,7 +3,7 @@
 #include "../utils/numbers.h"
 
 void Score::draw() const {
-    Numbers::drawNumber(score, 150, 20);
+    Numbers::drawNumber(score, 200, 20);
 }
 
 void Score::increment(const int scale) {

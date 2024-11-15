@@ -2,8 +2,6 @@
 
 #include "./player.h"
 
-#include <iostream>
-
 #include "../globals.h"
 #include "../config/colors.h"
 #include "../config/config.h"

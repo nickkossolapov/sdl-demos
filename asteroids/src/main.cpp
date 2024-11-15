@@ -11,6 +11,7 @@
 #include "entities/player.h"
 #include "managers/asteroidManager.h"
 #include "managers/bulletManager.h"
+#include "managers/lives.h"
 #include "utils/numbers.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
@@ -27,6 +28,7 @@ int main(int argc, char *args[]) {
 
     auto bulletManager = BulletManager();
     auto score = Score();
+    auto lives = Lives(score);
     auto asteroidManager = AsteroidManager(5, bulletManager, score);
 
     auto spaceship = Spaceship(1.0, 1.0, bulletManager);
@@ -45,6 +47,7 @@ int main(int argc, char *args[]) {
 
         spaceship.update();
         asteroidManager.update();
+        lives.update();
 
         simulation.updateSimulation();
 
@@ -54,6 +57,7 @@ int main(int argc, char *args[]) {
         bulletManager.drawBullets();
         asteroidManager.drawAsteroids();
         score.draw();
+        lives.draw();
 
         SDL_RenderPresent(gRenderer);
     }

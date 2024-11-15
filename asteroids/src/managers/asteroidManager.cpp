@@ -52,14 +52,6 @@ void AsteroidManager::drawAsteroids() const {
     for (const auto &asteroid: asteroids) {
         asteroid.draw();
     }
-
-    SDL_SetRenderDrawColor(gRenderer, 0xff, 0xff, 0xff, 0xFF);
-
-    for (int i = 0; i < asteroids.size(); i++) {
-        for (int j = -1; j < 2; ++j) {
-            SDL_RenderDrawPoint(gRenderer, 10 + i, 10 + j);
-        }
-    }
 }
 
 void AsteroidManager::createAsteroid() {

@@ -30,15 +30,15 @@ void Numbers::drawNumber(const int number, const int x, const int y) {
     std::string str = std::to_string(number);
     std::vector<int> digits;
 
-    for (char const c: str) {
-        digits.push_back(c - '0');
+    for (auto i = str.length() - 1; str.length() > i; i--) {
+        digits.push_back(str[i] - '0');
     }
 
     static int scale = 20;
     static int padding = 10;
 
     for (int i = 0; i < digits.size(); i++) {
-        int xInit = (scale + padding) * i + x; // todo: don't use full width for 1
+        int xInit = x - (scale + padding) * i; // todo: don't use full width for 1
 
         auto &lines = vectorisedNumbers[digits[i]];
 
