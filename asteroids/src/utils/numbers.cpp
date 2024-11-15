@@ -34,10 +34,10 @@ void Numbers::drawNumber(const int number, const int x, const int y) {
         digits.push_back(c - '0');
     }
 
-    static int scale = 50;
+    static int scale = 20;
     static int padding = 10;
 
-    for (int i = 0; i < digits.size() - 1; i++) {
+    for (int i = 0; i < digits.size(); i++) {
         int xInit = (scale + padding) * i + x; // todo: don't use full width for 1
 
         auto &lines = vectorisedNumbers[digits[i]];
@@ -45,8 +45,8 @@ void Numbers::drawNumber(const int number, const int x, const int y) {
         for (int j = 0; j < lines.size() - 1; j++) {
             int x0 = xInit + lines[j].x * scale;
             int y0 = y + lines[j].y * scale;
-            int x1 = xInit + lines[j+1].x * scale;
-            int y1 = y + lines[j+1].y * scale;
+            int x1 = xInit + lines[j + 1].x * scale;
+            int y1 = y + lines[j + 1].y * scale;
             SDL_RenderDrawLine(gRenderer, x0, y0, x1, y1);
         }
     }

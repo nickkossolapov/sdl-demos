@@ -42,6 +42,7 @@ add_executable(
         src/managers/score.h
         src/utils/numbers.h
         src/utils/numbers.cpp
+        src/managers/score.cpp
 )
 
 find_package(SDL2 REQUIRED)

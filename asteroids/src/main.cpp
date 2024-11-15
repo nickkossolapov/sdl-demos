@@ -26,7 +26,8 @@ int main(int argc, char *args[]) {
     SDL_Event e;
 
     auto bulletManager = BulletManager();
-    auto asteroidManager = AsteroidManager(5, bulletManager);
+    auto score = Score();
+    auto asteroidManager = AsteroidManager(5, bulletManager, score);
 
     auto spaceship = Spaceship(1.0, 1.0, bulletManager);
     spaceship.position = {static_cast<float>(ScreenSize::width) / 2, static_cast<float>(ScreenSize::height) / 2};
@@ -52,8 +53,7 @@ int main(int argc, char *args[]) {
         spaceship.draw();
         bulletManager.drawBullets();
         asteroidManager.drawAsteroids();
-
-        Numbers::drawNumber(2013456789, 10, 10);
+        score.draw();
 
         SDL_RenderPresent(gRenderer);
     }

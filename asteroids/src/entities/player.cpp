@@ -110,9 +110,7 @@ void Spaceship::draw() const {
     SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, rightEndX, rightEndY);
 
     if (isThrusting || isTiltTrusting) {
-        auto ticks = SDL_GetTicks();
-
-        if (ticks % 2 == 0) {
+        if (SDL_GetTicks() % 2 == 0) {
             float flameEndX = x - std::sin(orientation) * wingLength;
             float flameEndY = y - std::cos(orientation) * wingLength;
 

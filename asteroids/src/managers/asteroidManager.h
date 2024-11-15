@@ -4,11 +4,12 @@
 #include <random>
 
 #include "bulletManager.h"
+#include "score.h"
 #include "../entities/asteroid.h"
 
 class AsteroidManager {
 public:
-    explicit AsteroidManager(int initialAsteroids, BulletManager &_bulletManager);
+    explicit AsteroidManager(int initialAsteroids, BulletManager &_bulletManager, Score &_score);
 
     void update();
 
@@ -18,6 +19,7 @@ public:
 
 private:
     BulletManager &bulletManager;
+    Score &score;
     std::vector<Asteroid> asteroids;
     std::mt19937 rng;
 

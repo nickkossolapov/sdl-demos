@@ -5,9 +5,9 @@
 #include "../config/config.h"
 #include "../globals.h"
 
-AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager)
-        : bulletManager(_bulletManager),
-          rng(std::chrono::system_clock::now().time_since_epoch().count()) {
+AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager, Score &_score)
+    : bulletManager(_bulletManager), score(_score),
+      rng(std::chrono::system_clock::now().time_since_epoch().count()) {
     for (int i = 0; i < initialAsteroids; ++i) {
         createAsteroid();
     }
@@ -28,6 +28,7 @@ void AsteroidManager::update() {
 
     for (int i = 0; i < asteroids.size();) {
         if (asteroids[i].hasCollided) {
+            score.increment(asteroids[i].scale);
             createAsteroidFragments(asteroids[i].scale, asteroids[i].position, asteroids[i].velocity);
             std::swap(asteroids[i], asteroids.back());
             asteroids.pop_back();
