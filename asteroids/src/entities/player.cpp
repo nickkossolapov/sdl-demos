@@ -7,13 +7,13 @@
 #include "../config/config.h"
 #include "../utils/controller.h"
 
-Spaceship::Spaceship(float mass, float inertia, BulletManager &_bulletManager)
-    : Body2d(mass, inertia), bulletManager(_bulletManager) {
+Player::Player(float mass, float inertia, BulletManager &_bulletManager)
+        : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
 }
 
 
-void Spaceship::handleEvent(const SDL_Event &e) {
+void Player::handleEvent(const SDL_Event &e) {
     constexpr float turningSpeed = 5;
 
     if (e.type == SDL_JOYAXISMOTION) {
@@ -80,45 +80,50 @@ void Spaceship::handleEvent(const SDL_Event &e) {
     }
 }
 
-void Spaceship::draw() const {
+void Player::draw() const {
     auto [r, g, b, a] = Colours::white;
     SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
     auto [x, y, _] = position;
+    auto [tip, leftWing, rightWing, leftThruster, rightThruster] = edges;
 
-    float tipX = x + std::sin(orientation) * tipLength;
-    float tipY = y + std::cos(orientation) * tipLength;
-
-    constexpr float finAngle = 2.356194f; // 135 degrees
-
-    float leftEndX = x + std::sin(orientation - finAngle) * wingLength / 2;
-    float leftEndY = y + std::cos(orientation - finAngle) * wingLength / 2;
-    float leftWingX = x + std::sin(orientation - finAngle) * wingLength;
-    float leftWingY = y + std::cos(orientation - finAngle) * wingLength;
-
-    float rightEndX = x + std::sin(orientation + finAngle) * wingLength / 2;
-    float rightEndY = y + std::cos(orientation + finAngle) * wingLength / 2;
-    float rightWingX = x + std::sin(orientation + finAngle) * wingLength;
-    float rightWingY = y + std::cos(orientation + finAngle) * wingLength;
-
-    SDL_RenderDrawLineF(gRenderer, tipX, tipY, leftWingX, leftWingY);
-    SDL_RenderDrawLineF(gRenderer, tipX, tipY, rightWingX, rightWingY);
-    SDL_RenderDrawLineF(gRenderer, rightEndX, rightEndY, rightWingX, rightWingY);
-    SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, leftWingX, leftWingY);
-    SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, rightEndX, rightEndY);
+    SDL_RenderDrawLineF(gRenderer, tip.x, tip.y, leftWing.x, leftWing.y);
+    SDL_RenderDrawLineF(gRenderer, tip.x, tip.y, rightWing.x, rightWing.y);
+    SDL_RenderDrawLineF(gRenderer, rightThruster.x, rightThruster.y, rightWing.x, rightWing.y);
+    SDL_RenderDrawLineF(gRenderer, leftThruster.x, leftThruster.y, leftWing.x, leftWing.y);
+    SDL_RenderDrawLineF(gRenderer, leftThruster.x, leftThruster.y, rightThruster.x, rightThruster.y);
 
     if (isThrusting || isTiltTrusting) {
         if (SDL_GetTicks() % 2 == 0) {
             float flameEndX = x - std::sin(orientation) * wingLength;
             float flameEndY = y - std::cos(orientation) * wingLength;
 
-            SDL_RenderDrawLineF(gRenderer, leftEndX, leftEndY, flameEndX, flameEndY);
-            SDL_RenderDrawLineF(gRenderer, rightEndX, rightEndY, flameEndX, flameEndY);
+            SDL_RenderDrawLineF(gRenderer, leftThruster.x, leftThruster.y, flameEndX, flameEndY);
+            SDL_RenderDrawLineF(gRenderer, rightThruster.x, rightThruster.y, flameEndX, flameEndY);
         }
     }
 }
 
-void Spaceship::update() {
+void Player::calculateEdges() {
+    auto [x, y, _] = position;
+
+    edges.tip.x = x + std::sin(orientation) * tipLength;
+    edges.tip.y = y + std::cos(orientation) * tipLength;
+
+    constexpr float finAngle = 2.356194f; // 135 degrees
+
+    edges.leftThruster.x = x + std::sin(orientation - finAngle) * wingLength / 2;
+    edges.leftThruster.y = y + std::cos(orientation - finAngle) * wingLength / 2;
+    edges.leftWing.x = x + std::sin(orientation - finAngle) * wingLength;
+    edges.leftWing.y = y + std::cos(orientation - finAngle) * wingLength;
+
+    edges.rightThruster.x = x + std::sin(orientation + finAngle) * wingLength / 2;
+    edges.rightThruster.y = y + std::cos(orientation + finAngle) * wingLength / 2;
+    edges.rightWing.x = x + std::sin(orientation + finAngle) * wingLength;
+    edges.rightWing.y = y + std::cos(orientation + finAngle) * wingLength;
+}
+
+void Player::update() {
     if (isThrusting || isTiltTrusting) {
         constexpr float thrust = 500;
 
@@ -150,9 +155,11 @@ void Spaceship::update() {
     } else if (position.y > ScreenSize::height) {
         position.y = 0;
     }
+
+    calculateEdges();
 }
 
-void Spaceship::shoot() {
+void Player::shoot() {
     auto [x, y, z] = position;
     float tipX = x + std::sin(orientation) * tipLength;
     float tipY = y + std::cos(orientation) * tipLength;

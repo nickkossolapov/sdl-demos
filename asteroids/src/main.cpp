@@ -29,12 +29,14 @@ int main(int argc, char *args[]) {
     auto bulletManager = BulletManager();
     auto score = Score();
     auto lives = Lives(score);
-    auto asteroidManager = AsteroidManager(5, bulletManager, score);
 
-    auto spaceship = Spaceship(1.0, 1.0, bulletManager);
-    spaceship.position = {static_cast<float>(ScreenSize::width) / 2, static_cast<float>(ScreenSize::height) / 2};
+    auto player = Player(1.0, 1.0, bulletManager);
+    player.position = {static_cast<float>(ScreenSize::width) / 2, static_cast<float>(ScreenSize::height) / 2};
+    player.update();
 
-    auto simulation = Simulation(spaceship, bulletManager, asteroidManager);
+    auto asteroidManager = AsteroidManager(5, bulletManager, score, player);
+
+    auto simulation = Simulation(player, bulletManager, asteroidManager);
 
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
@@ -42,10 +44,10 @@ int main(int argc, char *args[]) {
                 quit = true;
             }
 
-            spaceship.handleEvent(e);
+            player.handleEvent(e);
         }
 
-        spaceship.update();
+        player.update();
         asteroidManager.update();
         lives.update();
 
@@ -53,7 +55,7 @@ int main(int argc, char *args[]) {
 
         prepareRenderer(gRenderer);
 
-        spaceship.draw();
+        player.draw();
         bulletManager.drawBullets();
         asteroidManager.drawAsteroids();
         score.draw();

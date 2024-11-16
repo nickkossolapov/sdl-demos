@@ -5,9 +5,10 @@
 #include "../config/config.h"
 #include "../globals.h"
 
-AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager, Score &_score)
-    : bulletManager(_bulletManager), score(_score),
-      rng(std::chrono::system_clock::now().time_since_epoch().count()) {
+AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager, Score &_score,
+                                 Player &_player)
+        : bulletManager(_bulletManager), score(_score), player(_player),
+          rng(std::chrono::system_clock::now().time_since_epoch().count()) {
     for (int i = 0; i < initialAsteroids; ++i) {
         createAsteroid();
     }
@@ -40,6 +41,10 @@ void AsteroidManager::update() {
             i++;
         }
     }
+}
+
+void AsteroidManager::checkCollisionWithPlayer(Asteroid &asteroid) {
+
 }
 
 void AsteroidManager::updateBodiesEuler(const float dt) {

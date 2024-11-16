@@ -6,10 +6,11 @@
 #include "bulletManager.h"
 #include "score.h"
 #include "../entities/asteroid.h"
+#include "../entities/player.h"
 
 class AsteroidManager {
 public:
-    explicit AsteroidManager(int initialAsteroids, BulletManager &_bulletManager, Score &_score);
+    explicit AsteroidManager(int initialAsteroids, BulletManager &_bulletManager, Score &_score, Player &player);
 
     void update();
 
@@ -20,12 +21,15 @@ public:
 private:
     BulletManager &bulletManager;
     Score &score;
+    Player &player;
     std::vector<Asteroid> asteroids;
     std::mt19937 rng;
 
     void createAsteroid();
 
     void createAsteroidFragments(int scale, const Vector &position, const Vector &velocity);
+
+    void checkCollisionWithPlayer(Asteroid &asteroid);
 };
 
 #endif //ASTEROIDMANAGER_H

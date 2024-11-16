@@ -11,7 +11,7 @@
 
 class Simulation {
 public:
-    explicit Simulation(Spaceship &_spaceship, BulletManager &_bulletManager, AsteroidManager &_asteroidManager)
+    explicit Simulation(Player &_spaceship, BulletManager &_bulletManager, AsteroidManager &_asteroidManager)
             : spaceship(_spaceship), bulletManager(_bulletManager), asteroidManager(_asteroidManager) {
     };
 
@@ -21,7 +21,7 @@ private:
     Uint32 lastTime = 0;
     float targetTimeStep = 0.005f;
     float accumulator = 0.0f;
-    Spaceship &spaceship;
+    Player &spaceship;
     BulletManager &bulletManager;
     AsteroidManager &asteroidManager;
 };

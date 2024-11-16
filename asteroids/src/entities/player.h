@@ -5,9 +5,17 @@
 #include "body2d.h"
 #include "../managers/bulletManager.h"
 
-class Spaceship final : public Body2d {
+struct PlayerEdges {
+    Vector tip;
+    Vector leftWing;
+    Vector rightWing;
+    Vector leftThruster;
+    Vector rightThruster;
+};
+
+class Player final : public Body2d {
 public:
-    explicit Spaceship(float mass, float inertia, BulletManager &_bulletManager);
+    explicit Player(float mass, float inertia, BulletManager &_bulletManager);
 
     void handleEvent(const SDL_Event &e);
 
@@ -18,12 +26,15 @@ public:
 private:
     float tipLength = 25;
     float wingLength = 15;
-    int flameAnimationCount = 0;
     BulletManager &bulletManager;
     bool isThrusting = false;
     bool isTiltTrusting = false;
+    bool hasCollided = false;
+    PlayerEdges edges;
 
     void shoot();
+
+    void calculateEdges();
 };
 
 #endif //ASTEROIDS_PLAYER_H
