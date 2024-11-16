@@ -1,4 +1,5 @@
 #include <cmath>
+#include <iostream>
 
 #include "./player.h"
 
@@ -97,6 +98,8 @@ void Player::draw() const {
         if (SDL_GetTicks() % 2 == 0) {
             float flameEndX = x - std::sin(orientation) * wingLength;
             float flameEndY = y - std::cos(orientation) * wingLength;
+            auto foo = position - Vector{flameEndX, flameEndY};
+            std::cout << foo.length() << std::endl;
 
             SDL_RenderDrawLineF(gRenderer, leftThruster.x, leftThruster.y, flameEndX, flameEndY);
             SDL_RenderDrawLineF(gRenderer, rightThruster.x, rightThruster.y, flameEndX, flameEndY);
@@ -104,7 +107,7 @@ void Player::draw() const {
     }
 }
 
-void Player::calculateEdges() {
+void Player::updateEdges() {
     auto [x, y, _] = position;
 
     edges.tip.x = x + std::sin(orientation) * tipLength;
@@ -155,8 +158,6 @@ void Player::update() {
     } else if (position.y > ScreenSize::height) {
         position.y = 0;
     }
-
-    calculateEdges();
 }
 
 void Player::shoot() {

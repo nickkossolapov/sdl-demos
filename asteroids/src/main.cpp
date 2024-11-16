@@ -48,10 +48,12 @@ int main(int argc, char *args[]) {
         }
 
         player.update();
-        asteroidManager.update();
-        lives.update();
 
         simulation.updateSimulation();
+
+        player.updateEdges();
+        lives.update();
+        asteroidManager.update();
 
         prepareRenderer(gRenderer);
 

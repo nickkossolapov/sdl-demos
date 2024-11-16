@@ -23,6 +23,8 @@ public:
 
     void update() override;
 
+    void updateEdges();
+
 private:
     float tipLength = 25;
     float wingLength = 15;
@@ -30,11 +32,10 @@ private:
     bool isThrusting = false;
     bool isTiltTrusting = false;
     bool hasCollided = false;
+
     PlayerEdges edges;
 
     void shoot();
-
-    void calculateEdges();
 };
 
 #endif //ASTEROIDS_PLAYER_H
