@@ -13,6 +13,7 @@
 #include "managers/bulletManager.h"
 #include "managers/lives.h"
 #include "utils/numbers.h"
+#include "managers/playerManager.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
     auto [r, g, b, a] = Colours::grey;
@@ -34,6 +35,7 @@ int main(int argc, char *args[]) {
     player.position = {static_cast<float>(ScreenSize::width) / 2, static_cast<float>(ScreenSize::height) / 2};
     player.update();
 
+    auto playerManager = PlayerManager(player, lives);
     auto asteroidManager = AsteroidManager(5, bulletManager, score, player);
 
     auto simulation = Simulation(player, bulletManager, asteroidManager);
@@ -54,6 +56,7 @@ int main(int argc, char *args[]) {
         player.updateEdges();
         lives.update();
         asteroidManager.update();
+        playerManager.update();
 
         prepareRenderer(gRenderer);
 

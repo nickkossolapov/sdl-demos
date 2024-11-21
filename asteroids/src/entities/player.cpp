@@ -7,10 +7,12 @@
 #include "../config/colors.h"
 #include "../config/config.h"
 #include "../utils/controller.h"
+#include "../constants.h"
 
 Player::Player(float mass, float inertia, BulletManager &_bulletManager)
         : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
+    orientation = Constants::Pi;
 }
 
 
@@ -84,12 +86,6 @@ void Player::handleEvent(const SDL_Event &e) {
 void Player::draw() const {
     auto [r, g, b, a] = Colours::white;
 
-    if (hasCollided) {
-        r = 255;
-        g = 0;
-        b = 0;
-    }
-    
     SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
     auto [x, y, _] = position;
@@ -175,4 +171,14 @@ void Player::shoot() {
     auto bullet = Bullet({tipX, tipY}, {std::sin(orientation), std::cos(orientation)});
 
     bulletManager.addBullet(bullet);
+}
+
+void Player::reset() {
+    position = {ScreenSize::width / 2.0f, ScreenSize::height / 2.0f};
+    velocity = {0, 0};
+    orientation = Constants::Pi;
+    angularVelocity = 0;
+    hasCollided = false;
+    isThrusting = false;
+    isTiltTrusting = false;
 }

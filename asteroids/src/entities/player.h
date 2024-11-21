@@ -35,6 +35,8 @@ public:
         return edges;
     }
 
+    void reset();
+
 private:
     float tipLength = 25;
     float wingLength = 15;

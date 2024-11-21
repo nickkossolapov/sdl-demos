@@ -1,5 +1,6 @@
 #ifndef LIVES_H
 #define LIVES_H
+
 #include "score.h"
 
 class Lives {
@@ -10,6 +11,12 @@ public:
     void draw() const;
 
     void update();
+
+    void decrement() {
+        if (lives > 0) {
+            lives--;
+        }
+    };
 
 private:
     int lives;

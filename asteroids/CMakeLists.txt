@@ -45,6 +45,8 @@ add_executable(
         src/managers/score.cpp
         src/managers/lives.h
         src/managers/lives.cpp
+        src/managers/playerManager.h
+        src/managers/playerManager.cpp
 )
 
 find_package(SDL2 REQUIRED)
