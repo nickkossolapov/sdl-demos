@@ -83,6 +83,13 @@ void Player::handleEvent(const SDL_Event &e) {
 
 void Player::draw() const {
     auto [r, g, b, a] = Colours::white;
+
+    if (hasCollided) {
+        r = 255;
+        g = 0;
+        b = 0;
+    }
+    
     SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
     auto [x, y, _] = position;

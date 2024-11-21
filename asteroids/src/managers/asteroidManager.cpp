@@ -3,7 +3,7 @@
 #include <chrono>
 
 #include "../config/config.h"
-#include "../globals.h"
+#include "../math/utils.h"
 
 AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager, Score &_score,
                                  Player &_player)
@@ -25,6 +25,8 @@ void AsteroidManager::update() {
                 break;
             }
         }
+
+        checkCollisionWithPlayer(asteroid);
     }
 
     for (int i = 0; i < asteroids.size();) {
@@ -44,7 +46,25 @@ void AsteroidManager::update() {
 }
 
 void AsteroidManager::checkCollisionWithPlayer(Asteroid &asteroid) {
+    if ((player.position - asteroid.position).length() > asteroid.radius + player.getLongestSide()) {
+        return;
+    }
 
+    auto playerEdges = player.getEdges();
+
+    for (auto &vertex: asteroid.vertices) {
+        if (isInTriangle(vertex, playerEdges.tip, playerEdges.rightWing, playerEdges.leftWing)) {
+            player.hasCollided = true;
+            return;
+        }
+    }
+
+    if (asteroid.isColliding(playerEdges.tip)
+        || asteroid.isColliding(playerEdges.rightWing)
+        || asteroid.isColliding(playerEdges.leftWing)) {
+        player.hasCollided = true;
+        return;
+    }
 }
 
 void AsteroidManager::updateBodiesEuler(const float dt) {

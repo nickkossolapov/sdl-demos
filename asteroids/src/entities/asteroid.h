@@ -14,6 +14,7 @@ public:
     bool hasCollided = false;
     bool hasAppeared = false;
     float radius = static_cast<float>(scale) * static_cast<float>(size);
+    std::array<Vector, 12> vertices;
 
     explicit Asteroid(int _scale, std::mt19937 &rng);
 
@@ -40,7 +41,6 @@ private:
     }
 
     std::array<Vector, 12> originalVertices;
-    std::array<Vector, 12> vertices;
 };
 
 #endif //ASTEROID_H

@@ -15,6 +15,8 @@ struct PlayerEdges {
 
 class Player final : public Body2d {
 public:
+    bool hasCollided = false;
+
     explicit Player(float mass, float inertia, BulletManager &_bulletManager);
 
     void handleEvent(const SDL_Event &e);
@@ -25,13 +27,20 @@ public:
 
     void updateEdges();
 
+    float getLongestSide() const {
+        return tipLength;
+    }
+
+    PlayerEdges &getEdges() {
+        return edges;
+    }
+
 private:
     float tipLength = 25;
     float wingLength = 15;
     BulletManager &bulletManager;
     bool isThrusting = false;
     bool isTiltTrusting = false;
-    bool hasCollided = false;
 
     PlayerEdges edges;
 
