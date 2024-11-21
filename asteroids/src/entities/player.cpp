@@ -84,9 +84,14 @@ void Player::handleEvent(const SDL_Event &e) {
 }
 
 void Player::draw() const {
-    auto [r, g, b, a] = Colours::white;
+    if (isInvincible && ((SDL_GetTicks() / 150) % 2 == 0)) {
+        auto [r, g, b, a] = Colours::grey;
+        SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
+    } else {
+        auto [r, g, b, a] = Colours::white;
+        SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
+    }
 
-    SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
 
     auto [x, y, _] = position;
     auto [tip, leftWing, rightWing, leftThruster, rightThruster] = edges;

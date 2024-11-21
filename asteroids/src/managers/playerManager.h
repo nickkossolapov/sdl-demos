@@ -14,6 +14,8 @@ public:
 private:
     Player &player;
     Lives &lives;
+
+    Uint32 lastSpawnedAt = 0;
 };
 
 #endif //ASTEROIDS_PLAYERMANAGER_H

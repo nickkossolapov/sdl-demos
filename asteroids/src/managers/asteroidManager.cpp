@@ -46,6 +46,10 @@ void AsteroidManager::update() {
 }
 
 void AsteroidManager::checkCollisionWithPlayer(Asteroid &asteroid) {
+    if (player.isInvincible) {
+        return;
+    }
+    
     if ((player.position - asteroid.position).length() > asteroid.radius + player.getLongestSide()) {
         return;
     }

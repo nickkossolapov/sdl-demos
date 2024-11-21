@@ -15,6 +15,7 @@ struct PlayerEdges {
 
 class Player final : public Body2d {
 public:
+    bool isInvincible = false;
     bool hasCollided = false;
 
     explicit Player(float mass, float inertia, BulletManager &_bulletManager);
