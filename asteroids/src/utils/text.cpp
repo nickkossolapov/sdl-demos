@@ -68,17 +68,19 @@ void Text::drawString(const std::string &text, float x, float y) {
     std::transform(indexedString.begin(), indexedString.end(), indexedString.begin(), ::tolower);
 
     static float scale = 10;
-    static float padding = 5;
+    static float padding = 3;
 
     for (int i = 0; i < text.length(); i++) {
+        auto charr = indexedString[i];
+        int charIndex = indexedString[i] - 'a';
+
+        if (charIndex > 25 || charIndex < 0) {
+            continue;
+        }
+
         float xInit = x + (scale + padding) * static_cast<float>(i) * 2;
-        int charIndex = (indexedString[i] - 'a') % 26;
 
         auto &lines = vectorisedLetters[charIndex];
-
-        if (lines.empty()) {
-            return;
-        }
 
         for (int j = 0; j < lines.size() - 1; j++) {
             float x0 = xInit + lines[j].x * scale;
