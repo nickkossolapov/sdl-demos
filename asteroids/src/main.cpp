@@ -12,7 +12,7 @@
 #include "managers/asteroidManager.h"
 #include "managers/bulletManager.h"
 #include "managers/lives.h"
-#include "utils/numbers.h"
+#include "utils/text.h"
 #include "managers/playerManager.h"
 
 void prepareRenderer(SDL_Renderer *renderer) {
@@ -54,17 +54,19 @@ int main(int argc, char *args[]) {
         simulation.updateSimulation();
 
         player.updateEdges();
-        lives.update();
-        asteroidManager.update();
-        playerManager.update();
+        // lives.update();
+        // asteroidManager.update();
+        // playerManager.update();
 
         prepareRenderer(gRenderer);
 
+        Text::drawString("abcdefghijklmnopqrstuvwxyz", 10, 10);
+
         player.draw();
-        bulletManager.drawBullets();
-        asteroidManager.drawAsteroids();
-        score.draw();
-        lives.draw();
+        // bulletManager.drawBullets();
+        // asteroidManager.drawAsteroids();
+        // score.draw();
+        // lives.draw();
 
         SDL_RenderPresent(gRenderer);
     }

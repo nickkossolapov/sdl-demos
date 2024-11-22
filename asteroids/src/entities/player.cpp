@@ -10,7 +10,7 @@
 #include "../constants.h"
 
 Player::Player(float mass, float inertia, BulletManager &_bulletManager)
-        : Body2d(mass, inertia), bulletManager(_bulletManager) {
+    : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
     orientation = Constants::Pi;
 }
@@ -106,8 +106,6 @@ void Player::draw() const {
         if (SDL_GetTicks() % 2 == 0) {
             float flameEndX = x - std::sin(orientation) * wingLength;
             float flameEndY = y - std::cos(orientation) * wingLength;
-            auto foo = position - Vector{flameEndX, flameEndY};
-            std::cout << foo.length() << std::endl;
 
             SDL_RenderDrawLineF(gRenderer, leftThruster.x, leftThruster.y, flameEndX, flameEndY);
             SDL_RenderDrawLineF(gRenderer, rightThruster.x, rightThruster.y, flameEndX, flameEndY);

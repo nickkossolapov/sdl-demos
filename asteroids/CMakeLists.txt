@@ -40,8 +40,8 @@ add_executable(
         src/utils/controller.h
         src/utils/controller.cpp
         src/managers/score.h
-        src/utils/numbers.h
-        src/utils/numbers.cpp
+        src/utils/text.h
+        src/utils/text.cpp
         src/managers/score.cpp
         src/managers/lives.h
         src/managers/lives.cpp

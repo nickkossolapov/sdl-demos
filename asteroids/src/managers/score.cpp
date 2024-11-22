@@ -1,9 +1,9 @@
 #include "score.h"
 
-#include "../utils/numbers.h"
+#include "../utils/text.h"
 
 void Score::draw() const {
-    Numbers::drawNumber(score, 200, 20);
+    Text::drawNumber(score, 200, 20);
 }
 
 void Score::increment(const int scale) {
