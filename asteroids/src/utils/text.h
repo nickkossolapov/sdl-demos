@@ -3,10 +3,11 @@
 
 #include <string>
 
-namespace Text {
-    void drawNumber(int number, int x, int y);
+namespace Text
+{
+    void drawRightAlignedNumber(int number, float rightX, float y, float scale = 10, float padding = 3);
 
-    void drawString(const std::string &text, float x, float y);
+    void drawString(const std::string& text, float x, float y, float scale = 10, float padding = 3);
 }
 
 #endif //ASTEROIDS_NUMBERS_H

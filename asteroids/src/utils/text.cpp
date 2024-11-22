@@ -1,9 +1,9 @@
 #include "text.h"
 
-#include <algorithm>
 #include <vector>
 #include <array>
 #include <iostream>
+#include <optional>
 #include <string>
 
 #include "../globals.h"
@@ -12,11 +12,7 @@
 const std::array<std::vector<SDL_FPoint>, 26> vectorisedLetters = {
     {
         /*A*/ {{0, 3}, {0, 1}, {1, 0}, {2, 1}, {2, 2}, {0, 2}, {2, 2}, {2, 3}},
-        /*B*/
-        {
-            {0, 1.5}, {0, 3}, {1.5, 3}, {2, 2.5}, {2, 2}, {1.5, 1.5}, {0, 1.5}, {0, 0}, {1.5, 0}, {2, 0.5}, {2, 1},
-            {1.5, 1.5}
-        },
+        /*B*/ {{0, 1.5}, {0, 3}, {1.5, 3}, {2, 2.5}, {2, 2}, {1.5, 1.5}, {0, 1.5}, {0, 0}, {1.5, 0}, {2, 0.5}, {2, 1}, {1.5, 1.5}},
         /*C*/ {{2, 3}, {0, 3}, {0, 0}, {2, 0}},
         /*D*/ {{0, 0}, {0, 3}, {1.5, 3}, {2, 2.5}, {2, 0.5}, {1.5, 0}, {0, 0}},
         /*E*/ {{2, 0}, {0, 0}, {0, 1.5}, {1.7, 1.5}, {0, 1.5}, {0, 3}, {2, 3}},
@@ -44,80 +40,76 @@ const std::array<std::vector<SDL_FPoint>, 26> vectorisedLetters = {
     }
 };
 
-
-const std::array<std::vector<SDL_Point>, 10> vectorisedNumbers = {
+const std::array<std::vector<SDL_FPoint>, 10> vectorisedNumbers = {
     {
-        {{0, 0}, {1, 0}, {1, 2}, {0, 2}, {0, 0}}, //0
-        {{{1, 0}, {1, 2}}}, //1
-        {{0, 0}, {1, 0}, {1, 1}, {0, 1}, {0, 2}, {1, 2}}, //2
-        {{0, 0}, {1, 0}, {1, 1}, {0, 1}, {1, 1}, {1, 2}, {0, 2}}, //3
-        {{0, 0}, {0, 1}, {1, 1}, {1, 0}, {1, 2}}, //4
-        {{1, 0}, {0, 0}, {0, 1}, {1, 1}, {1, 2}, {0, 2}}, //5
-        {{1, 0}, {0, 0}, {0, 2}, {1, 2}, {1, 1}, {0, 1}}, //6
-        {{0, 0}, {1, 0}, {1, 2}}, //7
-        {{0, 1}, {0, 0}, {1, 0}, {1, 2}, {0, 2}, {0, 1}, {1, 1}}, //8
-        {{1, 1}, {0, 1}, {0, 0}, {1, 0}, {1, 2}}
-    } //9
+        /*0*/ {{0, 0}, {2, 0}, {2, 3}, {0, 3}, {0, 0}},
+        /*1*/ {{{2, 0}, {2, 3}}},
+        /*2*/ {{0, 0}, {2, 0}, {2, 1.5}, {0, 1.5}, {0, 3}, {2, 3}},
+        /*3*/ {{0, 0}, {2, 0}, {2, 1.5}, {0, 1.5}, {2, 1.5}, {2, 3}, {0, 3}},
+        /*4*/ {{0, 0}, {0, 1.5}, {2, 1.5}, {2, 0}, {2, 3}},
+        /*5*/ {{2, 0}, {0, 0}, {0, 1.5}, {2, 1.5}, {2, 3}, {0, 3}},
+        /*6*/ {{2, 0}, {0, 0}, {0, 3}, {2, 3}, {2, 1.5}, {0, 1.5}},
+        /*7*/ {{0, 0}, {2, 0}, {2, 3}},
+        /*8*/ {{0, 1.5}, {0, 0}, {2, 0}, {2, 3}, {0, 3}, {0, 1.5}, {2, 1.5}},
+        /*9*/ {{2, 1.5}, {0, 1.5}, {0, 0}, {2, 0}, {2, 3}}
+    }
 };
 
-void Text::drawString(const std::string &text, float x, float y) {
+std::optional<std::vector<SDL_FPoint>> getLinesForChar(char c)
+{
+    if (c >= 'A' && c <= 'Z')
+    {
+        return vectorisedLetters[c - 'A'];
+    }
+
+    if (c >= 'a' && c <= 'z')
+    {
+        return vectorisedLetters[c - 'a'];
+    }
+
+    if (c >= '0' && c <= '9')
+    {
+        return vectorisedNumbers[c - '0'];
+    }
+
+    return {};
+}
+
+void Text::drawString(const std::string& text, float x, float y, float scale, float padding)
+{
     auto [r, g, b, a] = Colours::white;
     SDL_SetRenderDrawColor(gRenderer, r, g, b, a);
 
-    std::string indexedString = text;
-    std::transform(indexedString.begin(), indexedString.end(), indexedString.begin(), ::tolower);
+    for (int i = 0; i < text.length(); i++)
+    {
+        auto lines = getLinesForChar(text[i]);
 
-    static float scale = 10;
-    static float padding = 3;
-
-    for (int i = 0; i < text.length(); i++) {
-        auto charr = indexedString[i];
-        int charIndex = indexedString[i] - 'a';
-
-        if (charIndex > 25 || charIndex < 0) {
+        if (!lines)
+        {
             continue;
         }
 
         float xInit = x + (scale + padding) * static_cast<float>(i) * 2;
 
-        auto &lines = vectorisedLetters[charIndex];
-
-        for (int j = 0; j < lines.size() - 1; j++) {
-            float x0 = xInit + lines[j].x * scale;
-            float y0 = y + lines[j].y * scale;
-            float x1 = xInit + lines[j + 1].x * scale;
-            float y1 = y + lines[j + 1].y * scale;
+        for (int j = 0; j < lines->size() - 1; j++)
+        {
+            float x0 = xInit + (*lines)[j].x * scale;
+            float y0 = y + (*lines)[j].y * scale;
+            float x1 = xInit + (*lines)[j + 1].x * scale;
+            float y1 = y + (*lines)[j + 1].y * scale;
             SDL_RenderDrawLineF(gRenderer, x0, y0, x1, y1);
         }
     }
 }
 
-
-void Text::drawNumber(const int number, const int x, const int y) {
+void Text::drawRightAlignedNumber(const int number, const float rightX, const float y, float scale, float padding)
+{
     auto [r, g, b, a] = Colours::white;
     SDL_SetRenderDrawColor(gRenderer, r, g, b, a);
 
     std::string str = std::to_string(number);
-    std::vector<int> digits;
 
-    for (auto i = str.length() - 1; str.length() > i; i--) {
-        digits.push_back(str[i] - '0');
-    }
+    float xOffset = (scale + padding) * static_cast<float>(str.length()) * 2 - padding;
 
-    static int scale = 20;
-    static int padding = 10;
-
-    for (int i = 0; i < digits.size(); i++) {
-        int xInit = x - (scale + padding) * i; // todo: don't use full width for 1
-
-        auto &lines = vectorisedNumbers[digits[i]];
-
-        for (int j = 0; j < lines.size() - 1; j++) {
-            int x0 = xInit + lines[j].x * scale;
-            int y0 = y + lines[j].y * scale;
-            int x1 = xInit + lines[j + 1].x * scale;
-            int y1 = y + lines[j + 1].y * scale;
-            SDL_RenderDrawLine(gRenderer, x0, y0, x1, y1);
-        }
-    }
+    drawString(str, rightX - xOffset, y, scale, padding);
 }

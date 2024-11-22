@@ -15,13 +15,15 @@
 #include "utils/text.h"
 #include "managers/playerManager.h"
 
-void prepareRenderer(SDL_Renderer *renderer) {
+void prepareRenderer(SDL_Renderer* renderer)
+{
     auto [r, g, b, a] = Colours::grey;
     SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
-int main(int argc, char *args[]) {
+int main(int argc, char* args[])
+{
     init();
 
     bool quit = false;
@@ -40,9 +42,12 @@ int main(int argc, char *args[]) {
 
     auto simulation = Simulation(player, bulletManager, asteroidManager);
 
-    while (!quit) {
-        while (SDL_PollEvent(&e) != 0) {
-            if (e.type == SDL_QUIT || (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)) {
+    while (!quit)
+    {
+        while (SDL_PollEvent(&e) != 0)
+        {
+            if (e.type == SDL_QUIT || (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE))
+            {
                 quit = true;
             }
 
@@ -54,19 +59,17 @@ int main(int argc, char *args[]) {
         simulation.updateSimulation();
 
         player.updateEdges();
-        // lives.update();
-        // asteroidManager.update();
-        // playerManager.update();
+        lives.update();
+        asteroidManager.update();
+        playerManager.update();
 
         prepareRenderer(gRenderer);
 
-        Text::drawString("abcdefghijklmnopqrstuvwxyz", 10, 10);
-
         player.draw();
-        // bulletManager.drawBullets();
-        // asteroidManager.drawAsteroids();
-        // score.draw();
-        // lives.draw();
+        bulletManager.drawBullets();
+        asteroidManager.drawAsteroids();
+        score.draw();
+        lives.draw();
 
         SDL_RenderPresent(gRenderer);
     }
