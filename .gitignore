@@ -33,4 +33,5 @@
 
 */.idea/
 */lib/
+*/mingw_dev_lib/
 */cmake-build-debug/
