@@ -37,4 +37,3 @@ private:
 };
 
 #endif //ASTEROIDS_BULLET_H
- 

@@ -11,14 +11,14 @@
 #include "../config/config.h"
 
 Asteroid::Asteroid(const int _scale, std::mt19937 &rng)
-        : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
-          scale(_scale), vertices(std::array<Vector, 12>()) {
+    : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
+      scale(_scale), vertices(std::array<Vector, 12>()) {
     std::uniform_real_distribution<float> dist(0.5, 1.0);
 
     for (int i = 0; i < 12; ++i) {
         Vector vertex = {
-                std::cos(static_cast<float>(i) * Constants::Pi / 6),
-                std::sin(static_cast<float>(i) * Constants::Pi / 6),
+            std::cos(static_cast<float>(i) * Constants::Pi / 6),
+            std::sin(static_cast<float>(i) * Constants::Pi / 6),
         };
 
         vertices[i] = vertex * dist(rng) * radius;
@@ -33,8 +33,8 @@ void Asteroid::update() {
 
     for (int i = 0; i < 12; ++i) {
         vertices[i] = {
-                originalVertices[i].x * dCos - originalVertices[i].y * dSin + position.x,
-                originalVertices[i].x * dSin + originalVertices[i].y * dCos + position.y,
+            originalVertices[i].x * dCos - originalVertices[i].y * dSin + position.x,
+            originalVertices[i].x * dSin + originalVertices[i].y * dCos + position.y,
         };
     }
 
@@ -55,11 +55,11 @@ void Asteroid::draw() const {
     for (int i = 0; i < 12; ++i) {
         int j = (i + 1) % 12;
         SDL_RenderDrawLineF(
-                gRenderer,
-                vertices[i].x,
-                vertices[i].y,
-                vertices[j].x,
-                vertices[j].y);
+            gRenderer,
+            vertices[i].x,
+            vertices[i].y,
+            vertices[j].x,
+            vertices[j].y);
     }
 }
 
@@ -84,5 +84,4 @@ bool Asteroid::isOffScreen() const {
            || position.x > ScreenSize::width + radius
            || position.y < -radius
            || position.y > ScreenSize::height + radius;
-
 }

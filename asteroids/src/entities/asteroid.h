@@ -36,8 +36,8 @@ public:
 
 private:
     explicit Asteroid(const int _scale)
-            : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
-              scale(_scale), vertices(std::array<Vector, 12>()), originalVertices(std::array<Vector, 12>()) {
+        : Body2d(static_cast<float>(_scale), static_cast<float>(_scale)),
+          scale(_scale), vertices(std::array<Vector, 12>()), originalVertices(std::array<Vector, 12>()) {
     }
 
     std::array<Vector, 12> originalVertices;

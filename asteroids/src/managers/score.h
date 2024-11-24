@@ -1,15 +1,13 @@
 #ifndef ASTEROIDS_SCORE_H
 #define ASTEROIDS_SCORE_H
 
-class Score
-{
+class Score {
 public:
     void draw() const;
 
     void increment(int scale);
 
-    int getScore() const
-    {
+    int getScore() const {
         return score;
     };
 

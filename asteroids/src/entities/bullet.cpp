@@ -29,4 +29,3 @@ void Bullet::update(float dt) {
 bool Bullet::isOffScreen() const {
     return position.x < 0 || position.x > ScreenSize::width || position.y < 0 || position.y > ScreenSize::height;
 }
-

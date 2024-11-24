@@ -3,8 +3,7 @@
 
 #include "../math/vector.h"
 
-class Body2d
-{
+class Body2d {
 public:
     float mass;
     float inertia;
