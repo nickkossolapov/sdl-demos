@@ -5,8 +5,7 @@
 
 class Lives {
 public:
-    explicit Lives(Score &_score, const int _lives = 3) : lives(_lives), score(_score) {
-    }
+    explicit Lives(Score& score) : score(score) {}
 
     void draw() const;
 
@@ -18,11 +17,21 @@ public:
         }
     };
 
+    int getLives() const {
+        return lives;
+    }
+
+    void reset() {
+        lives = defaultLives;
+        lastBonusLifeAt = 0;
+    }
+
 private:
-    int lives;
+    static constexpr int defaultLives = 3;
+    int lives = defaultLives;
     int lastBonusLifeAt = 0;
     int maxLives = 10;
-    Score &score;
+    Score& score;
 };
 
 

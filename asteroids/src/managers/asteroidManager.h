@@ -10,7 +10,7 @@
 
 class AsteroidManager {
 public:
-    explicit AsteroidManager(int initialAsteroids, BulletManager &_bulletManager, Score &_score, Player &player);
+    explicit AsteroidManager(int initialAsteroids, BulletManager& _bulletManager, Score& _score, Player& player);
 
     void update();
 
@@ -18,18 +18,21 @@ public:
 
     void drawAsteroids() const;
 
+    void reset();
+
 private:
-    BulletManager &bulletManager;
-    Score &score;
-    Player &player;
+    BulletManager& bulletManager;
+    Score& score;
+    Player& player;
     std::vector<Asteroid> asteroids;
     std::mt19937 rng;
+    int initialAsteroids;
 
     void createAsteroid();
 
-    void createAsteroidFragments(int scale, const Vector &position, const Vector &velocity);
+    void createAsteroidFragments(int scale, const Vector& position, const Vector& velocity);
 
-    void checkCollisionWithPlayer(Asteroid &asteroid);
+    void checkCollisionWithPlayer(Asteroid& asteroid);
 };
 
 #endif //ASTEROIDMANAGER_H

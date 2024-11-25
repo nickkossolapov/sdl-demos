@@ -11,6 +11,10 @@ public:
         return score;
     };
 
+    void reset() {
+        score = 0;
+    }
+
 private:
     int score = 0;
 };

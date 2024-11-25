@@ -8,14 +8,14 @@
 #include "../utils/controller.h"
 #include "../constants.h"
 
-Player::Player(float mass, float inertia, BulletManager &_bulletManager)
+Player::Player(float mass, float inertia, BulletManager& _bulletManager)
     : Body2d(mass, inertia), bulletManager(_bulletManager) {
     maxSpeed = 400;
     orientation = Constants::Pi;
 }
 
 
-void Player::handleEvent(const SDL_Event &e) {
+void Player::handleEvent(const SDL_Event& e) {
     constexpr float turningSpeed = 5;
 
     if (e.type == SDL_JOYAXISMOTION) {
@@ -25,59 +25,64 @@ void Player::handleEvent(const SDL_Event &e) {
         if (e.jaxis.which == 0 && e.jaxis.axis == 1) {
             if (fabsf(getAxisTilt(e.jaxis.value)) > 0.7) {
                 isTiltTrusting = true;
-            } else {
+            }
+            else {
                 isTiltTrusting = false;
             }
         }
-    } else if (e.type == SDL_JOYBUTTONDOWN) {
+    }
+    else if (e.type == SDL_JOYBUTTONDOWN) {
         switch (e.jbutton.button) {
-            case 0:
-                isThrusting = true;
-                break;
-            case 2:
-                shoot();
-                break;
-            default:
-                break;
+        case 0:
+            isThrusting = true;
+            break;
+        case 2:
+            shoot();
+            break;
+        default:
+            break;
         }
-    } else if (e.type == SDL_JOYBUTTONUP) {
+    }
+    else if (e.type == SDL_JOYBUTTONUP) {
         switch (e.jbutton.button) {
-            case 0:
-                isThrusting = false;
-                break;
-            default:
-                break;
+        case 0:
+            isThrusting = false;
+            break;
+        default:
+            break;
         }
-    } else if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+    }
+    else if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
         switch (e.key.keysym.sym) {
-            case SDLK_RIGHT:
-                angularVelocity += turningSpeed;
-                break;
-            case SDLK_LEFT:
-                angularVelocity += -turningSpeed;
-                break;
-            case SDLK_UP:
-                isThrusting = true;
-                break;
-            case SDLK_SPACE:
-            case SDLK_TAB:
-                shoot();
-            default:
-                break;
+        case SDLK_RIGHT:
+            angularVelocity += turningSpeed;
+            break;
+        case SDLK_LEFT:
+            angularVelocity += -turningSpeed;
+            break;
+        case SDLK_UP:
+            isThrusting = true;
+            break;
+        case SDLK_SPACE:
+        case SDLK_TAB:
+            shoot();
+        default:
+            break;
         }
-    } else if (e.type == SDL_KEYUP) {
+    }
+    else if (e.type == SDL_KEYUP) {
         switch (e.key.keysym.sym) {
-            case SDLK_RIGHT:
-                angularVelocity -= turningSpeed;
-                break;
-            case SDLK_LEFT:
-                angularVelocity -= -turningSpeed;
-                break;
-            case SDLK_UP:
-                isThrusting = false;
-                break;
-            default:
-                break;
+        case SDLK_RIGHT:
+            angularVelocity -= turningSpeed;
+            break;
+        case SDLK_LEFT:
+            angularVelocity -= -turningSpeed;
+            break;
+        case SDLK_UP:
+            isThrusting = false;
+            break;
+        default:
+            break;
         }
     }
 }
@@ -86,7 +91,8 @@ void Player::draw() const {
     if (isInvincible && ((SDL_GetTicks() / 150) % 2 == 0)) {
         auto [r, g, b, a] = Colours::grey;
         SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
-    } else {
+    }
+    else {
         auto [r, g, b, a] = Colours::white;
         SDL_SetRenderDrawColor(gRenderer, r, g, b, 0xFF);
     }
@@ -137,14 +143,16 @@ void Player::update() {
 
         netForce.x = std::sin(orientation) * thrust;
         netForce.y = std::cos(orientation) * thrust;
-    } else {
+    }
+    else {
         netForce.x = 0;
         netForce.y = 0;
 
         if (velocity.length() < 30) {
             velocity.x = 0;
             velocity.y = 0;
-        } else {
+        }
+        else {
             constexpr float breakingFactor = 1.01;
 
             velocity.x /= breakingFactor;
@@ -154,13 +162,15 @@ void Player::update() {
 
     if (position.x < 0) {
         position.x = ScreenSize::width;
-    } else if (position.x > ScreenSize::width) {
+    }
+    else if (position.x > ScreenSize::width) {
         position.x = 0;
     }
 
     if (position.y < 0) {
         position.y = ScreenSize::height;
-    } else if (position.y > ScreenSize::height) {
+    }
+    else if (position.y > ScreenSize::height) {
         position.y = 0;
     }
 }
@@ -182,4 +192,5 @@ void Player::reset() {
     hasCollided = false;
     isThrusting = false;
     isTiltTrusting = false;
+    isDead = false;
 }

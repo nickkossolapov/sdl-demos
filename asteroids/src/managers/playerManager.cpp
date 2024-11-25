@@ -1,6 +1,12 @@
 #include "playerManager.h"
 
 void PlayerManager::update() {
+    if (lives.getLives() == 0 && player.hasCollided) {
+        gameOver = true;
+        player.isDead = true;
+        return;
+    }
+
     if (player.hasCollided) {
         player.hasCollided = false;
         lives.decrement();

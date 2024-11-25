@@ -5,20 +5,21 @@
 #include "../config/config.h"
 #include "../math/utils.h"
 
-AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager &_bulletManager, Score &_score,
-                                 Player &_player)
+AsteroidManager::AsteroidManager(int const initialAsteroids, BulletManager& _bulletManager, Score& _score,
+                                 Player& _player)
     : bulletManager(_bulletManager), score(_score), player(_player),
-      rng(std::chrono::system_clock::now().time_since_epoch().count()) {
+      rng(std::chrono::system_clock::now().time_since_epoch().count()),
+      initialAsteroids(initialAsteroids) {
     for (int i = 0; i < initialAsteroids; ++i) {
         createAsteroid();
     }
 }
 
 void AsteroidManager::update() {
-    for (auto &asteroid: asteroids) {
+    for (auto& asteroid : asteroids) {
         asteroid.update();
 
-        for (auto &bullet: bulletManager.getBullets()) {
+        for (auto& bullet : bulletManager.getBullets()) {
             if (asteroid.isColliding(bullet.position) && !bullet.isDestroyed) {
                 asteroid.hasCollided = true;
                 bullet.isDestroyed = true;
@@ -45,7 +46,7 @@ void AsteroidManager::update() {
     }
 }
 
-void AsteroidManager::checkCollisionWithPlayer(Asteroid &asteroid) {
+void AsteroidManager::checkCollisionWithPlayer(Asteroid& asteroid) {
     if (player.isInvincible) {
         return;
     }
@@ -56,7 +57,7 @@ void AsteroidManager::checkCollisionWithPlayer(Asteroid &asteroid) {
 
     auto playerEdges = player.getEdges();
 
-    for (auto &vertex: asteroid.vertices) {
+    for (auto& vertex : asteroid.vertices) {
         if (isInTriangle(vertex, playerEdges.tip, playerEdges.rightWing, playerEdges.leftWing)) {
             player.hasCollided = true;
             return;
@@ -72,13 +73,13 @@ void AsteroidManager::checkCollisionWithPlayer(Asteroid &asteroid) {
 }
 
 void AsteroidManager::updateBodiesEuler(const float dt) {
-    for (auto &asteroid: asteroids) {
+    for (auto& asteroid : asteroids) {
         asteroid.updateBodyEuler(dt);
     }
 }
 
 void AsteroidManager::drawAsteroids() const {
-    for (const auto &asteroid: asteroids) {
+    for (const auto& asteroid : asteroids) {
         asteroid.draw();
     }
 }
@@ -99,24 +100,24 @@ void AsteroidManager::createAsteroid() {
     short face = faceDist(rng);
 
     switch (face) {
-        case 0: // top
-            asteroid.position = {xDist(rng), -asteroid.radius};
-            asteroid.velocity = {speedDist(rng) * 2, 1};
-            break;
-        case 1: // right
-            asteroid.position = {ScreenSize::width + asteroid.radius, yDist(rng)};
-            asteroid.velocity = {-1, speedDist(rng) * 2};
-            break;
-        case 2: // bottom
-            asteroid.position = {xDist(rng), ScreenSize::height + asteroid.radius};
-            asteroid.velocity = {speedDist(rng) * 2, -1};
-            break;
-        case 3: // left
-            asteroid.position = {-asteroid.radius, yDist(rng)};
-            asteroid.velocity = {1, speedDist(rng) * 2};
-            break;
-        default:
-            break;
+    case 0: // top
+        asteroid.position = {xDist(rng), -asteroid.radius};
+        asteroid.velocity = {speedDist(rng) * 2, 1};
+        break;
+    case 1: // right
+        asteroid.position = {ScreenSize::width + asteroid.radius, yDist(rng)};
+        asteroid.velocity = {-1, speedDist(rng) * 2};
+        break;
+    case 2: // bottom
+        asteroid.position = {xDist(rng), ScreenSize::height + asteroid.radius};
+        asteroid.velocity = {speedDist(rng) * 2, -1};
+        break;
+    case 3: // left
+        asteroid.position = {-asteroid.radius, yDist(rng)};
+        asteroid.velocity = {1, speedDist(rng) * 2};
+        break;
+    default:
+        break;
     }
 
     // Adjust velocity to move towards the center so that the asteroid doesn't just fly off the screen
@@ -133,7 +134,7 @@ void AsteroidManager::createAsteroid() {
     asteroids.push_back(asteroid);
 }
 
-void AsteroidManager::createAsteroidFragments(int scale, const Vector &position, const Vector &velocity) {
+void AsteroidManager::createAsteroidFragments(int scale, const Vector& position, const Vector& velocity) {
     if (scale == 1) {
         return;
     }
@@ -157,3 +158,12 @@ void AsteroidManager::createAsteroidFragments(int scale, const Vector &position,
         asteroids.push_back(asteroid);
     }
 }
+
+void AsteroidManager::reset() {
+    asteroids.clear();
+
+    for (int i = 0; i < initialAsteroids; ++i) {
+        createAsteroid();
+    }
+}
+

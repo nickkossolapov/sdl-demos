@@ -7,14 +7,23 @@
 
 class PlayerManager {
 public:
-    PlayerManager(Player &player, Lives &lives) : player(player), lives(lives) {};
+    PlayerManager(Player& player, Lives& lives) : player(player), lives(lives) {}
 
     void update();
 
-private:
-    Player &player;
-    Lives &lives;
+    void reset() {
+        gameOver = false;
+        lastSpawnedAt = 0;
+    }
 
+    bool isGameOver() const {
+        return gameOver;
+    };
+
+private:
+    Player& player;
+    Lives& lives;
+    bool gameOver = false;
     Uint32 lastSpawnedAt = 0;
 };
 

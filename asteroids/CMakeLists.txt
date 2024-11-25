@@ -47,6 +47,8 @@ add_executable(
         src/managers/lives.cpp
         src/managers/playerManager.h
         src/managers/playerManager.cpp
+        src/managers/gameStateManager.h
+        src/managers/gameStateManager.cpp
 )
 
 find_package(SDL2 REQUIRED)

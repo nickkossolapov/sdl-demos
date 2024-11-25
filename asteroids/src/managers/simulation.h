@@ -11,19 +11,23 @@
 
 class Simulation {
 public:
-    explicit Simulation(Player &_spaceship, BulletManager &_bulletManager, AsteroidManager &_asteroidManager)
-            : spaceship(_spaceship), bulletManager(_bulletManager), asteroidManager(_asteroidManager) {
-    };
+    explicit Simulation(Player& _spaceship, BulletManager& _bulletManager, AsteroidManager& _asteroidManager)
+        : spaceship(_spaceship), bulletManager(_bulletManager), asteroidManager(_asteroidManager) {};
 
     void updateSimulation();
+
+    void pause(bool value) {
+        paused = value;
+    }
 
 private:
     Uint32 lastTime = 0;
     float targetTimeStep = 0.005f;
     float accumulator = 0.0f;
-    Player &spaceship;
-    BulletManager &bulletManager;
-    AsteroidManager &asteroidManager;
+    Player& spaceship;
+    BulletManager& bulletManager;
+    AsteroidManager& asteroidManager;
+    bool paused = true;
 };
 
 

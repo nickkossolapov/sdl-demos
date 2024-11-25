@@ -11,17 +11,18 @@
 #include "entities/player.h"
 #include "managers/asteroidManager.h"
 #include "managers/bulletManager.h"
+#include "managers/gameStateManager.h"
 #include "managers/lives.h"
 #include "utils/text.h"
 #include "managers/playerManager.h"
 
-void prepareRenderer(SDL_Renderer *renderer) {
+void prepareRenderer(SDL_Renderer* renderer) {
     auto [r, g, b, a] = Colours::grey;
     SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
-int main(int argc, char *args[]) {
+int main(int argc, char* args[]) {
     init();
 
     bool quit = false;
@@ -40,12 +41,15 @@ int main(int argc, char *args[]) {
 
     auto simulation = Simulation(player, bulletManager, asteroidManager);
 
+    auto gameStateManager = GameStateManager(score, playerManager, simulation, player, asteroidManager, lives);
+
     while (!quit) {
         while (SDL_PollEvent(&e) != 0) {
             if (e.type == SDL_QUIT || (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE)) {
                 quit = true;
             }
 
+            gameStateManager.handleEvent(e);
             player.handleEvent(e);
         }
 

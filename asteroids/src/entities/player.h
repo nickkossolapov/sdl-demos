@@ -17,10 +17,11 @@ class Player final : public Body2d {
 public:
     bool isInvincible = false;
     bool hasCollided = false;
+    bool isDead = false;
 
-    explicit Player(float mass, float inertia, BulletManager &_bulletManager);
+    explicit Player(float mass, float inertia, BulletManager& _bulletManager);
 
-    void handleEvent(const SDL_Event &e);
+    void handleEvent(const SDL_Event& e);
 
     void draw() const override;
 
@@ -32,7 +33,7 @@ public:
         return tipLength;
     }
 
-    PlayerEdges &getEdges() {
+    PlayerEdges& getEdges() {
         return edges;
     }
 
@@ -41,7 +42,7 @@ public:
 private:
     float tipLength = 25;
     float wingLength = 15;
-    BulletManager &bulletManager;
+    BulletManager& bulletManager;
     bool isThrusting = false;
     bool isTiltTrusting = false;
 
