@@ -1,6 +1,10 @@
 #include "gameStateManager.h"
 
-void GameStateManager::handleEvent(const SDL_Event& e) {
+#include "../config/config.h"
+#include "../utils/text.h"
+
+
+void GameStateManager::handleEvent(const SDL_Event &e) {
     if (e.type == SDL_KEYUP) {
         // if (gameState == GameState::GameOver) {
         if (e.key.keysym.sym == SDLK_q) {
@@ -19,8 +23,16 @@ void GameStateManager::handleEvent(const SDL_Event& e) {
     }
 }
 
+void GameStateManager::draw() {
+    if (gameState == GameState::WelcomeScreen) {
+        static auto welcomeString = "Press any key to start";
+        auto [width, height] = Text::getStringWidthAndHeight(welcomeString);
+        Text::drawString(welcomeString, ScreenSize::width / 2 - width / 2, ScreenSize::height / 2 - height / 2);
+    }
+}
+
 void GameStateManager::update() {
-    if (inGame) {
+    if (isInGame()) {
         if (playerManager.isGameOver()) {
             gameState = GameState::GameOver;
         }

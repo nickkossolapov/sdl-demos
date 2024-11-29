@@ -13,28 +13,30 @@ enum class GameState {
 
 class GameStateManager {
 public:
-    GameStateManager(Score& score, PlayerManager& playerManager, Simulation& simulation, Player& player, AsteroidManager& asteroidManager,
-                     Lives& lives)
+    GameStateManager(Score &score, PlayerManager &playerManager, Simulation &simulation, Player &player, AsteroidManager &asteroidManager,
+                     Lives &lives)
         : score(score), playerManager(playerManager), simulation(simulation), player(player), asteroidManager(asteroidManager),
-          lives(lives) {}
+          lives(lives) {
+    }
 
-    void handleEvent(const SDL_Event& e);
+    void handleEvent(const SDL_Event &e);
 
     bool isInGame() const {
-        return inGame;
+        return gameState == GameState::Playing;
     }
+
+    void draw();
 
     void update();
 
 private:
-    Score& score;
-    PlayerManager& playerManager;
-    Simulation& simulation;
-    Player& player;
-    AsteroidManager& asteroidManager;
-    Lives& lives;
+    Score &score;
+    PlayerManager &playerManager;
+    Simulation &simulation;
+    Player &player;
+    AsteroidManager &asteroidManager;
+    Lives &lives;
 
-    bool inGame = false;
     GameState gameState = GameState::WelcomeScreen;
 };
 

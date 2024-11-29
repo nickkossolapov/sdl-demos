@@ -5,6 +5,10 @@
 #include <iostream>
 #include <optional>
 #include <string>
+#include <tuple>
+#include <tuple>
+#include <tuple>
+#include <tuple>
 
 #include "../globals.h"
 #include "../config/colors.h"
@@ -92,6 +96,11 @@ void Text::drawString(const std::string &text, float x, float y, float scale, fl
             SDL_RenderDrawLineF(gRenderer, x0, y0, x1, y1);
         }
     }
+}
+
+std::tuple<float, float> Text::getStringWidthAndHeight(const std::string &text, float scale, float padding) {
+    const auto length = static_cast<float>(text.length());
+    return {length * (scale * 2 + padding) - padding, scale * 3};
 }
 
 void Text::drawRightAlignedNumber(const int number, const float rightX, const float y, float scale, float padding) {
