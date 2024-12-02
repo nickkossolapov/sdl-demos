@@ -13,13 +13,12 @@ enum class GameState {
 
 class GameStateManager {
 public:
-    GameStateManager(Score &score, PlayerManager &playerManager, Simulation &simulation, Player &player, AsteroidManager &asteroidManager,
-                     Lives &lives)
+    GameStateManager(Score& score, PlayerManager& playerManager, Simulation& simulation, Player& player, AsteroidManager& asteroidManager,
+                     Lives& lives)
         : score(score), playerManager(playerManager), simulation(simulation), player(player), asteroidManager(asteroidManager),
-          lives(lives) {
-    }
+          lives(lives) {}
 
-    void handleEvent(const SDL_Event &e);
+    void handleEvent(const SDL_Event& e);
 
     bool isInGame() const {
         return gameState == GameState::Playing;
@@ -30,14 +29,15 @@ public:
     void update();
 
 private:
-    Score &score;
-    PlayerManager &playerManager;
-    Simulation &simulation;
-    Player &player;
-    AsteroidManager &asteroidManager;
-    Lives &lives;
+    Score& score;
+    PlayerManager& playerManager;
+    Simulation& simulation;
+    Player& player;
+    AsteroidManager& asteroidManager;
+    Lives& lives;
 
     GameState gameState = GameState::WelcomeScreen;
+    Uint32 gameOverAt = 0;
 };
 
 #endif //GAMESTATEMANAGER_H

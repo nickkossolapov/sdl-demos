@@ -16,13 +16,13 @@
 #include "utils/text.h"
 #include "managers/playerManager.h"
 
-void prepareRenderer(SDL_Renderer *renderer) {
+void prepareRenderer(SDL_Renderer* renderer) {
     auto [r, g, b, a] = Colours::grey;
     SDL_SetRenderDrawColor(renderer, r, g, b, 0xFF);
     SDL_RenderClear(renderer);
 }
 
-int main(int argc, char *args[]) {
+int main(int argc, char* args[]) {
     init();
 
     bool quit = false;
@@ -64,6 +64,7 @@ int main(int argc, char *args[]) {
             lives.update();
             asteroidManager.update();
             playerManager.update();
+            gameStateManager.update();
 
             player.draw();
             bulletManager.drawBullets();

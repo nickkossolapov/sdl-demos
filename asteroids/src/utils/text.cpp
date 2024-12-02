@@ -59,7 +59,7 @@ const std::array<std::vector<SDL_FPoint>, 10> vectorisedNumbers = {
     }
 };
 
-std::optional<std::vector<SDL_FPoint> > getLinesForChar(char c) {
+std::optional<std::vector<SDL_FPoint>> getLinesForChar(char c) {
     if (c >= 'A' && c <= 'Z') {
         return vectorisedLetters[c - 'A'];
     }
@@ -75,7 +75,7 @@ std::optional<std::vector<SDL_FPoint> > getLinesForChar(char c) {
     return {};
 }
 
-void Text::drawString(const std::string &text, float x, float y, float scale, float padding) {
+void Text::drawString(const std::string& text, float x, float y, float scale, float padding) {
     auto [r, g, b, a] = Colours::white;
     SDL_SetRenderDrawColor(gRenderer, r, g, b, a);
 
@@ -98,17 +98,13 @@ void Text::drawString(const std::string &text, float x, float y, float scale, fl
     }
 }
 
-std::tuple<float, float> Text::getStringWidthAndHeight(const std::string &text, float scale, float padding) {
+std::tuple<float, float> Text::getStringWidthAndHeight(const std::string& text, float scale, float padding) {
     const auto length = static_cast<float>(text.length());
-    return {length * (scale * 2 + padding) - padding, scale * 3};
+    return {length * (scale + padding) * 2 - padding, scale * 3};
 }
 
 void Text::drawRightAlignedNumber(const int number, const float rightX, const float y, float scale, float padding) {
-    auto [r, g, b, a] = Colours::white;
-    SDL_SetRenderDrawColor(gRenderer, r, g, b, a);
-
     std::string str = std::to_string(number);
-
     float xOffset = (scale + padding) * static_cast<float>(str.length()) * 2 - padding;
 
     drawString(str, rightX - xOffset, y, scale, padding);

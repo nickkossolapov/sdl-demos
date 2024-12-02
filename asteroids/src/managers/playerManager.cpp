@@ -1,7 +1,7 @@
 #include "playerManager.h"
 
 void PlayerManager::update() {
-    if (lives.getLives() == 0 && player.hasCollided) {
+    if (lives.getLives() <= 1 && player.hasCollided) {
         gameOver = true;
         player.isDead = true;
         return;
