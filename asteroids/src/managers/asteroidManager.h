@@ -27,12 +27,15 @@ private:
     std::vector<Asteroid> asteroids;
     std::mt19937 rng;
     int initialAsteroids;
+    int minAsteroids = 5;
 
     void createAsteroid();
 
     void createAsteroidFragments(int scale, const Vector& position, const Vector& velocity);
 
     void checkCollisionWithPlayer(Asteroid& asteroid);
+
+    void trySpawnAsteroid();
 };
 
 #endif //ASTEROIDMANAGER_H

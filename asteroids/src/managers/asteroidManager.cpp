@@ -39,10 +39,34 @@ void AsteroidManager::update() {
         } else if (asteroids[i].hasAppeared && asteroids[i].isOffScreen()) {
             std::swap(asteroids[i], asteroids.back());
             asteroids.pop_back();
-            createAsteroid();
         } else {
             i++;
         }
+    }
+
+    while (asteroids.size() < minAsteroids) {
+        createAsteroid();
+    }
+
+    trySpawnAsteroid();
+}
+
+void AsteroidManager::trySpawnAsteroid() {
+    static constexpr Uint32 initialMaxSpawnInterval = 5000;
+    static constexpr Uint32 minSpawnInterval = 1000;
+    static Uint32 maxSpawnInterval = initialMaxSpawnInterval;
+
+    std::uniform_int_distribution<Uint32> dist(0, maxSpawnInterval);
+    static Uint32 nextSpawnTime = SDL_GetTicks() + dist(rng);
+
+    if (Uint32 currentTime = SDL_GetTicks(); currentTime >= nextSpawnTime) {
+        createAsteroid();
+
+        if (maxSpawnInterval > minSpawnInterval) {
+            maxSpawnInterval -= 100;
+        }
+
+        nextSpawnTime = currentTime + dist(rng);
     }
 }
 
